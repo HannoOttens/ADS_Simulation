@@ -8,6 +8,7 @@ namespace ADS_Simulation
 {
     class Simulation
     {
+        ulong simulationClock = 0;
         StablePriorityQueue<Event> eventQueue = new StablePriorityQueue<Event>(1000);
     }
 }
