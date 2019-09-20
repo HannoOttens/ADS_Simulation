@@ -6,10 +6,16 @@ namespace ADS_Simulation
     {
         static void Main(string[] args)
         {
-            MarshallArgs(args);
-            Console.WriteLine("Hello World!");
+            while (true)
+            {
+                args = Console.ReadLine().Split(' ');
+                MarshallArgs(args);
+
+                Console.WriteLine("Hello World!");
+            }
         }
 
+        #region Console argument parsing
         /// <summary>
         /// Marshall the program arguments
         /// </summary>
@@ -55,5 +61,6 @@ namespace ADS_Simulation
 +====================================+===========+====================================+
 ");
         }
+    #endregion
     }
 }
