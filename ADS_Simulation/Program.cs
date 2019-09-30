@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADS_Simulation.NS_State;
+using System;
 
 namespace ADS_Simulation
 {
@@ -6,12 +7,21 @@ namespace ADS_Simulation
     {
         static void Main(string[] args)
         {
-            while (true)
-            {
-                args = Console.ReadLine().Split(' ');
-                MarshallArgs(args);
+            args = Console.ReadLine().Split(' ');
+            MarshallArgs(args);
 
-                Console.WriteLine("Hello World!");
+            // Initialize simulation
+            Simulation state = new Simulation();
+
+            while(true)
+            {
+
+
+
+
+                // Stop if it is time
+                if (state.stoppingConditionMet())
+                    break;
             }
         }
 

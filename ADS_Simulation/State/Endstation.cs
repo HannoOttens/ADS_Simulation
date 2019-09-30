@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ADS_Simulation.State
+namespace ADS_Simulation.NS_State
 {
-    class Endstation
+    class Endstation : Station
     {
+        Switch _switch = new Switch();
     }
 }

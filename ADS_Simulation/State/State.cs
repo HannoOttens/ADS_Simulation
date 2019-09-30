@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ADS_Simulation.State
+// NS_ prefix wegens namespace conflict
+namespace ADS_Simulation.NS_State
 {
-    class State
+    public class State
     {
+        List<Tram> trams;
+        List<Station> stations;
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ADS_Simulation.Events
 {
-    class TramArrival
+    class DepartureStartstation
     {
     }
 }
