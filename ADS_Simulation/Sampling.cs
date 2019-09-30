@@ -25,7 +25,7 @@ namespace ADS_Simulation
         /// </summary>
         /// <returns></returns>
         public static int drivingTime() {
-            return -1;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int passengerExchangeTime(int pOut, int pIn)
         {
-            return -1;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int timeUntilNextPassenger()
         {
-            return -1;
+            throw new NotImplementedException();
         }
 
         /// <summary>

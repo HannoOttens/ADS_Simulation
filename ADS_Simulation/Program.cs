@@ -11,16 +11,16 @@ namespace ADS_Simulation
             MarshallArgs(args);
 
             // Initialize simulation
-            Simulation state = new Simulation();
+            Simulation simulation = new Simulation();
 
             while(true)
             {
-
+                simulation.Step();
 
 
 
                 // Stop if it is time
-                if (state.stoppingConditionMet())
+                if (simulation.StoppingConditionMet())
                     break;
             }
         }

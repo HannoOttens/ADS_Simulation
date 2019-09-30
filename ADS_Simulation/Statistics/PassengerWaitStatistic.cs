@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using ADS_Simulation.NS_State;
-using Priority_Queue;
 
-namespace ADS_Simulation.Events
+namespace ADS_Simulation.Statistics
 {
-    class ArrivalEndstation : Event
+    class PassengerWaitStatistic : Statistic
     {
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void measure(State state)
         {
             throw new NotImplementedException();
         }
