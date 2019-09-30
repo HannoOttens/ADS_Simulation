@@ -17,7 +17,6 @@ namespace ADS_Simulation
 
             // Initialize simulation
             Simulation simulation = new Simulation();
-
             while(simulation.Step()) {}
         }
 

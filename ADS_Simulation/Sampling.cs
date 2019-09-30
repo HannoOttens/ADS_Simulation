@@ -11,6 +11,12 @@ namespace ADS_Simulation
     /// </summary>
     static class Sampling
     {
+        static void initializeDistributions()
+        {
+            //TODO: Maak distributie objecten hier
+        }
+
+
         /// <summary>
         /// The time it takes to clear a switch
         /// </summary>
@@ -24,7 +30,7 @@ namespace ADS_Simulation
         /// The estimated driving time between stations
         /// </summary>
         /// <returns></returns>
-        public static int drivingTime() {
+        public static int drivingTime(int averageForPart) {
             throw new NotImplementedException();
         }
 
