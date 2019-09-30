@@ -7,5 +7,6 @@ namespace ADS_Simulation.Events
 {
     abstract class Event : StablePriorityQueueNode
     {
+        int time;
     }
 }
