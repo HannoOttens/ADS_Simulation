@@ -1,0 +1,107 @@
+﻿{
+  "frequencey": 16,
+  "tramCapcity": 420,
+  "stationClearanceTime": 40,
+  "switchClearanceTime": 60,
+  "startTime": 0,
+  "endTime": 0,
+  "ucDualDriverSwitch": false,
+  "transferTimes": [
+    {
+      "from": "P+R De Uithof",
+      "to": "WKZ",
+      "distance": 0.6,
+      "averageTime": 110
+    },
+    {
+      "from": "WKZ",
+      "to": "P+R De Uithof",
+      "distance": 0.6,
+      "averageTime": 113
+    },
+    {
+      "from": "WKZ",
+      "to": "UMC",
+      "distance": 0.6,
+      "averageTime": 78
+    },
+    {
+      "from": "UMC",
+      "to": "WKZ",
+      "distance": 0.6,
+      "averageTime": 78
+    },
+    {
+      "from": "UMC",
+      "to": "Heidelberglaan",
+      "distance": 0.4,
+      "averageTime": 78
+    },
+    {
+      "from": "Heidelberglaan",
+      "to": "UMC",
+      "distance": 0.4,
+      "averageTime": 86
+    },
+    {
+      "from": "Heidelberglaan",
+      "to": "Padualaan",
+      "distance": 0.4,
+      "averageTime": 60
+    },
+    {
+      "from": "Padualaan",
+      "to": "Heidelberglaan",
+      "distance": 0.4,
+      "averageTime": 60
+    },
+    {
+      "from": "Padualaan",
+      "to": "Kromme Rijn",
+      "distance": 0.8,
+      "averageTime": 100
+    },
+    {
+      "from": "Kromme Rijn",
+      "to": "Padualaan",
+      "distance": 0.8,
+      "averageTime": 101
+    },
+    {
+      "from": "Kromme Rijn",
+      "to": "Galgenwaard",
+      "distance": 0.6,
+      "averageTime": 59
+    },
+    {
+      "from": "Galgenwaard",
+      "to": "Kromme Rijn",
+      "distance": 0.6,
+      "averageTime": 59
+    },
+    {
+      "from": "Galgenwaard",
+      "to": "Vaartsche Rijn",
+      "distance": 3.1,
+      "averageTime": 243
+    },
+    {
+      "from": "Vaartsche Rijn",
+      "to": "Galgenwaard",
+      "distance": 3.1,
+      "averageTime": 243
+    },
+    {
+      "from": "Vaartsche Rijn",
+      "to": "Centraal Station",
+      "distance": 1.4,
+      "averageTime": 135
+    },
+    {
+      "from": "Centraal Station",
+      "to": "Vaartsche Rijn",
+      "distance": 1.4,
+      "averageTime": 134
+    }
+  ]
+}

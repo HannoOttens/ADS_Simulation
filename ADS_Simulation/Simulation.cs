@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.Events;
+﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using Priority_Queue;
@@ -11,12 +12,11 @@ namespace ADS_Simulation
     class Simulation
     {
         private const int MAX_EVENTS = 10000; // NOG GEEN IDEE OF DIT PAST
-        private const int MAX_TIME = 36000; //KLOPT NOG NIET
 
         State state;
         StablePriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
-        ulong simulationClock;
+        int simulationClock;
 
         public Simulation()
         {
@@ -31,7 +31,11 @@ namespace ADS_Simulation
             };
         }
 
-        internal void Step()
+        /// <summary>
+        /// Make one step in the simulation
+        /// </summary>
+        /// <returns>If simulation has ended</returns>
+        public bool Step()
         {
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
@@ -43,16 +47,17 @@ namespace ADS_Simulation
             // Measure statistics
             foreach (var statistic in statistics)
                 statistic.measure(state);
+
+            return StoppingConditionMet();
         }
 
         /// <summary>
         /// Check if the stopping condition of simulation has been met
         /// </summary>
-        /// <returns></returns>
-        public bool StoppingConditionMet()
+        private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                || simulationClock >= MAX_TIME;
+                || simulationClock >= Config.c.endTime;
         }
     }
 }

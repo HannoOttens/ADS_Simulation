@@ -1,28 +1,24 @@
-﻿using ADS_Simulation.NS_State;
+﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.NS_State;
 using System;
 
 namespace ADS_Simulation
 {
     class Program
     {
+        static string configPath = "../../../config.json";
+
         static void Main(string[] args)
         {
-            args = Console.ReadLine().Split(' ');
             MarshallArgs(args);
+
+            // Initialize config
+            Config.readConfig(configPath);
 
             // Initialize simulation
             Simulation simulation = new Simulation();
 
-            while(true)
-            {
-                simulation.Step();
-
-
-
-                // Stop if it is time
-                if (simulation.StoppingConditionMet())
-                    break;
-            }
+            while(simulation.Step()) {}
         }
 
         #region Console argument parsing
@@ -38,6 +34,10 @@ namespace ADS_Simulation
                 for (i = 0; i < args.Length; i++)
                     switch (args[i])
                     {
+                        case "-c":
+                        case "-config":
+                            configPath = args[i++];
+                            break;
                         case "-h":
                         case "-help":
                             PrintHelp();
@@ -64,11 +64,11 @@ namespace ADS_Simulation
 
     HELP ME!
 
-+====================================+===========+====================================+
-| Command              Parameters    | Default   | Detail                             |
-+====================================+===========+====================================+
-
-+====================================+===========+====================================+
++====================================+===================+====================================+
+| Command              Parameters    | Default           | Detail                             |
++====================================+===================+====================================+
+  -c, -config          <path>        | ../../config.json |
++====================================+===================+====================================+
 ");
         }
     #endregion
