@@ -17,9 +17,9 @@ namespace ADS_Simulation
         StablePriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
 
-        public Simulation(int frequency)
+        public Simulation()
         {
-            List<Tram> trams = GetTrams(3600 / frequency); // Create trams
+            List<Tram> trams = GetTrams(); // Create trams
             List<Station> stations = new List<Station>(); // TODO
             state = new State(0, trams, stations) ;
             eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
@@ -36,8 +36,10 @@ namespace ADS_Simulation
         /// </summary>
         /// <param name="interval">Interval in seconds between departing trams</param>
         /// <returns>List of trams</returns>
-        public List<Tram> GetTrams(int interval)
+        public List<Tram> GetTrams()
         {
+            int interval = 3600 / Config.c.frequency;
+
             var trams = new List<Tram>();
             int id = 6000;
             int t = 0;
