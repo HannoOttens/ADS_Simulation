@@ -16,12 +16,10 @@ namespace ADS_Simulation
         State state;
         StablePriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
-        int simulationClock;
 
         public Simulation()
         {
             state = new State();
-            simulationClock = 0;
             eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
             statistics = new List<Statistic>()
             {
@@ -41,13 +39,14 @@ namespace ADS_Simulation
             Event _event = eventQueue.Dequeue();
             _event.Execute(state, eventQueue);
 
-            // Advance clock
-            simulationClock = _event.time;
+            // Advance clock (mss deel maken van de event.Execute?)
+            state.simulationClock = _event.time;
 
             // Measure statistics
             foreach (var statistic in statistics)
                 statistic.measure(state);
 
+            // Return if should be stopped
             return StoppingConditionMet();
         }
 
@@ -57,7 +56,7 @@ namespace ADS_Simulation
         private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                || simulationClock >= Config.c.endTime;
+                || state.simulationClock >= Config.c.endTime;
         }
     }
 }

@@ -7,7 +7,15 @@ namespace ADS_Simulation.NS_State
 {
     public class State
     {
-        List<Tram> trams;
-        List<Station> stations;
+        public int simulationClock;
+        public List<Tram> trams;
+        public List<Station> stations;
+
+        public State(int startTime, List<Tram> ts, List<Station> ss)
+        {
+            simulationClock = startTime;
+            trams = ts;
+            stations = ss;
+        }
     }
 }

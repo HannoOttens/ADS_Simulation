@@ -4,7 +4,12 @@ using System.Text;
 
 namespace ADS_Simulation.NS_State
 {
-    class Station
+    public class Station
     {
+        public Queue<int> waitingPassengers;
+        public Station()
+        {
+            waitingPassengers = new Queue<int>();
+        }
     }
 }

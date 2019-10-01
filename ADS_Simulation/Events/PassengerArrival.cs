@@ -8,9 +8,21 @@ namespace ADS_Simulation.Events
 {
     class PassengerArrival : Event
     {
+        private int _stationIdx;
+
+        public PassengerArrival(int stationIdx)
+        {
+            _stationIdx = stationIdx;
+        }
+
         public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
         {
-            throw new NotImplementedException();
+            // Add passenger to station
+            state.stations[_stationIdx].waitingPassengers.Enqueue(state.simulationClock);
+
+            //Enq
+            int timeUntilNext = Sampling.timeUntilNextPassenger(state.simulationClock);
+            eventQueue.Enqueue(new PassengerArrival(_stationIdx), state.simulationClock + timeUntilNext);
         }
     }
 }

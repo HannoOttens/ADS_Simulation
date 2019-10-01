@@ -48,8 +48,9 @@ namespace ADS_Simulation
         /// <summary>
         /// Time until next passenger arrives
         /// </summary>
+        /// <param name="time">Needed to get the correct poisson time range</param>
         /// <returns></returns>
-        public static int timeUntilNextPassenger()
+        public static int timeUntilNextPassenger(int time)
         {
             throw new NotImplementedException();
         }
