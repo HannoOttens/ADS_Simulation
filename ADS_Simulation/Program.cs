@@ -16,7 +16,7 @@ namespace ADS_Simulation
             Config.readConfig(configPath);
 
             // Initialize simulation
-            Simulation simulation = new Simulation();
+            Simulation simulation = new Simulation(15);
             while(simulation.Step()) {}
         }
 

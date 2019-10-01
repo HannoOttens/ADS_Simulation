@@ -17,9 +17,11 @@ namespace ADS_Simulation
         StablePriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
 
-        public Simulation()
+        public Simulation(int frequency)
         {
-            state = new State();
+            List<Tram> trams = GetTrams(3600 / frequency); // Create trams
+            List<Station> stations = new List<Station>(); // TODO
+            state = new State(0, trams, stations) ;
             eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
             statistics = new List<Statistic>()
             {
@@ -27,6 +29,26 @@ namespace ADS_Simulation
                 new TramLoadStatistic(),
                 new EmptyStationStatistic()
             };
+        }
+
+        /// <summary>
+        /// Calculates the number of trams necessary based on the frequency
+        /// </summary>
+        /// <param name="interval">Interval in seconds between departing trams</param>
+        /// <returns>List of trams</returns>
+        public List<Tram> GetTrams(int interval)
+        {
+            var trams = new List<Tram>();
+            int id = 6000;
+            int t = 0;
+
+            // Loop until the first tram is scheduled to leave P+R again (calculated as 17+5+17+5)
+            while(t <= 44)
+            {
+                trams.Add(new Tram(++id));
+                t += interval;
+            }
+            return trams;
         }
 
         /// <summary>
