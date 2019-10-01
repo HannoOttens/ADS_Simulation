@@ -19,6 +19,8 @@ namespace ADS_Simulation.Configuration
 
     public class ConfigData
     {
+        public int oneWayTripTimeMinutes;
+        public int turnAroundTimeMinutes;
         public int frequency;
         public int tramCapcity;
         public int stationClearanceTime;

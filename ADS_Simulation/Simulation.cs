@@ -19,9 +19,9 @@ namespace ADS_Simulation
 
         public Simulation()
         {
-            List<Tram> trams = GetTrams(); // Create trams
+            List<Tram> trams = CreateTrams(Config.c.frequency);
             List<Station> stations = new List<Station>(); // TODO
-            state = new State(0, trams, stations) ;
+            state = new State(0, trams, stations);
             eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
             statistics = new List<Statistic>()
             {
@@ -34,22 +34,21 @@ namespace ADS_Simulation
         /// <summary>
         /// Calculates the number of trams necessary based on the frequency
         /// </summary>
-        /// <param name="interval">Interval in seconds between departing trams</param>
+        /// <param name="frequency">Number of trains per hour</param>
         /// <returns>List of trams</returns>
-        public List<Tram> GetTrams()
+        public List<Tram> CreateTrams(int frequency)
         {
-            int interval = 3600 / Config.c.frequency;
+            // Interval at which trains leave the station
+            float interval = 3600 / frequency;
+
+            // Calculate the amount needed to fill a 44 minute cycle 
+            // and the first tram is scheduled to leave P+R again
+            int roundTripTime = 2 * (Config.c.oneWayTripTimeMinutes + Config.c.turnAroundTimeMinutes);
+            int numberOfTrains = (int)(roundTripTime / interval);
 
             var trams = new List<Tram>();
-            int id = 6000;
-            int t = 0;
-
-            // Loop until the first tram is scheduled to leave P+R again (calculated as 17+5+17+5)
-            while(t <= 44)
-            {
-                trams.Add(new Tram(++id));
-                t += interval;
-            }
+            for (int i = 1; i <= numberOfTrains; i++)
+                trams.Add(new Tram(6000 + i));
             return trams;
         }
 

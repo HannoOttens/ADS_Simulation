@@ -5,6 +5,8 @@
   "switchClearanceTime": 60,
   "startTime": 0,
   "endTime": 0,
+  "turnAroundTimeMinutes": 5,
+  "oneWayTripTimeMinutes": 17,
   "ucDualDriverSwitch": false,
   "transferTimes": [
     {
