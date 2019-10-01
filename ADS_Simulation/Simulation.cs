@@ -37,10 +37,9 @@ namespace ADS_Simulation
         {
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
-            _event.Execute(state, eventQueue);
-
             // Advance clock (mss deel maken van de event.Execute?)
             state.simulationClock = _event.time;
+            _event.Execute(state, eventQueue);
 
             // Measure statistics
             foreach (var statistic in statistics)
