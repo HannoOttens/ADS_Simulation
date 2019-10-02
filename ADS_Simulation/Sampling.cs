@@ -31,7 +31,8 @@ namespace ADS_Simulation
         /// </summary>
         /// <returns></returns>
         public static int drivingTime(int averageForPart) {
-            throw new NotImplementedException();
+            //TODO: Implement
+            return averageForPart;
         }
 
         /// <summary>
@@ -42,7 +43,8 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int passengerExchangeTime(int pOut, int pIn)
         {
-            throw new NotImplementedException();
+            //TODO: Implement
+            return 100;
         }
 
         /// <summary>

@@ -18,11 +18,11 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
         {
             // Add passenger to station
-            state.stations[_stationIdx].waitingPassengers.Enqueue(state.simulationClock);
+            state.stations[_stationIdx].waitingPassengers.Enqueue(state.time);
 
             //Enq
-            int timeUntilNext = Sampling.timeUntilNextPassenger(state.simulationClock);
-            eventQueue.Enqueue(new PassengerArrival(_stationIdx), state.simulationClock + timeUntilNext);
+            int timeUntilNext = Sampling.timeUntilNextPassenger(state.time);
+            eventQueue.Enqueue(new PassengerArrival(_stationIdx), state.time + timeUntilNext);
         }
     }
 }

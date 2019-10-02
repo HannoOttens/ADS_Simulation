@@ -6,8 +6,8 @@ namespace ADS_Simulation.NS_State
 {
     public class Tram
     {
-        int id;
-        int passengerCount;
+        public int id;
+        public int passengerCount;
 
         public Tram(int id) {
             this.id = id;
