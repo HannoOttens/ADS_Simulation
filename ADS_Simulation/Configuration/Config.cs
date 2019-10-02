@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+// All instatiated at start-of-app with JSON.
+#nullable disable
+
 namespace ADS_Simulation.Configuration
 {
     static class Config
