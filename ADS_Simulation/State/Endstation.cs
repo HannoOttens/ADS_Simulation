@@ -7,5 +7,9 @@ namespace ADS_Simulation.NS_State
     class Endstation : Station
     {
         Switch _switch = new Switch();
+
+        public Endstation(string name) : base(name)
+        {
+        }
     }
 }
