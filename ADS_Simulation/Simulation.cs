@@ -57,10 +57,10 @@ namespace ADS_Simulation
         /// <returns>List of stations</returns>
         public List<Station> CreateStations()
         {
-            var stations = new List<Station>{new Endstation(Config.c.stations[0])};
-            for (int i = 1; i < Config.c.stations.Length - 1; i++)
+            var stations = new List<Station>{new Endstation(Config.c.stations[0])}; // First element is endstation
+            for (int i = 1; i < Config.c.stations.Length - 1; i++) // All stations except first and last
                 stations.Add(new Station(Config.c.stations[i]));
-            stations.Add(new Endstation(Config.c.stations[Config.c.stations.Length - 1]));
+            stations.Add(new Endstation(Config.c.stations[Config.c.stations.Length - 1])); // Last element is endstation
             return stations;
         }
 
