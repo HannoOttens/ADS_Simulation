@@ -8,102 +8,120 @@
   "turnAroundTimeMinutes": 5,
   "oneWayTripTimeMinutes": 17,
   "ucDualDriverSwitch": false,
+  "startStation": "P+R De Uithof",
+  "endStation": "Centraal Station",
   "transferTimes": [
     {
       "from": "P+R De Uithof",
       "to": "WKZ",
       "distance": 0.6,
-      "averageTime": 110
+      "averageTime": 110,
+      "index": 1
     },
     {
       "from": "WKZ",
       "to": "P+R De Uithof",
       "distance": 0.6,
-      "averageTime": 113
+      "averageTime": 113,
+      "index": 16
     },
     {
       "from": "WKZ",
       "to": "UMC",
       "distance": 0.6,
-      "averageTime": 78
+      "averageTime": 78,
+      "index": 2
     },
     {
       "from": "UMC",
       "to": "WKZ",
       "distance": 0.6,
-      "averageTime": 78
+      "averageTime": 78,
+      "index": 15
     },
     {
       "from": "UMC",
       "to": "Heidelberglaan",
       "distance": 0.4,
-      "averageTime": 78
+      "averageTime": 78,
+      "index": 3
     },
     {
       "from": "Heidelberglaan",
       "to": "UMC",
       "distance": 0.4,
-      "averageTime": 86
+      "averageTime": 86,
+      "index": 14
     },
     {
       "from": "Heidelberglaan",
       "to": "Padualaan",
       "distance": 0.4,
-      "averageTime": 60
+      "averageTime": 60,
+      "index": 4
     },
     {
       "from": "Padualaan",
       "to": "Heidelberglaan",
       "distance": 0.4,
-      "averageTime": 60
+      "averageTime": 60,
+      "index": 13
     },
     {
       "from": "Padualaan",
       "to": "Kromme Rijn",
       "distance": 0.8,
-      "averageTime": 100
+      "averageTime": 100,
+      "index": 5
     },
     {
       "from": "Kromme Rijn",
       "to": "Padualaan",
       "distance": 0.8,
-      "averageTime": 101
+      "averageTime": 101,
+      "index": 12
     },
     {
       "from": "Kromme Rijn",
       "to": "Galgenwaard",
       "distance": 0.6,
-      "averageTime": 59
+      "averageTime": 59,
+      "index": 6
     },
     {
       "from": "Galgenwaard",
       "to": "Kromme Rijn",
       "distance": 0.6,
-      "averageTime": 59
+      "averageTime": 59,
+      "index": 11
     },
     {
       "from": "Galgenwaard",
       "to": "Vaartsche Rijn",
       "distance": 3.1,
-      "averageTime": 243
+      "averageTime": 243,
+      "index": 7
     },
     {
       "from": "Vaartsche Rijn",
       "to": "Galgenwaard",
       "distance": 3.1,
-      "averageTime": 243
+      "averageTime": 243,
+      "index": 10
     },
     {
       "from": "Vaartsche Rijn",
       "to": "Centraal Station",
       "distance": 1.4,
-      "averageTime": 135
+      "averageTime": 135,
+      "index": 8
     },
     {
       "from": "Centraal Station",
       "to": "Vaartsche Rijn",
       "distance": 1.4,
-      "averageTime": 134
+      "averageTime": 134,
+      "index": 9
     }
   ]
 }

@@ -20,7 +20,7 @@ namespace ADS_Simulation
         public Simulation()
         {
             List<Tram> trams = CreateTrams(Config.c.frequency);
-            List<Station> stations = new List<Station>(); // TODO
+            List<Station> stations = CreateStations();
             state = new State(0, trams, stations);
             eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
             statistics = new List<Statistic>()
@@ -36,7 +36,7 @@ namespace ADS_Simulation
         /// </summary>
         /// <param name="frequency">Number of trains per hour</param>
         /// <returns>List of trams</returns>
-        public List<Tram> CreateTrams(int frequency)
+        private List<Tram> CreateTrams(int frequency)
         {
             // Interval at which trains leave the station
             float interval = 3600 / frequency;
@@ -50,6 +50,34 @@ namespace ADS_Simulation
             for (int i = 1; i <= numberOfTrains; i++)
                 trams.Add(new Tram(6000 + i));
             return trams;
+        }
+
+        /// <summary>
+        /// Create the list of stations (P+R to UC and back) with direction A for P+R to UC
+        /// </summary>
+        /// <returns>The list of stations</returns>
+        private List<Station> CreateStations()
+        {
+            // Sort stations on index
+            Config.c.transferTimes.Sort((a, b) => a.index.CompareTo(b.index));
+
+            var stations = new List<Station>();
+
+            // Start in direction A
+            var direction = Direction.A;
+            foreach (StationData stationData in Config.c.transferTimes)
+            {
+                bool isEndStation = stationData.from == Config.c.startStation
+                    || stationData.from == Config.c.endStation;
+
+                stations.Add(new Station(stationData.from, isEndStation ? Direction.END : direction));
+
+                // Change direction at endstation
+                if (stationData.from == Config.c.endStation)
+                    direction = Direction.B;
+            }
+
+            return stations;
         }
 
         /// <summary>
