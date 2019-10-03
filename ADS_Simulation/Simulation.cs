@@ -19,16 +19,30 @@ namespace ADS_Simulation
 
         public Simulation()
         {
+            List<Tram> trams = CreateTrams(Config.c.frequency);
+            List<Station> stations = CreateStations();
             List<Tram> trams = CreateTrams();
             List<Station> stations = CreateStations();
             state = new State(0, trams, stations);
-            eventQueue = new StablePriorityQueue<Event>(MAX_EVENTS);
+            eventQueue = InitializeEventQueue();
             statistics = new List<Statistic>()
             {
-                new PassengerWaitStatistic(),
-                new TramLoadStatistic(),
-                new EmptyStationStatistic()
+                //new PassengerWaitStatistic(),
+                //new TramLoadStatistic(),
+                //new EmptyStationStatistic()
             };
+        }
+
+        private StablePriorityQueue<Event> InitializeEventQueue()
+        {
+            var queue = new StablePriorityQueue<Event>(MAX_EVENTS);
+            int interval = 60 / Config.c.frequency;
+
+            // Make an arrival event for every tram
+            for (int i = 0; i < state.trams.Count; i++)
+                queue.Enqueue(new TramArrival(state.trams[i], 0), i * interval);
+
+            return queue;
         }
 
         /// <summary>
@@ -73,14 +87,13 @@ namespace ADS_Simulation
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
             // Advance clock (mss deel maken van de event.Execute?)
-            state.simulationClock = _event.time;
+            state.time = (int)_event.Priority;
             _event.Execute(state, eventQueue);
 
             // Measure statistics
             foreach (var statistic in statistics)
                 statistic.measure(state);
 
-            // Return if should be stopped
             return StoppingConditionMet();
         }
 
@@ -90,7 +103,7 @@ namespace ADS_Simulation
         private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                || state.simulationClock >= Config.c.endTime;
+                || state.time >= Config.c.endTime;
         }
     }
 }

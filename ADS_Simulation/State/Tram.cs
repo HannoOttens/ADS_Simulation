@@ -8,7 +8,6 @@ namespace ADS_Simulation.NS_State
     {
         int id;
         int passengerCount;
-        Direction direction;
 
         public Tram(int id) {
             this.id = id;

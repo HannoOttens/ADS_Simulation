@@ -1,6 +1,7 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using System;
+using System.Threading;
 
 namespace ADS_Simulation
 {
@@ -17,7 +18,9 @@ namespace ADS_Simulation
 
             // Initialize simulation
             Simulation simulation = new Simulation();
-            while(simulation.Step()) {}
+            while(simulation.Step()) {
+                Thread.Sleep(100);
+            }
         }
 
         #region Console argument parsing

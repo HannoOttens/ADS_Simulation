@@ -8,8 +8,6 @@ namespace ADS_Simulation.Events
 {
     abstract class Event : StablePriorityQueueNode
     {
-        public int time;
-
         /// <summary>
         /// Execute the event and add new events to the queue
         /// </summary>

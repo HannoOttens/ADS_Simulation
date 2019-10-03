@@ -33,7 +33,8 @@ namespace ADS_Simulation.Configuration
         public bool ucDualDriverSwitch;
         public string[] stations;
 
-        //TODO:Mss hier een Dictionary<(from,to),StationData> van maken?
+        public string startStation;
+        public string endStation;
         public List<StationData> transferTimes;
     }
 
@@ -43,5 +44,6 @@ namespace ADS_Simulation.Configuration
         public string to;
         public float distance;
         public int averageTime;
+        public int index;
     }
 }
