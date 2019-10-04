@@ -22,12 +22,11 @@ namespace ADS_Simulation.NS_State
 
     public class Station
     {
-        private Queue<Tram> incomingTrams;
+        public Queue<Tram> incomingTrams;
         public string name;
         public Direction direction;
         Tram? occupant;
 
-        // TODO split queue depending on direction
         public Queue<int> waitingPassengers; // Passengers waiting for trip to Central Station
         public Station(string name, Direction direction)
         {
@@ -75,7 +74,7 @@ namespace ADS_Simulation.NS_State
             }
         }
 
-        public bool IsFree()
+        public virtual bool IsFree(int platform = 1)
         {
             return occupant == null;
         }
@@ -84,9 +83,28 @@ namespace ADS_Simulation.NS_State
         /// Free the station
         /// </summary>
         /// <returns>True when station has no more trains in queue</returns>
-        public void Free()
+        public virtual void Free(int platform = 1)
         {
             occupant = null;
+        }
+
+        public int DequePassengers(int currentTime, int capacity)
+        {
+            int i = 0;
+            while (waitingPassengers.Count > 0 && i <= capacity)
+            {
+                int arrivalTime = waitingPassengers.Dequeue();
+                int waitingTime = currentTime - arrivalTime;
+                //TODO pass waiting time to statistics
+                i++;
+            }
+            return i;
+        }
+
+        public int ExitingPassengers(int currentTime)
+        {
+            throw new NotImplementedException();
+            //TODO determine amount of passangers that will exit the tram
         }
     }
 }

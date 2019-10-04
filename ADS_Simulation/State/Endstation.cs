@@ -10,6 +10,7 @@ namespace ADS_Simulation.NS_State
         public Switch Switch;
         public Queue<Tram> departingTrams;
 
+        // tram at platform 2
         Tram? occupant2;
 
         public Endstation(string name, Direction direction) : base(name, direction)
@@ -29,6 +30,14 @@ namespace ADS_Simulation.NS_State
         public int NextDeparture(int currentTime)
         {
             throw new NotImplementedException();
+        }
+
+        public override void Free(int platform = 1)
+        {
+            if (platform == 1)
+                base.Free(platform);
+            else
+                occupant2 = null;
         }
     }
 }
