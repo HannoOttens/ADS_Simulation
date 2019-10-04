@@ -81,10 +81,11 @@ namespace ADS_Simulation
                 bool isEndStation = stationData.from == Config.c.startStation
                     || stationData.from == Config.c.endStation;
 
-                if (isEndStation && direction == Direction.A)
-                    stations.Add(new Endstation(stationData.from, true));
-                else if (isEndStation)
-                    stations.Add(new Endstation(stationData.from, false));
+                if (isEndStation)
+                {
+                    bool hasDepot = direction == Direction.A;
+                    stations.Add(new Endstation(stationData.from, hasDepot));
+                }
                 else
                     stations.Add(new Station(stationData.from, direction));
 

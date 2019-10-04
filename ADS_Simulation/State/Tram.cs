@@ -1,6 +1,7 @@
 ﻿using ADS_Simulation.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ADS_Simulation.NS_State
@@ -9,6 +10,7 @@ namespace ADS_Simulation.NS_State
     {
         public int id;
         public int passengerCount;
+        private bool readyForDeparture;
 
         public Tram(int id) {
             this.id = id;
@@ -24,6 +26,11 @@ namespace ADS_Simulation.NS_State
             return Config.c.tramCapacity - passengerCount;
         }
 
+        internal bool IsReadyForDeparture()
+        {
+            return readyForDeparture;
+        }
+
         /// <summary>
         /// Empty the tram
         /// </summary>
@@ -33,6 +40,24 @@ namespace ADS_Simulation.NS_State
             int t = passengerCount;
             passengerCount = 0;
             return t;
+        }
+
+        /// <summary>
+        /// Mark a tram as ready to depart
+        /// </summary>
+        public void ReadyForDeparture()
+        {
+            Debug.Assert(!readyForDeparture, $"Tried to mark tram {id} as 'ready for departure', but tram was already marked ready.");
+            readyForDeparture = true;
+        }
+
+        /// <summary>
+        /// Reset the ready for departure flag
+        /// </summary>
+        public void ResetReadyForDeparture()
+        {
+            Debug.Assert(readyForDeparture, $"Tried to mark tram {id} as 'unready for departure', but tram wasn't marked ready.");
+            readyForDeparture = false;
         }
 
         /// <summary>

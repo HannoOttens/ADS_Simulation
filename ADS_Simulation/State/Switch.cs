@@ -41,6 +41,14 @@ namespace ADS_Simulation.NS_State
             };
         }
 
+        public SwitchLane ExitLaneFor(Platform platform)
+         => platform switch
+         {
+             Platform.A => SwitchLane.Cross,
+             Platform.B => SwitchLane.DepartureLane,
+             _ => throw new Exception("Unknown platform")
+         };
+
         public bool SwitchLaneFree(SwitchLane lane)
         {
             return lane switch

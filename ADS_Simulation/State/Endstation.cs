@@ -22,7 +22,6 @@ namespace ADS_Simulation.NS_State
     class Endstation : Station
     {
         public Switch Switch;
-        public Queue<Tram> departingTrams;
         private bool hasDepot;
         private TimeTable timeTable;
 
@@ -32,9 +31,7 @@ namespace ADS_Simulation.NS_State
         public Endstation(string name, bool hasDepot) : base(name, Direction.END)
         {
             this.hasDepot = hasDepot;
-
             Switch = new Switch();
-            departingTrams = new Queue<Tram>();
             
             //TODO: Juiste start-offset
             timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());

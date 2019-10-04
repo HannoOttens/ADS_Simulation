@@ -37,7 +37,7 @@ namespace ADS_Simulation.Events
                 int nextEventTime = Math.Max(passengerTransferTime, nextDepartureTime);
 
                 // Queue event
-                Event e = new ExpectedDepartureStartstation(tram, station, platform);
+                Event e = new ExpectedDepartureStartstation(tram, station, platform, nextDepartureTime);
                 eventQueue.Enqueue(e, nextEventTime);
             }
             // Transfer tram to depot

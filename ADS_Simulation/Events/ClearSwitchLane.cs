@@ -22,17 +22,16 @@ namespace ADS_Simulation.Events
             station.Switch.FreeSwitch(lane);
 
             // Check if tram is in queue at switch, give priority to departing trams
-            if (station.departingTrams.TryDequeue(out Tram? departingTram))
-            {
-                Event e = new ExpectedDepartureStartstation(departingTram, station);
-                eventQueue.Enqueue(e, state.time);
-            }
 
-            if (station.incomingTrams.TryDequeue(out Tram? arrivingTram))
+            // FIXME: Find the first occupant ready for departure
+            if (false)
+            {
+                //Event e = new DepartureStartstation(departingTram, station);
+                //eventQueue.Enqueue(e, state.time);
+            }
+            else if (station.incomingTrams.TryDequeue(out Tram? arrivingTram))
             {
                 Platform platform = station.BestFreePlatform();
-
-
                 Event e = new ArrivalEndstation(arrivingTram, station, platform);
                 eventQueue.Enqueue(e, state.time + Sampling.switchClearanceTime());
             }
