@@ -20,13 +20,12 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             var station = state.stations[stationIndex];
+
+            // Occupy station with the tram
             station.Occupy(tram);
 
-            // First empty the tram
-            int pOut = tram.EmptyPassengers();
-
-            // Then board the passengers
-            int pIn = station.BoardPassengers(tram);
+            // Board and unboard passengers
+            (int pOut, int pIn) = station.UnboardAndBoard(tram);
 
             // Queue the expected tram departure
             eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), state.time + Sampling.passengerExchangeTime(pOut,pIn));

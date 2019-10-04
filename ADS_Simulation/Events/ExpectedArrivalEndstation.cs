@@ -24,7 +24,7 @@ namespace ADS_Simulation.Events
             if(bestPlatform > 0)
             {
                 station.Occupy(tram, bestPlatform);
-                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), Configuration.Config.c.switchClearanceTime);
+                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), Sampling.switchClearanceTime());
             }
             else
                 station.incomingTrams.Enqueue(tram);

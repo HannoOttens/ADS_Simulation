@@ -28,17 +28,21 @@ namespace ADS_Simulation.Events
             // Check if tram can do another round trip if it is at endstaion with depot
             if (!station.TramToDepot(state.time))
             {
-                // TODO take into account the dwell time of passengers
-                // TODO dequeu passengers
-                int nextDeparture = station.NextDeparture();
-                Event e = new ExpectedDepartureStartstation();
-                eventQueue.Enqueue(e, nextDeparture);
+                // Board and unboard
+                (int pOut, int pIn) = station.UnboardAndBoard(tram);
+
+                // Calculate when to schedule departure
+                int passengerTransferTime = state.time + Sampling.passengerExchangeTime(pOut, pIn);
+                int nextDepartureTime = station.NextDeparture();
+                int nextEventTime = Math.Max(passengerTransferTime, nextDepartureTime);
+
+                // Queue event
+                Event e = new ExpectedDepartureStartstation(tram, station, platform);
+                eventQueue.Enqueue(e, nextEventTime);
             }
+            // Transfer tram to depot
             else
-            {
-                // Transfer tram to depot
                 station.Free(platform);
-            }
         }
     }
 }

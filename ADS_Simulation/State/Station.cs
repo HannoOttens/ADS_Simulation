@@ -122,5 +122,22 @@ namespace ADS_Simulation.NS_State
         {
             return waitingPassengers.Count > 0;
         }
+
+        /// <summary>
+        /// First unboard, then board passengers
+        /// </summary>
+        /// <param name="tram"></param>
+        /// <returns></returns>
+        public (int pOut, int pIn) UnboardAndBoard(Tram tram)
+        {
+            // First empty the tram
+            int pOut = tram.EmptyPassengers(); //TODO: Don;t empty, but stochastic number
+
+            // Then board the passengers
+            int pIn = BoardPassengers(tram);
+
+            return (pOut, pIn);
+        }
+
     }
 }
