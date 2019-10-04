@@ -25,12 +25,13 @@ namespace ADS_Simulation.Configuration
         public int oneWayTripTimeMinutes;
         public int turnAroundTimeMinutes;
         public int frequency;
-        public int tramCapcity;
+        public int tramCapacity;
         public int stationClearanceTime;
         public int switchClearanceTime;
         public int startTime;
         public int endTime;
         public bool ucDualDriverSwitch;
+        public string[] stations;
 
         public string startStation;
         public string endStation;

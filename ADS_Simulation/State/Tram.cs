@@ -6,12 +6,19 @@ namespace ADS_Simulation.NS_State
 {
     public class Tram
     {
-        public int id;
-        public int passengerCount;
+        int id;
+        int passengerCount;
 
         public Tram(int id) {
             this.id = id;
             passengerCount = 0;
+            direction = Direction.WestBound;
         }
+    }
+
+    public enum Direction
+    {
+        WestBound, // Towards Central Station
+        EastBound // Towards P+R
     }
 }
