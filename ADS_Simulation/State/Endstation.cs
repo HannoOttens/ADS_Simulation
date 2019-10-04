@@ -6,10 +6,29 @@ namespace ADS_Simulation.NS_State
 {
     class Endstation : Station
     {
-        Switch _switch;
-        public Endstation(string name) : base(name, Direction.END)
+        private bool hasDepot;
+        public Switch Switch;
+        public Queue<Tram> departingTrams;
+
+        Tram? occupant2;
+
+        public Endstation(string name, Direction direction) : base(name, direction)
         {
-            _switch = new Switch();
+            Switch = new Switch();
+            departingTrams = new Queue<Tram>();
+        }
+
+        public bool TramToDepot(int currentTime)
+        {
+            // Trip time is one-way driving time times two plus the turn-around time
+            int roundTripTime = Configuration.Config.c.oneWayTripTimeMinutes * 60 * 2 
+                + Configuration.Config.c.turnAroundTimeMinutes * 60;
+            return hasDepot && Configuration.Config.c.endTime - currentTime >= roundTripTime;
+        }
+
+        public int NextDeparture(int currentTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }
