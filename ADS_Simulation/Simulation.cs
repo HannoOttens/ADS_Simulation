@@ -14,7 +14,7 @@ namespace ADS_Simulation
         private const int MAX_EVENTS = 10000; // NOG GEEN IDEE OF DIT PAST
 
         State state;
-        StablePriorityQueue<Event> eventQueue;
+        FastPriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
 
         public Simulation()
@@ -31,14 +31,14 @@ namespace ADS_Simulation
             };
         }
 
-        private StablePriorityQueue<Event> InitializeEventQueue()
+        private FastPriorityQueue<Event> InitializeEventQueue()
         {
-            var queue = new StablePriorityQueue<Event>(MAX_EVENTS);
+            var queue = new FastPriorityQueue<Event>(MAX_EVENTS);
             int interval = 60 / Config.c.frequency;
 
             // Make an arrival event for every tram
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new TramArrival(state.trams[i], 0), i * interval);
+                queue.Enqueue(new ExpectedTramArrival(state.trams[i], 0), i * interval * 60);
 
             return queue;
         }
@@ -99,14 +99,13 @@ namespace ADS_Simulation
         /// <summary>
         /// Make one step in the simulation
         /// </summary>
-        /// <returns>If simulation has ended</returns>
+        /// <returns>False when simulation has ended</returns>
         public bool Step()
         {
-            if (eventQueue.Count == 0) return true;
-
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
-            // Advance clock (mss deel maken van de event.Execute?)
+
+            // Advance clock and execute
             state.time = (int)_event.Priority;
             _event.Execute(state, eventQueue);
 
@@ -114,7 +113,7 @@ namespace ADS_Simulation
             foreach (var statistic in statistics)
                 statistic.measure(state);
 
-            return StoppingConditionMet();
+            return !StoppingConditionMet();
         }
 
         /// <summary>
@@ -123,7 +122,7 @@ namespace ADS_Simulation
         private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                || state.time >= Config.c.endTime;
+                && state.time >= Config.c.endTime;
         }
     }
 }

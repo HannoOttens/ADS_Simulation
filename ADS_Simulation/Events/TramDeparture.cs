@@ -17,7 +17,7 @@ namespace ADS_Simulation.Events
             this.stationIndex = stationIndex;
         }
 
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             var station = state.stations[stationIndex];
             station.Free();
@@ -26,11 +26,8 @@ namespace ADS_Simulation.Events
             if (station.HasQueue())
             {
                 Tram newOccupant = station.OccupyFromQueue();
-                Console.WriteLine($"{newOccupant.id} arrived at {station.name}");
-                eventQueue.Enqueue(new TramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0,0));
+                eventQueue.Enqueue(new ExpectedTramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0,0));
             }
-
-            Console.WriteLine($"Tram {tram.id} departed from {station.name}");
 
             // Let current train arrive at next station
             int newStationIndex = stationIndex + 1 >= state.stations.Count ? 0 : stationIndex + 1;

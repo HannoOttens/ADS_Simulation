@@ -8,16 +8,7 @@ namespace ADS_Simulation.Events
 {
     class ClearSwitchLane : Event
     {
-        Endstation station;
-        SwitchLane lane;
-
-        public ClearSwitchLane(Endstation station, SwitchLane lane)
-        {
-            this.station = station;
-            this.lane = lane;
-        }
-
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             station.Switch.FreeSwitch(lane);
 

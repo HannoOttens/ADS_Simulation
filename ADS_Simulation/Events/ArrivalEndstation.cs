@@ -8,18 +8,7 @@ namespace ADS_Simulation.Events
 {
     class ArrivalEndstation : Event
     {
-        Tram tram;
-        Endstation station;
-        int platform;
-
-        public ArrivalEndstation(Tram tram, Endstation station, int platform)
-        {
-            this.tram = tram;
-            this.station = station;
-            this.platform = platform;
-        }
-
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Clear switch
             SwitchLane lane = platform == 1 ? SwitchLane.Cross : SwitchLane.ArrivalLane;

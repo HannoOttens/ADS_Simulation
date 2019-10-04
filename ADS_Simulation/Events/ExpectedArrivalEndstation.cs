@@ -8,15 +8,7 @@ namespace ADS_Simulation.Events
 {
     class ExpectedArrivalEndstation : Event
     {
-        Tram tram;
-        Endstation station;
-
-        public ExpectedArrivalEndstation(Tram tram, Endstation station)
-        {
-            this.tram = tram;
-            this.station = station;
-        }
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Check if there is a free platform available and if switch lane is free
             // Cross is used for platform 1
