@@ -52,11 +52,20 @@ namespace ADS_Simulation.NS_State
             else return -1;
         }
 
+        /// <summary>
+        /// Get the time of next departure
+        /// </summary>
+        /// <returns></returns>
         public int NextDeparture()
         {
             return timeTable.Next();
         }
 
+        /// <summary>
+        /// Occupy a platform of the station
+        /// </summary>
+        /// <param name="tram">The new occupant</param>
+        /// <param name="platform">The target platform</param>
         internal void Occupy(Tram tram, int platform)
         {
             if (platform == 1)
@@ -78,11 +87,22 @@ namespace ADS_Simulation.NS_State
         public void Free(int platform)
         {
             if (platform == 1)
-                Free(platform);
+            {
+                if (occupant == null) throw new Exception($"Tried to free platform {platform} on {name}, but platform was free already.");
+                occupant = null;
+            }
             else
+            {
+                if (occupant2 == null) throw new Exception($"Tried to free platform {platform} on {name}, but platform was free already.");
                 occupant2 = null;
+            }
         }
 
+        /// <summary>
+        /// Check if platform is free
+        /// </summary>
+        /// <param name="platform">The target platform</param>
+        /// <returns>If the platform</returns>
         public bool IsFree(int platform)
         {
             if (platform == 1)
