@@ -21,11 +21,11 @@ namespace ADS_Simulation.Events
         {
             // Check if there is a free platform available and if switch lane is free
             // Cross is used for platform 1
-            int goToPlatform = station.BestFreePlatform();
-            if(goToPlatform > 0)
+            int bestPlatform = station.BestFreePlatform();
+            if(bestPlatform > 0)
             {
-                station.Occupy(tram, goToPlatform);
-                eventQueue.Enqueue(new ArrivalEndstation(tram, station, goToPlatform), Configuration.Config.c.switchClearanceTime);
+                station.Occupy(tram, bestPlatform);
+                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), Configuration.Config.c.switchClearanceTime);
             }
             else
                 station.incomingTrams.Enqueue(tram);

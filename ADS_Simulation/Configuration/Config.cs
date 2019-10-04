@@ -32,10 +32,14 @@ namespace ADS_Simulation.Configuration
         public int endTime;
         public bool ucDualDriverSwitch;
         public string[] stations;
-
         public string startStation;
         public string endStation;
         public List<StationData> transferTimes;
+
+        internal int GetIntervalSeconds()
+        {
+            return 3600 / frequency;
+        }
     }
 
     public class StationData

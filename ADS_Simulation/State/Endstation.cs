@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADS_Simulation.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,7 @@ namespace ADS_Simulation.NS_State
         public Switch Switch;
         public Queue<Tram> departingTrams;
         private bool hasDepot;
+        private TimeTable timeTable;
 
         // tram at platform 2
         public Tram? occupant2;
@@ -16,8 +18,12 @@ namespace ADS_Simulation.NS_State
         public Endstation(string name, bool hasDepot) : base(name, Direction.END)
         {
             this.hasDepot = hasDepot;
+
             Switch = new Switch();
             departingTrams = new Queue<Tram>();
+            
+            //TODO: Juiste start-offset
+            timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
         }
 
         public bool TramToDepot(int currentTime)
@@ -41,9 +47,9 @@ namespace ADS_Simulation.NS_State
             else return -1;
         }
 
-        public int NextDeparture(int currentTime)
+        public int NextDeparture()
         {
-            throw new NotImplementedException();
+            return timeTable.Next();
         }
 
         internal void Occupy(Tram tram, int platform)

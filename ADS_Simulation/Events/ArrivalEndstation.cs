@@ -30,7 +30,7 @@ namespace ADS_Simulation.Events
             {
                 // TODO take into account the dwell time of passengers
                 // TODO dequeu passengers
-                int nextDeparture = station.NextDeparture(state.time);
+                int nextDeparture = station.NextDeparture();
                 Event e = new ExpectedDepartureStartstation();
                 eventQueue.Enqueue(e, nextDeparture);
             }
