@@ -97,11 +97,9 @@ namespace ADS_Simulation
         /// <summary>
         /// Make one step in the simulation
         /// </summary>
-        /// <returns>True when simulation has ended</returns>
+        /// <returns>False when simulation has ended</returns>
         public bool Step()
         {
-            if (eventQueue.Count == 0) return true; // Dit weghalen als t kan
-
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
             // Advance clock (mss deel maken van de event.Execute?)
@@ -112,7 +110,7 @@ namespace ADS_Simulation
             foreach (var statistic in statistics)
                 statistic.measure(state);
 
-            return StoppingConditionMet();
+            return !StoppingConditionMet();
         }
 
         /// <summary>

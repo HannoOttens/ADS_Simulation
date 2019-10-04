@@ -18,7 +18,7 @@ namespace ADS_Simulation
 
             // Initialize simulation
             Simulation simulation = new Simulation();
-            while(!simulation.Step()) {
+            while(simulation.Step()) {
                 // Graphical representation or addition between-step fuctionality
             }
         }
