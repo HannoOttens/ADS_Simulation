@@ -59,9 +59,9 @@ namespace ADS_Simulation.NS_State
         /// <returns>1 or 2 for platform, -1 if unable to enter</returns>
         public Platform BestFreePlatform()
         {
-            if (IsFree(1) && Switch.SwitchLaneFree(SwitchLane.Cross))
+            if (IsFree(Platform.A) && Switch.SwitchLaneFree(SwitchLane.Cross))
                 return Platform.A;
-            else if (IsFree(2) && Switch.SwitchLaneFree(SwitchLane.ArrivalLane))
+            else if (IsFree(Platform.B) && Switch.SwitchLaneFree(SwitchLane.ArrivalLane))
                 return Platform.B;
             else return Platform.None;
         }
@@ -84,12 +84,12 @@ namespace ADS_Simulation.NS_State
         {
             if (platform == Platform.A)
             {
-                Debug.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant.id}");
+                Debug.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant?.id}");
                 occupant = tram;
             }
             else if (platform == Platform.B)
             {
-                Debug.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2.id}");
+                Debug.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2?.id}");
                 occupant2 = tram;
             }
             else throw new Exception($"Unknown platform {platform}.");
@@ -118,11 +118,12 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         /// <param name="platform">The target platform</param>
         /// <returns>If the platform</returns>
-        public bool IsFree(int platform)
+        public bool IsFree(Platform platform)
         {
-            if (platform == 1)
-                return IsFree();
-            else return occupant2 == null;
+            if (platform == Platform.A)
+                return occupant == null;
+            else 
+                return occupant2 == null;
         }
     }
 }
