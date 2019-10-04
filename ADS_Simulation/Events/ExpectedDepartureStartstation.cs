@@ -21,7 +21,7 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
-            throw new NotImplementedException();
+            eventQueue.Enqueue(new DepartureStartstation(), state.time);
         }
     }
 }

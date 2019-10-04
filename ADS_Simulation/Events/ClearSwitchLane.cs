@@ -24,14 +24,17 @@ namespace ADS_Simulation.Events
             // Check if tram is in queue at switch, give priority to departing trams
             if (station.departingTrams.TryDequeue(out Tram? departingTram))
             {
-                Event e = new ExpectedDepartureStartstation();
-                eventQueue.Enqueue(e, 0);
+                Event e = new ExpectedDepartureStartstation(departingTram, station);
+                eventQueue.Enqueue(e, state.time);
             }
 
             if (station.incomingTrams.TryDequeue(out Tram? arrivingTram))
             {
-                Event e = new ExpectedArrivalEndstation(arrivingTram, station);
-                eventQueue.Enqueue(e, 0);
+                Platform platform = station.BestFreePlatform();
+
+
+                Event e = new ArrivalEndstation(arrivingTram, station, platform);
+                eventQueue.Enqueue(e, state.time + Sampling.switchClearanceTime());
             }
         }
     }

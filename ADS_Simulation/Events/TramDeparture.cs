@@ -21,24 +21,22 @@ namespace ADS_Simulation.Events
         {
             var station = state.stations[stationIndex];
             station.Free();
-            
+
             // Enqueue current train
             if (station.HasQueue())
             {
                 Tram newOccupant = station.OccupyFromQueue();
-                eventQueue.Enqueue(new ExpectedTramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0,0));
+                eventQueue.Enqueue(new ExpectedTramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0, 0));
             }
 
-            // Let current train arrive at next station
-            int newStationIndex = stationIndex + 1 >= state.stations.Count ? 0 : stationIndex + 1;
-
-            //TODO:REMOVE
-            if (newStationIndex == 0)
+            //TODO: REMOVE THIS IF
+            if (stationIndex == state.stations.Count - 1)
             {
                 Console.WriteLine(tram.id);
                 return;
             }
-            eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100));
+
+            eventQueue.Enqueue(new ExpectedTramArrival(tram, stationIndex + 1), state.time + Sampling.drivingTime(100));
         }
     }
 }
