@@ -1,10 +1,24 @@
 ﻿using ADS_Simulation.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ADS_Simulation.NS_State
 {
+    enum Platform
+    {
+        /// <summary>
+        /// Platform connected to the departure track
+        /// </summary>
+        A,
+        /// <summary>
+        /// Platform connected to the arrival track
+        /// </summary>
+        B,
+        None
+    }
+
     class Endstation : Station
     {
         public Switch Switch;
@@ -43,19 +57,19 @@ namespace ADS_Simulation.NS_State
         /// Returns the best platform to enter on
         /// </summary>
         /// <returns>1 or 2 for platform, -1 if unable to enter</returns>
-        public int BestFreePlatform()
+        public Platform BestFreePlatform()
         {
             if (IsFree(1) && Switch.SwitchLaneFree(SwitchLane.Cross))
-                return 1;
+                return Platform.A;
             else if (IsFree(2) && Switch.SwitchLaneFree(SwitchLane.ArrivalLane))
-                return 2;
-            else return -1;
+                return Platform.B;
+            else return Platform.None;
         }
 
         /// <summary>
         /// Get the time of next departure
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The time of next departure</returns>
         public int NextDeparture()
         {
             return timeTable.Next();
@@ -66,34 +80,35 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         /// <param name="tram">The new occupant</param>
         /// <param name="platform">The target platform</param>
-        internal void Occupy(Tram tram, int platform)
+        internal void Occupy(Tram tram, Platform platform)
         {
-            if (platform == 1)
+            if (platform == Platform.A)
             {
-                if (occupant != null) throw new Exception($"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant.id}");
+                Debug.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant.id}");
                 occupant = tram;
             }
-            else
+            else if (platform == Platform.B)
             {
-                if (occupant2 != null) throw new Exception($"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2.id}");
+                Debug.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2.id}");
                 occupant2 = tram;
             }
+            else throw new Exception($"Unknown platform {platform}.");
         }
 
         /// <summary>
         /// Free an endstation platform
         /// </summary>
         /// <param name="platform"></param>
-        public void Free(int platform)
+        public void Free(Platform platform)
         {
-            if (platform == 1)
+            if (platform == Platform.A)
             {
-                if (occupant == null) throw new Exception($"Tried to free platform {platform} on {name}, but platform was free already.");
+                Debug.Assert(occupant != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
                 occupant = null;
             }
             else
             {
-                if (occupant2 == null) throw new Exception($"Tried to free platform {platform} on {name}, but platform was free already.");
+                Debug.Assert(occupant2 != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
                 occupant2 = null;
             }
         }

@@ -20,8 +20,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Check if there is a free platform available and if switch lane is free
-            // Cross is used for platform 1
-            int bestPlatform = station.BestFreePlatform();
+            Platform bestPlatform = station.BestFreePlatform();
             if(bestPlatform > 0)
             {
                 station.Occupy(tram, bestPlatform);

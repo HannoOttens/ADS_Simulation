@@ -10,9 +10,9 @@ namespace ADS_Simulation.Events
     {
         Tram tram;
         Endstation station;
-        int platform;
+        Platform platform;
 
-        public ArrivalEndstation(Tram tram, Endstation station, int platform)
+        public ArrivalEndstation(Tram tram, Endstation station, Platform platform)
         {
             this.tram = tram;
             this.station = station;
@@ -22,7 +22,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Clear switch
-            SwitchLane lane = platform == 1 ? SwitchLane.Cross : SwitchLane.ArrivalLane;
+            SwitchLane lane = platform == Platform.A ? SwitchLane.Cross : SwitchLane.ArrivalLane;
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), 0);
 
             // Check if tram can do another round trip if it is at endstaion with depot
