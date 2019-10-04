@@ -6,9 +6,9 @@ namespace ADS_Simulation.NS_State
 {
     class Endstation : Station
     {
-        private bool hasDepot;
         public Switch Switch;
         public Queue<Tram> departingTrams;
+        private bool hasDepot;
 
         // tram at platform 2
         public Tram? occupant2;
@@ -33,15 +33,19 @@ namespace ADS_Simulation.NS_State
             throw new NotImplementedException();
         }
 
-        public override void Free(int platform = 1)
+        /// <summary>
+        /// Free an endstation platform
+        /// </summary>
+        /// <param name="platform"></param>
+        public void Free(int platform)
         {
             if (platform == 1)
-                base.Free(platform);
+                Free(platform);
             else
                 occupant2 = null;
         }
 
-        public bool IsFree(int platform = 1)
+        public bool IsFree(int platform)
         {
             if (platform == 1)
                 return IsFree();

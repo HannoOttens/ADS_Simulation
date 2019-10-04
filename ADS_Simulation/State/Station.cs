@@ -92,7 +92,7 @@ namespace ADS_Simulation.NS_State
         /// Free the station
         /// </summary>
         /// <returns>True when station has no more trains in queue</returns>
-        public virtual void Free(int platform = 1)
+        public void Free()
         {
             occupant = null;
         }
