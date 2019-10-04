@@ -41,10 +41,10 @@ namespace ADS_Simulation.NS_State
                 occupant2 = null;
         }
 
-        public override bool IsFree(int platform = 1)
+        public bool IsFree(int platform = 1)
         {
             if (platform == 1)
-                return base.IsFree(platform);
+                return IsFree();
             else return occupant2 == null;
         }
     }

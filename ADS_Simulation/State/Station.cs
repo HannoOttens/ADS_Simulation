@@ -27,7 +27,7 @@ namespace ADS_Simulation.NS_State
         public Direction direction;
         public Queue<int> waitingPassengers;
 
-        Tram? occupant;
+        public Tram? occupant;
 
         public Station(string name, Direction direction)
         {
@@ -83,7 +83,7 @@ namespace ADS_Simulation.NS_State
         /// Check if station is free
         /// </summary>
         /// <returns></returns>
-        public virtual bool IsFree(int platform = 1)
+        public bool IsFree()
         {
             return occupant == null;
         }

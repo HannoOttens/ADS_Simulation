@@ -8,6 +8,15 @@ namespace ADS_Simulation.Events
 {
     class ClearSwitchLane : Event
     {
+        Endstation station;
+        SwitchLane lane;
+
+        public ClearSwitchLane(Endstation station, SwitchLane lane)
+        {
+            this.station = station;
+            this.lane = lane;
+        }
+
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             station.Switch.FreeSwitch(lane);
@@ -18,6 +27,7 @@ namespace ADS_Simulation.Events
                 Event e = new ExpectedDepartureStartstation();
                 eventQueue.Enqueue(e, 0);
             }
+
             if (station.incomingTrams.TryDequeue(out Tram arrivingTram))
             {
                 Event e = new ExpectedArrivalEndstation(arrivingTram, station);
