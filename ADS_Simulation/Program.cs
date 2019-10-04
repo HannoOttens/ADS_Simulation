@@ -19,7 +19,7 @@ namespace ADS_Simulation
             // Initialize simulation
             Simulation simulation = new Simulation();
             while(simulation.Step()) {
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
 
