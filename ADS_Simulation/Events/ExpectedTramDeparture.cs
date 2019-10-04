@@ -8,9 +8,19 @@ namespace ADS_Simulation.Events
 {
     class ExpectedTramDeparture : Event
     {
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        private Tram tram;
+        private int stationIndex;
+
+        public ExpectedTramDeparture(Tram tram, int stationIndex)
         {
-            throw new NotImplementedException();
+            this.tram = tram;
+            this.stationIndex = stationIndex;
+        }
+
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
+        {
+
+            eventQueue.Enqueue(new TramDeparture(tram, stationIndex), 0);
         }
     }
 }

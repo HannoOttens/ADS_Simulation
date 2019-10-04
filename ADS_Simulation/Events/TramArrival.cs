@@ -17,12 +17,10 @@ namespace ADS_Simulation.Events
             this.stationIndex = stationIndex;
         }
 
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
-            Console.WriteLine($"{tram.id} arrived at {state.stations[stationIndex].name}");
-            
             state.stations[stationIndex].Occupy(tram);
-            eventQueue.Enqueue(new TramDeparture(tram, stationIndex), state.time + Sampling.passengerExchangeTime(0,0));
+            eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), state.time + Sampling.passengerExchangeTime(0,0));
         }
     }
 }

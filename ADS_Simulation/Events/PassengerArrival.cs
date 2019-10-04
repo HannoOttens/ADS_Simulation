@@ -15,7 +15,7 @@ namespace ADS_Simulation.Events
             _stationIdx = stationIdx;
         }
 
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Add passenger to station
             state.stations[_stationIdx].waitingPassengers.Enqueue(state.time);

@@ -14,7 +14,7 @@ namespace ADS_Simulation
         private const int MAX_EVENTS = 10000; // NOG GEEN IDEE OF DIT PAST
 
         State state;
-        StablePriorityQueue<Event> eventQueue;
+        FastPriorityQueue<Event> eventQueue;
         List<Statistic> statistics;
 
         public Simulation()
@@ -31,14 +31,14 @@ namespace ADS_Simulation
             };
         }
 
-        private StablePriorityQueue<Event> InitializeEventQueue()
+        private FastPriorityQueue<Event> InitializeEventQueue()
         {
-            var queue = new StablePriorityQueue<Event>(MAX_EVENTS);
+            var queue = new FastPriorityQueue<Event>(MAX_EVENTS);
             int interval = 60 / Config.c.frequency;
 
             // Make an arrival event for every tram
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new TramArrival(state.trams[i], 0), i * interval * 60);
+                queue.Enqueue(new ExpectedTramArrival(state.trams[i], 0), i * interval * 60);
 
             return queue;
         }
@@ -102,7 +102,8 @@ namespace ADS_Simulation
         {
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
-            // Advance clock (mss deel maken van de event.Execute?)
+
+            // Advance clock and execute
             state.time = (int)_event.Priority;
             _event.Execute(state, eventQueue);
 

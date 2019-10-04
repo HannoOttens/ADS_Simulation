@@ -8,7 +8,7 @@ namespace ADS_Simulation.Events
 {
     class ExpectedDepartureStartstation : Event
     {
-        public override void Execute(State state, StablePriorityQueue<Event> eventQueue)
+        public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             throw new NotImplementedException();
         }
