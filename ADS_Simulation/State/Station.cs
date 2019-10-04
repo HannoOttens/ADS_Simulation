@@ -65,13 +65,10 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         /// <param name="tram"></param>
         /// <returns>True if tram could arrive at station</returns>
-        public bool Occupy(Tram tram)
+        public void Occupy(Tram tram)
         {
             if (occupant is null)
-            {
                 occupant = tram;
-                return true;
-            }
             else
                 throw new Exception($"{tram.id} tried to occupy {name} in direction {direction}, but the station was full.");
         }

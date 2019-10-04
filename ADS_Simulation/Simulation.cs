@@ -38,7 +38,7 @@ namespace ADS_Simulation
 
             // Make an arrival event for every tram
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new TramArrival(state.trams[i], 0), i * interval);
+                queue.Enqueue(new TramArrival(state.trams[i], 0), i * interval * 60);
 
             return queue;
         }
@@ -97,10 +97,10 @@ namespace ADS_Simulation
         /// <summary>
         /// Make one step in the simulation
         /// </summary>
-        /// <returns>If simulation has ended</returns>
+        /// <returns>True when simulation has ended</returns>
         public bool Step()
         {
-            if (eventQueue.Count == 0) return true;
+            if (eventQueue.Count == 0) return true; // Dit weghalen als t kan
 
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
@@ -121,7 +121,7 @@ namespace ADS_Simulation
         private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                || state.time >= Config.c.endTime;
+                && state.time >= Config.c.endTime;
         }
     }
 }
