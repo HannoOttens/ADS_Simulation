@@ -19,10 +19,8 @@ namespace ADS_Simulation
 
         public Simulation()
         {
-            List<Tram> trams = CreateTrams(Config.c.frequency);
             List<Station> stations = CreateStations();
             List<Tram> trams = CreateTrams();
-            List<Station> stations = CreateStations();
             state = new State(0, trams, stations);
             eventQueue = InitializeEventQueue();
             statistics = new List<Statistic>()
@@ -66,15 +64,33 @@ namespace ADS_Simulation
         }
 
         /// <summary>
-        /// Create stations as declared in config
+        /// Create the list of stations (P+R to UC and back) with direction A for P+R to UC
         /// </summary>
-        /// <returns>List of stations</returns>
-        public List<Station> CreateStations()
+        /// <returns>The list of stations</returns>
+        private List<Station> CreateStations()
         {
-            var stations = new List<Station>{new Endstation(Config.c.stations[0])}; // First element is endstation
-            for (int i = 1; i < Config.c.stations.Length - 1; i++) // All stations except first and last
-                stations.Add(new Station(Config.c.stations[i]));
-            stations.Add(new Endstation(Config.c.stations[Config.c.stations.Length - 1])); // Last element is endstation
+            // Sort stations on index
+            Config.c.transferTimes.Sort((a, b) => a.index.CompareTo(b.index));
+
+            var stations = new List<Station>();
+
+            // Start in direction A
+            var direction = Direction.A;
+            foreach (StationData stationData in Config.c.transferTimes)
+            {
+                bool isEndStation = stationData.from == Config.c.startStation
+                    || stationData.from == Config.c.endStation;
+
+                if (isEndStation)
+                    stations.Add(new Endstation(stationData.from));
+                else
+                    stations.Add(new Station(stationData.from, direction));
+
+                // Change direction at endstation
+                if (stationData.from == Config.c.endStation)
+                    direction = Direction.B;
+            }
+
             return stations;
         }
 

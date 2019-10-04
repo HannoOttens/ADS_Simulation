@@ -24,12 +24,15 @@ namespace ADS_Simulation.NS_State
     {
         private Queue<Tram> incomingTrams;
         public string name;
+        public Direction direction;
+        Tram? occupant;
 
         // TODO split queue depending on direction
         public Queue<int> waitingPassengers; // Passengers waiting for trip to Central Station
-        public Station(string name)
+        public Station(string name, Direction direction)
         {
             this.name = name;
+            this.direction = direction;
             waitingPassengers = new Queue<int>();
             incomingTrams = new Queue<Tram>();
         }

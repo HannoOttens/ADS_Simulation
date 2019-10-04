@@ -36,8 +36,11 @@ namespace ADS_Simulation.Events
             int newStationIndex = stationIndex + 1 >= state.stations.Count ? 0 : stationIndex + 1;
 
             //TODO:REMOVE
-            if (newStationIndex == 0) return;
-
+            if (newStationIndex == 0)
+            {
+                Console.WriteLine(tram.id);
+                return;
+            }
             eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100));
         }
     }
