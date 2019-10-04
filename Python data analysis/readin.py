@@ -1,4 +1,3 @@
-from tabulate import tabulate
 
 class Table:
     def __init__(self, data):
@@ -26,6 +25,37 @@ class Table:
         header_index = self.headers.index(header)
         self.rows.sort(key=sort_on_column(header_index))
         self.columns = columnize(self.headers, self.rows)
+
+    def remove(self, header):
+        header_index = self.headers.index(header)
+        for row in self.rows:
+            del row[header_index]        
+        del self.columns[header]
+        del self.headers[header_index]
+
+    def delete_rows_where(self, header, value):
+        header_index = self.headers.index(header)
+
+        to_delete = []
+        for idx, row in enumerate(self.rows):
+            if row[header_index] == value:
+                to_delete.append(idx)
+        
+        for s, idx in enumerate(to_delete):
+            del self.rows[idx - s]
+
+        self.columns = columnize(self.headers, self.rows)
+
+    def replace(self, rval, newval):
+        for header in self.headers:
+            self.replace_in(header, rval, newval)
+
+    def replace_in(self, header, rval, newval):
+        header_index = self.headers.index(header)
+        for row in self.rows:
+             row[header_index] = row[header_index].replace(rval, newval)
+        self.columns = columnize(self.headers, self.rows)
+
 
 # Sort key for rows
 def sort_on_column(index):
@@ -60,13 +90,3 @@ def read_in(filepath):
 
     return Table(data)
 
-
-# Example
-t = read_in("C:/Users/hanno/Google Drive/Vakken/Y4S1/ADS/ADS Simulation Assignment/Code/Python data analysis/Data/artificial-input-data-passengers-01.csv")
-t.change_type('Direction', int)
-t.change_type('From', float)
-t.change_type('To', float)
-t.change_type('PassIn', float)
-t.change_type('PassOut', float)
-t.sort_on('Stop')
-print(tabulate(t.rows, headers=t.headers))

@@ -84,6 +84,8 @@ namespace ADS_Simulation
         /// <returns>If simulation has ended</returns>
         public bool Step()
         {
+            if (eventQueue.Count == 0) return true;
+
             // Get next event and execute
             Event _event = eventQueue.Dequeue();
             // Advance clock (mss deel maken van de event.Execute?)
