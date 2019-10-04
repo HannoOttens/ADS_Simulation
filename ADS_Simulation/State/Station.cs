@@ -43,8 +43,12 @@ namespace ADS_Simulation.NS_State
         /// <returns>The new occupant</returns>
         internal Tram OccupyFromQueue()
         {
-            occupant = incomingTrams.Dequeue();
-            return occupant;
+            if (occupant is null)
+            {
+                occupant = incomingTrams.Dequeue();
+                return occupant;
+            }
+            else throw new Exception($"Tried to occupy {name} in direction {direction} from the incomingTrams queue, but the station was full.");
         }
 
         /// <summary>
@@ -60,21 +64,28 @@ namespace ADS_Simulation.NS_State
         /// Try enter the station
         /// </summary>
         /// <param name="tram"></param>
-        /// <returns>True if arrived at station, false when placed in queue</returns>
-        public bool TryOccupy(Tram tram)
+        /// <returns>True if tram could arrive at station</returns>
+        public bool Occupy(Tram tram)
         {
-            if(occupant is null)
+            if (occupant is null)
             {
                 occupant = tram;
                 return true;
             }
             else
-            {
-                incomingTrams.Enqueue(tram);
-                return false;
-            }
+                throw new Exception($"{tram.id} tried to occupy {name} in direction {direction}, but the station was full.");
         }
 
+        // Put tram in station queue
+        public void Enqueue(Tram tram)
+        {
+            incomingTrams.Enqueue(tram);
+        }
+
+        /// <summary>
+        /// Check if station is free
+        /// </summary>
+        /// <returns></returns>
         public bool IsFree()
         {
             return occupant == null;
