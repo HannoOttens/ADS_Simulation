@@ -44,7 +44,7 @@ namespace ADS_Simulation
         public static int passengerExchangeTime(int pOut, int pIn)
         {
             //TODO: Implement
-            return 100;
+            return pOut + pIn;
         }
 
         /// <summary>

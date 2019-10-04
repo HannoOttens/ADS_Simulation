@@ -19,8 +19,15 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
+            var station = state.stations[stationIndex];
 
-            eventQueue.Enqueue(new TramDeparture(tram, stationIndex), 0);
+            if (!tram.IsFull() && station.HasPassengers())
+            {
+                int pIn = station.BoardPassengers(tram);
+                eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), Sampling.passengerExchangeTime(0, pIn));
+            }
+            else
+                eventQueue.Enqueue(new TramDeparture(tram, stationIndex), 0);
         }
     }
 }

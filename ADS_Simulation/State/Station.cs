@@ -25,10 +25,10 @@ namespace ADS_Simulation.NS_State
         private Queue<Tram> incomingTrams;
         public string name;
         public Direction direction;
+        public Queue<int> waitingPassengers;
+
         Tram? occupant;
 
-        // TODO split queue depending on direction
-        public Queue<int> waitingPassengers; // Passengers waiting for trip to Central Station
         public Station(string name, Direction direction)
         {
             this.name = name;
@@ -95,6 +95,32 @@ namespace ADS_Simulation.NS_State
         public void Free()
         {
             occupant = null;
+        }
+
+        /// <summary>
+        /// Remove passengers from station
+        /// </summary>
+        /// <param name="maxPassengers">Maximum amount that will still fit in the tram</param>
+        /// <returns>The amount of boarded passengers</returns>
+        public int BoardPassengers(Tram tram)
+        {
+            int maxPassengers = tram.PassengerSpace();
+            int count = 0;
+
+            while (count++ < maxPassengers && waitingPassengers.Count > 0)
+                waitingPassengers.Dequeue();
+
+            tram.AddPassengers(count);
+            return count;
+        }
+
+        /// <summary>
+        /// Check if the station has waiting passenges
+        /// </summary>
+        /// <returns>True when there are passengers waiting</returns>
+        public bool HasPassengers()
+        {
+            return waitingPassengers.Count > 0;
         }
     }
 }
