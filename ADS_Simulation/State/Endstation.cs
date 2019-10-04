@@ -26,6 +26,11 @@ namespace ADS_Simulation.NS_State
             timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
         }
 
+        /// <summary>
+        /// Check if tram should be brought to the depot (end of service)
+        /// </summary>
+        /// <param name="currentTime">The current time</param>
+        /// <returns>if the tram should be stopped</returns>
         public bool TramToDepot(int currentTime)
         {
             // Trip time is one-way driving time times two plus the turn-around time
