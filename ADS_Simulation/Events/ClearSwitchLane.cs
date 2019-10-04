@@ -10,7 +10,19 @@ namespace ADS_Simulation.Events
     {
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
-            throw new NotImplementedException();
+            station.Switch.FreeSwitch(lane);
+
+            // Check if tram is in queue at switch, give priority to departing trams
+            if (station.departingTrams.TryDequeue(out Tram departingTram))
+            {
+                Event e = new ExpectedDepartureStartstation();
+                eventQueue.Enqueue(e, 0);
+            }
+            if (station.incomingTrams.TryDequeue(out Tram arrivingTram))
+            {
+                Event e = new ExpectedArrivalEndstation(arrivingTram, station);
+                eventQueue.Enqueue(e, 0);
+            }
         }
     }
 }

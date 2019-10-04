@@ -22,7 +22,7 @@ namespace ADS_Simulation.NS_State
 
     public class Station
     {
-        private Queue<Tram> incomingTrams;
+        public Queue<Tram> incomingTrams;
         public string name;
         public Direction direction;
         public Queue<int> waitingPassengers;
@@ -83,7 +83,7 @@ namespace ADS_Simulation.NS_State
         /// Check if station is free
         /// </summary>
         /// <returns></returns>
-        public bool IsFree()
+        public virtual bool IsFree(int platform = 1)
         {
             return occupant == null;
         }
@@ -92,35 +92,9 @@ namespace ADS_Simulation.NS_State
         /// Free the station
         /// </summary>
         /// <returns>True when station has no more trains in queue</returns>
-        public void Free()
+        public virtual void Free(int platform = 1)
         {
             occupant = null;
-        }
-
-        /// <summary>
-        /// Remove passengers from station
-        /// </summary>
-        /// <param name="maxPassengers">Maximum amount that will still fit in the tram</param>
-        /// <returns>The amount of boarded passengers</returns>
-        public int BoardPassengers(Tram tram)
-        {
-            int maxPassengers = tram.PassengerSpace();
-            int count = 0;
-
-            while (count++ < maxPassengers && waitingPassengers.Count > 0)
-                waitingPassengers.Dequeue();
-
-            tram.AddPassengers(count);
-            return count;
-        }
-
-        /// <summary>
-        /// Check if the station has waiting passenges
-        /// </summary>
-        /// <returns>True when there are passengers waiting</returns>
-        public bool HasPassengers()
-        {
-            return waitingPassengers.Count > 0;
         }
     }
 }
