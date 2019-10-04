@@ -15,39 +15,41 @@ namespace ADS_Simulation.NS_State
 
         public void FreeSwitch(SwitchLane lane)
         {
-            switch (lane)
+            if (SwitchLaneFree(lane))
+                throw new Exception($"Tried to free {lane} but it was already free.");
+
+            _ = lane switch
             {
-                case SwitchLane.ArrivalLane:
-                    state.arrival = false;
-                    break;
-                case SwitchLane.DepartureLane:
-                    state.departure = false;
-                    break;
-                case SwitchLane.Cross:
-                    state.cross = false;
-                    break;
-            }
+                SwitchLane.ArrivalLane => state.arrival = false,
+                SwitchLane.DepartureLane => state.departure = false,
+                SwitchLane.Cross => state.cross = false,
+                _ => throw new Exception("Unknown switchlane")
+            };
         }
 
-        public bool UseSwitchIfFree(SwitchLane lane)
+        public void UseSwitchLane(SwitchLane lane)
         {
-            bool isFree = false;
-            switch (lane)
+            if (!SwitchLaneFree(lane))
+                throw new Exception($"Tried to use {lane} but it was not free.");
+
+            _ = lane switch
             {
-                case SwitchLane.ArrivalLane:
-                    isFree = !state.cross && !state.arrival;
-                    if (isFree) state.arrival = true;
-                    break;
-                case SwitchLane.DepartureLane:
-                    isFree = !state.cross && !state.departure;
-                    if (isFree) state.departure = true;
-                    break;
-                case SwitchLane.Cross:
-                    isFree = !state.cross && !state.arrival && !state.departure;
-                    if (isFree) state.cross = true;
-                    break;
-            }
-            return isFree;
+                SwitchLane.ArrivalLane => state.arrival = true,
+                SwitchLane.DepartureLane => state.departure = true,
+                SwitchLane.Cross => state.cross = true,
+                _ => throw new Exception("Unknown switchlane")
+            };
+        }
+
+        public bool SwitchLaneFree(SwitchLane lane)
+        {
+            return lane switch
+            {
+                SwitchLane.ArrivalLane => !state.cross && !state.arrival,
+                SwitchLane.DepartureLane => !state.cross && !state.departure,
+                SwitchLane.Cross => !state.cross && !state.arrival && !state.departure,
+                _ => throw new Exception("Unknown switchlane")
+            };
         }
     }
 
@@ -58,3 +60,4 @@ namespace ADS_Simulation.NS_State
         Cross = 2
     }
 }
+

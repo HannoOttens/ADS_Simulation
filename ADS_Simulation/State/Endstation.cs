@@ -23,14 +23,41 @@ namespace ADS_Simulation.NS_State
         public bool TramToDepot(int currentTime)
         {
             // Trip time is one-way driving time times two plus the turn-around time
-            int roundTripTime = Configuration.Config.c.oneWayTripTimeMinutes * 60 * 2 
+            int roundTripTime = Configuration.Config.c.oneWayTripTimeMinutes * 60 * 2
                 + Configuration.Config.c.turnAroundTimeMinutes * 60;
             return hasDepot && Configuration.Config.c.endTime - currentTime >= roundTripTime;
+        }
+
+        /// <summary>
+        /// Returns the best platform to enter on
+        /// </summary>
+        /// <returns>1 or 2 for platform, -1 if unable to enter</returns>
+        public int BestFreePlatform()
+        {
+            if (IsFree(1) && Switch.SwitchLaneFree(SwitchLane.Cross))
+                return 1;
+            else if (IsFree(2) && Switch.SwitchLaneFree(SwitchLane.ArrivalLane))
+                return 2;
+            else return -1;
         }
 
         public int NextDeparture(int currentTime)
         {
             throw new NotImplementedException();
+        }
+
+        internal void Occupy(Tram tram, int platform)
+        {
+            if (platform == 1)
+            {
+                if (occupant != null) throw new Exception($"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant.id}");
+                occupant = tram;
+            }
+            else
+            {
+                if (occupant2 != null) throw new Exception($"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2.id}");
+                occupant2 = tram;
+            }
         }
 
         /// <summary>
