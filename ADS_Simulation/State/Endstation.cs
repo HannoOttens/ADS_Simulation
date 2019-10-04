@@ -11,10 +11,11 @@ namespace ADS_Simulation.NS_State
         public Queue<Tram> departingTrams;
 
         // tram at platform 2
-        Tram? occupant2;
+        public Tram? occupant2;
 
-        public Endstation(string name, Direction direction) : base(name, direction)
+        public Endstation(string name, bool hasDepot) : base(name, Direction.END)
         {
+            this.hasDepot = hasDepot;
             Switch = new Switch();
             departingTrams = new Queue<Tram>();
         }
@@ -38,6 +39,13 @@ namespace ADS_Simulation.NS_State
                 base.Free(platform);
             else
                 occupant2 = null;
+        }
+
+        public override bool IsFree(int platform = 1)
+        {
+            if (platform == 1)
+                return base.IsFree(platform);
+            else return occupant2 == null;
         }
     }
 }

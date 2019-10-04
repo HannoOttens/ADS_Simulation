@@ -25,7 +25,7 @@ namespace ADS_Simulation.NS_State
         public Queue<Tram> incomingTrams;
         public string name;
         public Direction direction;
-        Tram? occupant;
+        public Tram? occupant;
 
         public Queue<int> waitingPassengers; // Passengers waiting for trip to Central Station
         public Station(string name, Direction direction)
