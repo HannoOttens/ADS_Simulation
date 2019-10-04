@@ -75,6 +75,11 @@ namespace ADS_Simulation.NS_State
             }
         }
 
+        public bool IsFree()
+        {
+            return occupant == null;
+        }
+
         /// <summary>
         /// Free the station
         /// </summary>

@@ -41,7 +41,7 @@ namespace ADS_Simulation.Events
                 Console.WriteLine(tram.id);
                 return;
             }
-            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100));
+            eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100));
         }
     }
 }
