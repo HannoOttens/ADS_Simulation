@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -38,7 +39,7 @@ namespace ADS_Simulation.Events
             // Queue next arrival
             int stationIndex = state.stations.IndexOf(station);
             int newStationIndex = stationIndex + 1;
-            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100)); //TODO Fix avarage for part
+            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime));
         }
     }
 }

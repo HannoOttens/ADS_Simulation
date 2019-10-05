@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -31,9 +32,12 @@ namespace ADS_Simulation.Events
 
             int newStationIndex = stationIndex + 1 == state.stations.Count ? 0 : stationIndex + 1;
             if (state.stations[newStationIndex] is Endstation endstation)
-                eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time
+                eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation),
+                    state.time +
+                    Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime));
             else
-                eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time
+                eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex),
+                    state.time + Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime));
         }
     }
 }
