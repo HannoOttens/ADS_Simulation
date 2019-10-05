@@ -29,14 +29,6 @@ namespace ADS_Simulation.Events
                 eventQueue.Enqueue(new ExpectedTramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0, 0));
             }
 
-            //TODO: REMOVE THIS IF
-            if (stationIndex == state.stations.Count - 1)
-            {
-                Console.WriteLine(tram.id);
-                return;
-            }
-
-
             int newStationIndex = stationIndex + 1 == state.stations.Count ? 0 : stationIndex + 1;
             if (state.stations[newStationIndex] is Endstation endstation)
                 eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time

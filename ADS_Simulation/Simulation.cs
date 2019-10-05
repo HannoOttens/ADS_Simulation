@@ -5,6 +5,7 @@ using ADS_Simulation.Statistics;
 using Priority_Queue;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace ADS_Simulation
@@ -107,6 +108,7 @@ namespace ADS_Simulation
             Event _event = eventQueue.Dequeue();
 
             // Advance clock and execute
+            Debug.Assert(state.time <= (int)_event.Priority, "We traveled back in time - that's not that great - time travel really isn't great - please stop");
             state.time = (int)_event.Priority;
             _event.Execute(state, eventQueue);
 

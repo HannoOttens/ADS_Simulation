@@ -30,7 +30,7 @@ namespace ADS_Simulation.Events
                 tram.ReadyForDeparture();
 
                 // Start leaving directly when possible
-                SwitchLane lane = station.Switch.ExitLaneFor(Platform.A);
+                SwitchLane lane = Switch.ExitLaneFor(Platform.A);
                 if (station.Switch.SwitchLaneFree(lane))
                     eventQueue.Enqueue(new DepartureStartstation(tram, station, platform), state.time);
             }

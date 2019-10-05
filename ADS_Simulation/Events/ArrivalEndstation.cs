@@ -22,7 +22,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Clear switch
-            SwitchLane lane = platform == Platform.A ? SwitchLane.Cross : SwitchLane.ArrivalLane;
+            SwitchLane lane = Switch.ArrivalLaneFor(platform);
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
 
             // Check if tram can do another round trip if it is at endstaion with depot

@@ -28,16 +28,16 @@ namespace ADS_Simulation.Events
             tram.ResetReadyForDeparture();
             
             // Claim lane
-            SwitchLane lane = station.Switch.ExitLaneFor(Platform.A);
+            SwitchLane lane = Switch.ExitLaneFor(platform);
             station.Switch.UseSwitchLane(lane);
 
             // Clear the lane it's leaving over in 60s
-            eventQueue.Enqueue(new ClearSwitchLane(station, lane), Sampling.switchClearanceTime());
+            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
 
             // Queue next arrival
             int stationIndex = state.stations.IndexOf(station);
             int newStationIndex = stationIndex + 1;
-            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), Sampling.drivingTime(100)); //TODO Fix avarage for part
+            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100)); //TODO Fix avarage for part
         }
     }
 }
