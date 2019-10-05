@@ -13,9 +13,9 @@ namespace ADS_Simulation
     {
         private const int MAX_EVENTS = 10000; // NOG GEEN IDEE OF DIT PAST
 
-        State state;
-        FastPriorityQueue<Event> eventQueue;
-        List<Statistic> statistics;
+        public State state;
+        public FastPriorityQueue<Event> eventQueue;
+        public List<Statistic> statistics;
 
         public Simulation()
         {
@@ -27,7 +27,7 @@ namespace ADS_Simulation
             {
                 //new PassengerWaitStatistic(),
                 //new TramLoadStatistic(),
-                //new EmptyStationStatistic()
+                new EmptyStationStatistic(stations.Count)
             };
         }
 

@@ -23,7 +23,7 @@ namespace ADS_Simulation.Events
         {
             // Clear switch
             SwitchLane lane = platform == Platform.A ? SwitchLane.Cross : SwitchLane.ArrivalLane;
-            eventQueue.Enqueue(new ClearSwitchLane(station, lane), 0);
+            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
 
             // Check if tram can do another round trip if it is at endstaion with depot
             if (!station.TramToDepot(state.time))

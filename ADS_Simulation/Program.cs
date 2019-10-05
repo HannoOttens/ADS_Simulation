@@ -1,5 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
+using ADS_Simulation.Statistics;
 using System;
 using System.Threading;
 
@@ -20,6 +21,15 @@ namespace ADS_Simulation
             Simulation simulation = new Simulation();
             while(simulation.Step()) {
                 // Graphical representation or addition between-step fuctionality
+            }
+
+            if(simulation.statistics[0] is EmptyStationStatistic ess)
+            {
+                Console.WriteLine($"Average station empty time: {ess.AverageEmptyTime()}");
+
+                (int stationIndex, int longestTime) = ess.LongestEmptyTime();
+                Station station = simulation.state.stations[stationIndex];
+                Console.WriteLine($"Longest empty: {station.name} for {longestTime}s");
             }
         }
 

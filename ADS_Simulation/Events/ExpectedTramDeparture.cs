@@ -27,7 +27,7 @@ namespace ADS_Simulation.Events
                 eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), Sampling.passengerExchangeTime(0, pIn));
             }
             else
-                eventQueue.Enqueue(new TramDeparture(tram, stationIndex), 0);
+                eventQueue.Enqueue(new TramDeparture(tram, stationIndex), state.time);
         }
     }
 }
