@@ -47,7 +47,7 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         public void ReadyForDeparture()
         {
-            Debug.Assert(!readyForDeparture, $"Tried to mark tram {id} as 'ready for departure', but tram was already marked ready.");
+            Trace.Assert(!readyForDeparture, $"Tried to mark tram {id} as 'ready for departure', but tram was already marked ready.");
             readyForDeparture = true;
         }
 
@@ -56,7 +56,7 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         public void ResetReadyForDeparture()
         {
-            Debug.Assert(readyForDeparture, $"Tried to mark tram {id} as 'unready for departure', but tram wasn't marked ready.");
+            Trace.Assert(readyForDeparture, $"Tried to mark tram {id} as 'unready for departure', but tram wasn't marked ready.");
             readyForDeparture = false;
         }
 
@@ -73,7 +73,7 @@ namespace ADS_Simulation.NS_State
         {
             passengerCount += count;
             if (passengerCount > Config.c.tramCapacity)
-                throw new Exception($"Tram capacity exceeded in tram {id} by {Config.c.tramCapacity - passengerCount}");
+                throw new Exception($"Tram capacity exceeded in tram {id} by {passengerCount - Config.c.tramCapacity}");
         }
     }
 }

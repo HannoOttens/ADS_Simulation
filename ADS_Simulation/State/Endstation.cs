@@ -106,12 +106,12 @@ namespace ADS_Simulation.NS_State
         {
             if (platform == Platform.A)
             {
-                Debug.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant?.id}");
+                Trace.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant?.id}");
                 occupant = tram;
             }
             else if (platform == Platform.B)
             {
-                Debug.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2?.id}");
+                Trace.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2?.id}");
                 occupant2 = tram;
             }
             else throw new Exception($"Unknown platform {platform}.");
@@ -125,12 +125,12 @@ namespace ADS_Simulation.NS_State
         {
             if (platform == Platform.A)
             {
-                Debug.Assert(occupant != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+                Trace.Assert(occupant != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
                 occupant = null;
             }
             else
             {
-                Debug.Assert(occupant2 != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+                Trace.Assert(occupant2 != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
                 occupant2 = null;
             }
         }
@@ -155,7 +155,7 @@ namespace ADS_Simulation.NS_State
         /// <returns></returns>
         public Tram OccupyFromQueue(Platform platform)
         {
-            Debug.Assert(IsFree(platform), $"Tried to occupy {platform} from queue, but platform was already taken.");
+            Trace.Assert(IsFree(platform), $"Tried to occupy {platform} from queue, but platform was already taken.");
 
             Tram tram = incomingTrams.Dequeue();
             if (platform == Platform.A)

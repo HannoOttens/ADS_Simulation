@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -21,8 +19,10 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
+
             // Clear switch
             SwitchLane lane = Switch.ArrivalLaneFor(platform);
+            System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}"); 
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
 
             // Check if tram can do another round trip if it is at endstaion with depot

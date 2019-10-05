@@ -2,6 +2,7 @@
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace ADS_Simulation
@@ -25,11 +26,11 @@ namespace ADS_Simulation
 
             if(simulation.statistics[0] is EmptyStationStatistic ess)
             {
-                Console.WriteLine($"Average station empty time: {ess.AverageEmptyTime()}");
+                System.Diagnostics.Debug.WriteLine($"Average station empty time: {ess.AverageEmptyTime()}");
 
                 (int stationIndex, int longestTime) = ess.LongestEmptyTime();
                 Station station = simulation.state.stations[stationIndex];
-                Console.WriteLine($"Longest empty: {station.name} for {longestTime}s");
+                System.Diagnostics.Debug.WriteLine($"Longest empty: {station.name} for {longestTime}s");
             }
         }
 
@@ -71,7 +72,7 @@ namespace ADS_Simulation
         /// </summary>
         static void PrintHelp()
         {
-            Console.WriteLine(@"
+            System.Diagnostics.Debug.WriteLine(@"
 ===========================================[HELP]============================================
 
     HELP ME!
