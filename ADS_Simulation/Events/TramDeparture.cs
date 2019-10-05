@@ -36,7 +36,12 @@ namespace ADS_Simulation.Events
                 return;
             }
 
-            eventQueue.Enqueue(new ExpectedTramArrival(tram, stationIndex + 1), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time
+
+            int newStationIndex = stationIndex + 1 == state.stations.Count ? 0 : stationIndex + 1;
+            if (state.stations[newStationIndex] is Endstation endstation)
+                eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time
+            else
+                eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(100)); //TODO: Fix driving time
         }
     }
 }

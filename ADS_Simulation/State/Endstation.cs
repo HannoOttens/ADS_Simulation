@@ -37,6 +37,31 @@ namespace ADS_Simulation.NS_State
             timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
         }
 
+        public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
+        {
+            if (occupant != null && occupant.IsReadyForDeparture())
+                return (occupant, Platform.A);
+            else if (occupant2 != null && occupant2.IsReadyForDeparture())
+                return (occupant2, Platform.B);
+
+            return (null, Platform.None);
+        }
+
+        /// <summary>
+        /// Get platform corresponing to occupant
+        /// </summary>
+        /// <param name="tram">Tram</param>
+        /// <returns>Platform at which the tram is stationed</returns>
+        private Platform PlatformForOccupant(Tram tram)
+        {
+            if (tram == occupant)
+                return Platform.A;
+            else if (tram == occupant2)
+                return Platform.B;
+
+            throw new Exception($"Tried to find platform corresponding to tram {tram.id}, but none was found.");
+        }
+
         /// <summary>
         /// Check if tram should be brought to the depot (end of service)
         /// </summary>
@@ -121,6 +146,24 @@ namespace ADS_Simulation.NS_State
                 return occupant == null;
             else 
                 return occupant2 == null;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Tram OccupyFromQueue(Platform platform)
+        {
+            Debug.Assert(IsFree(platform), $"Tried to occupy {platform} from queue, but platform was already taken.");
+
+            Tram tram = incomingTrams.Dequeue();
+            if (platform == Platform.A)
+                occupant = tram;
+            else
+                occupant2 = tram;
+
+            return tram;
         }
     }
 }

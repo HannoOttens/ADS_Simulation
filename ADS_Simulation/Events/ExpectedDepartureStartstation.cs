@@ -26,8 +26,10 @@ namespace ADS_Simulation.Events
             // Close doors if it is time to leave
             if (state.time >= timeTableTime)
             {
+                // Mark tram as ready for departure
                 tram.ReadyForDeparture();
 
+                // Start leaving directly when possible
                 SwitchLane lane = station.Switch.ExitLaneFor(Platform.A);
                 if (station.Switch.SwitchLaneFree(lane))
                     eventQueue.Enqueue(new DepartureStartstation(tram, station, platform), state.time);

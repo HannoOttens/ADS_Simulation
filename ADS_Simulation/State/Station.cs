@@ -41,7 +41,7 @@ namespace ADS_Simulation.NS_State
         /// Let train enter from queue
         /// </summary>
         /// <returns>The new occupant</returns>
-        internal Tram OccupyFromQueue()
+        public Tram OccupyFromQueue()
         {
             if (occupant is null)
             {
