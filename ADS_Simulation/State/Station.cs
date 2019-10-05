@@ -107,8 +107,11 @@ namespace ADS_Simulation.NS_State
             int maxPassengers = tram.PassengerSpace();
             int count = 0;
 
-            while (count++ < maxPassengers && waitingPassengers.Count > 0)
+            while (count < maxPassengers && waitingPassengers.Count > 0)
+            {
                 waitingPassengers.Dequeue();
+                count++;
+            }
 
             tram.AddPassengers(count);
             return count;
