@@ -27,12 +27,14 @@ namespace ADS_Simulation
         }
 
         /// <summary>
-        /// The estimated driving time between stations
+        /// The estimated driving time between stations.
+        /// This is a lognormal distribution with the natural logarithm of the average driving time as mu and 0.1 as sigma
         /// </summary>
+        /// <param name="averageForPart">Average driving time for this section</param>
         /// <returns></returns>
-        public static int drivingTime(int averageForPart) {
-            //TODO: Implement
-            return averageForPart;
+        public static int drivingTime(int averageForPart)
+        {
+            return (int)LogNormal.Sample(Math.Log(averageForPart), 0.1);
         }
 
         /// <summary>
