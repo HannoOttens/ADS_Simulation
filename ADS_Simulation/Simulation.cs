@@ -39,7 +39,7 @@ namespace ADS_Simulation
 
             // Make an arrival event for every tram
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new ExpectedTramArrival(state.trams[i], 0), i * interval * 60);
+                queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), i * interval * 60);
 
             return queue;
         }

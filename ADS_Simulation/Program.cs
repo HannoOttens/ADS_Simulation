@@ -1,7 +1,9 @@
 ﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -102,7 +104,10 @@ namespace ADS_Simulation
             void DrawOccupants(bool above)
             {
                 if (above)
+                {
+                    DrawTransitTrams(above);
                     DrawStationQueues(above);
+                }
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 if (above)
@@ -118,7 +123,10 @@ namespace ADS_Simulation
                 Console.WriteLine();
 
                 if (!above)
+                {
                     DrawStationQueues(above);
+                    DrawTransitTrams(above);
+                }
             }
 
             void DrawOccupant(int i, bool above)
@@ -171,6 +179,72 @@ namespace ADS_Simulation
                                 DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
                             else
                                 Console.Write(new string(' ', dotDist));
+                        Console.WriteLine();
+                    }
+
+                Console.ResetColor();
+            }
+
+            void DrawTransitTrams(bool above)
+            {
+                // Get correct events
+                var groupedTranits = simulation.eventQueue.OfType<ExpectedTramArrival>()
+                    .GroupBy(e => e.stationIndex);
+                var endTransits = simulation.eventQueue.OfType<ExpectedArrivalEndstation>()
+                    .GroupBy(e => e.station.name);
+                int maxTransits = Math.Max(
+                    groupedTranits.Select(g => g.Count()).DefaultIfEmpty(0).Max(), 
+                    endTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max());
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+
+                if (above)
+                    for (int q = maxTransits - 1; q >= 0; q--)
+                    {
+                        Console.Write(new string(' ', dotDist/2));
+
+                        // Middle stations
+                        for (int i = 1; i < state.stations.Count / 2; i++)
+                        {
+                            var ts = groupedTranits.SingleOrDefault(k => k.Key == i);
+                            if (q < ts?.Count())
+                                DrawTrainId(ts.ToList()[q].tram.id);
+                            else
+                                Console.Write(new string(' ', dotDist));
+                        }
+
+                        // Utrecht Centraal
+                        var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.endStation);
+                        if (q < tes?.Count())
+                            DrawTrainId(tes.ToList()[q].tram.id);
+                        else
+                            Console.Write(new string(' ', dotDist));
+
+                        Console.WriteLine();
+                    }
+                else
+                    for (int q = 0; q < maxTransits; q++)
+                    {
+                        Console.Write(new string(' ', dotDist / 2));
+
+                        // P+R
+                        var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.startStation);
+                        if (q < tes?.Count())
+                            DrawTrainId(tes.ToList()[q].tram.id);
+                        else
+                            Console.Write(new string(' ', dotDist));
+
+                        // Middle stations
+                        Console.Write(new string(' ', dotDist));
+                        for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
+                        {
+                            var ts = groupedTranits.SingleOrDefault(k => k.Key == i);
+                            if (q < ts?.Count())
+                                DrawTrainId(ts.ToList()[q].tram.id);
+                            else
+                                Console.Write(new string(' ', dotDist));
+                        }
+
                         Console.WriteLine();
                     }
 
