@@ -15,11 +15,10 @@ namespace ADS_Simulation
         static string configPath = "../../../config.json";
 
         static bool step = false;
-        static bool gui = true;
+        static bool gui = false;
 
         static void Main(string[] args)
         {
-            //args = new string[] { "-s" };
             MarshallArgs(args);
 
             // Initialize config
@@ -273,6 +272,9 @@ namespace ADS_Simulation
                         case "-step":
                             step = true;
                             break;
+                        case "-gui":
+                            gui = true;
+                            break;
                         case "-h":
                         case "-help":
                             PrintHelp();
@@ -302,7 +304,9 @@ namespace ADS_Simulation
 +====================================+===================+====================================+
 | Command              Parameters    | Default           | Detail                             |
 +====================================+===================+====================================+
-  -c, -config          <path>        | ../../config.json |
+  -c, -config          <path>        | ../../config.json | Defines the config path
+  -s, -step                          | false             | Per-event stepping
+  -gui                               | false             | Show GUI
 +====================================+===================+====================================+
 ");
         }
