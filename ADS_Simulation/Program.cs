@@ -99,25 +99,32 @@ namespace ADS_Simulation
 
             void DrawOccupants(Direction direction)
             {
-                int i = direction == Direction.A ? 0 : state.stations.Count / 2 - 1;
-                int max = direction == Direction.A ? state.stations.Count / 2 + 1 : state.stations.Count - 1;
-
-                for (; i * 2 < max; i++)
-                {
-                    Tram? occupant = state.stations[i].occupant;
-                    if (occupant != null)
+                if (direction == Direction.A)
+                    for (int i = 0; i <= state.stations.Count / 2; i++)
                     {
-                        string occupantName = occupant.id.ToString();
-
-                        string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
-                        string outt = emptySpace + occupantName + emptySpace;
-                        if (outt.Length == dotDist - 1)
-                            outt = ' ' + outt;
-                        Console.Write(outt);
+                        DrawOccupant(i);
                     }
-                    else Console.Write(new string(' ', dotDist));
-                }
+                else
+                    for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
+                    {
+                        DrawOccupant(i);
+                    }
                 Console.WriteLine();
+            }
+
+            void DrawOccupant(int i)
+            {
+                Tram? occupant = state.stations[i].occupant;
+                if (occupant != null)
+                {
+                    string occupantName = occupant.id.ToString();
+                    string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
+                    string outt = emptySpace + occupantName + emptySpace;
+                    if (outt.Length == dotDist - 1)
+                        outt = ' ' + outt;
+                    Console.Write(outt);
+                }
+                else Console.Write(new string(' ', dotDist));
             }
         }
 
