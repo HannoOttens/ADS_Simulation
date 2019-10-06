@@ -72,7 +72,7 @@ namespace ADS_Simulation.NS_State
             // Trip time is one-way driving time times two plus the turn-around time
             int roundTripTime = Configuration.Config.c.oneWayTripTimeMinutes * 60 * 2
                 + Configuration.Config.c.turnAroundTimeMinutes * 60;
-            return hasDepot && Configuration.Config.c.endTime - currentTime >= roundTripTime;
+            return hasDepot && Configuration.Config.c.endTime - currentTime <= roundTripTime;
         }
 
         /// <summary>
