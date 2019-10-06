@@ -22,7 +22,7 @@ namespace ADS_Simulation
         {
             List<Station> stations = CreateStations();
             List<Tram> trams = CreateTrams();
-            state = new State(0, trams, stations);
+            state = new State(Config.c.startTime, trams, stations);
             eventQueue = InitializeEventQueue();
             statistics = new List<Statistic>()
             {

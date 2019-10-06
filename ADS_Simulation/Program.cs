@@ -42,18 +42,21 @@ namespace ADS_Simulation
                 s.Print(simulation.state);
         }
 
+        /// <summary>
+        /// Code to draw the GUI (don't look at the code, look at the GUI, the GUI is the part that actually looks alright)
+        /// </summary>
+        /// <param name="simulation">Current simulation</param>
         static void DrawGUI(Simulation simulation)
         {
             int dotDist = 15;
             State state = simulation.state;
 
             // Basic stats
+            Console.WriteLine(new String('~', 150));
             Console.WriteLine($"Time: {simulation.state.time}");
             Console.WriteLine();
 
             DrawStationLine();
-            Console.WriteLine();
-            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
