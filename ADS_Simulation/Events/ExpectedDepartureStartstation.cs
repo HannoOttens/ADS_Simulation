@@ -23,6 +23,8 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
+            System.Diagnostics.Debug.WriteLine($"ExpectedDepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, Timetable: {timeTableTime}");
+
             // Close doors if it is time to leave
             if (state.time >= timeTableTime)
             {
@@ -30,7 +32,7 @@ namespace ADS_Simulation.Events
                 tram.ReadyForDeparture();
 
                 // Start leaving directly when possible
-                SwitchLane lane = Switch.ExitLaneFor(Platform.A);
+                SwitchLane lane = Switch.ExitLaneFor(platform);
                 if (station.Switch.SwitchLaneFree(lane))
                     eventQueue.Enqueue(new DepartureStartstation(tram, station, platform), state.time);
             }
