@@ -11,5 +11,10 @@ namespace ADS_Simulation.Statistics
         {
             throw new NotImplementedException();
         }
+
+        public override void Print(State state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

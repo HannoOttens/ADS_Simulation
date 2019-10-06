@@ -19,6 +19,7 @@ namespace ADS_Simulation.Events
         {
 
             System.Diagnostics.Debug.WriteLine($"ClearSwitchLane: {station.name}, {lane}");
+
             /* Kind of a critical point here:
              * - We have a possible departing tram
              * - We have a possible incoming tram
@@ -34,6 +35,9 @@ namespace ADS_Simulation.Events
             if (departingTram != null)
             {
                 // Queue the departure
+                SwitchLane departureLane = Switch.ArrivalLaneFor(departingPlatform);
+                station.Switch.UseSwitchLane(departureLane);
+
                 Event e = new DepartureStartstation(departingTram, station, departingPlatform);
                 eventQueue.Enqueue(e, state.time);
             }

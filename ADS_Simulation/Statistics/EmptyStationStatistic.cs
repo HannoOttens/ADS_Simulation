@@ -65,5 +65,14 @@ namespace ADS_Simulation.Statistics
         {
             return totalEmptyTime / stationCount;
         }
+
+        public override void Print(State state)
+        {
+            Console.WriteLine($"Average station empty time: {AverageEmptyTime()}");
+
+            (int stationIndex, int longestTime) = LongestEmptyTime();
+            Station station = state.stations[stationIndex];
+            Console.WriteLine($"Longest empty: {station.name} for {longestTime}s");
+        }
     }
 }

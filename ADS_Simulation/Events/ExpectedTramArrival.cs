@@ -19,7 +19,11 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
-            if (state.stations[stationIndex].IsFree())
+            var station = state.stations[stationIndex];
+
+            System.Diagnostics.Debug.WriteLine($"ExpectedTramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
+
+            if (station.IsFree())
                 eventQueue.Enqueue(new TramArrival(tram, stationIndex), state.time);
         }
     }

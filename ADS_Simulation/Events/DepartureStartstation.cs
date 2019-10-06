@@ -27,11 +27,10 @@ namespace ADS_Simulation.Events
 
             // Reset ready for departure
             tram.ResetReadyForDeparture();
-            
+
             // Claim lane
             SwitchLane lane = Switch.ExitLaneFor(platform);
             System.Diagnostics.Debug.WriteLine($"DepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, {lane}");
-            station.Switch.UseSwitchLane(lane);
 
             // Clear the lane it's leaving over in 60s
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());

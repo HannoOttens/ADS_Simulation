@@ -24,14 +24,9 @@ namespace ADS_Simulation
                 // Graphical representation or addition between-step fuctionality
             }
 
-            if(simulation.statistics[0] is EmptyStationStatistic ess)
-            {
-                System.Diagnostics.Debug.WriteLine($"Average station empty time: {ess.AverageEmptyTime()}");
-
-                (int stationIndex, int longestTime) = ess.LongestEmptyTime();
-                Station station = simulation.state.stations[stationIndex];
-                System.Diagnostics.Debug.WriteLine($"Longest empty: {station.name} for {longestTime}s");
-            }
+            // Print statistic output
+            foreach (var s in simulation.statistics)
+                s.Print(simulation.state);
         }
 
         #region Console argument parsing

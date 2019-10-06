@@ -3,8 +3,8 @@
   "tramCapacity": 420,
   "stationClearanceTime": 40,
   "switchClearanceTime": 60,
-  "startTime": 0,
-  "endTime": 0,
+  "startTime": 21600, // 6 AM
+  "endTime": 77400, // 9 PM
   "turnAroundTimeMinutes": 5,
   "oneWayTripTimeMinutes": 17,
   "ucDualDriverSwitch": false,

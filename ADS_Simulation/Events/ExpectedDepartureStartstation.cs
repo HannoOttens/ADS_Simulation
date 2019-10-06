@@ -34,7 +34,10 @@ namespace ADS_Simulation.Events
                 // Start leaving directly when possible
                 SwitchLane lane = Switch.ExitLaneFor(platform);
                 if (station.Switch.SwitchLaneFree(lane))
+                {
+                    station.Switch.UseSwitchLane(lane);
                     eventQueue.Enqueue(new DepartureStartstation(tram, station, platform), state.time);
+                }
             }
             // Otherwise let extra passengers enter
             else

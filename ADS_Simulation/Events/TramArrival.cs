@@ -20,6 +20,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             var station = state.stations[stationIndex];
+            System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
 
             // Occupy station with the tram
             station.Occupy(tram);
