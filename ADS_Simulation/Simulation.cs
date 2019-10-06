@@ -125,7 +125,7 @@ namespace ADS_Simulation
         private bool StoppingConditionMet()
         {
             return eventQueue.Count == 0
-                && state.time >= Config.c.endTime;
+                || state.time >= Config.c.endTime;
         }
     }
 }

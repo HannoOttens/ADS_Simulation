@@ -10,9 +10,12 @@ namespace ADS_Simulation
     class Program
     {
         static string configPath = "../../../config.json";
+        static bool step = false;
+        static bool gui = true;
 
         static void Main(string[] args)
         {
+            args = new string[] { "-s" };
             MarshallArgs(args);
 
             // Initialize config
@@ -20,13 +23,102 @@ namespace ADS_Simulation
 
             // Initialize simulation
             Simulation simulation = new Simulation();
-            while(simulation.Step()) {
+            while (simulation.Step())
+            {
+                if (step)
+                    Console.ReadKey();
+
+                if (gui)
+                    DrawGUI(simulation);
+
                 // Graphical representation or addition between-step fuctionality
             }
 
             // Print statistic output
             foreach (var s in simulation.statistics)
                 s.Print(simulation.state);
+        }
+
+        static void DrawGUI(Simulation simulation)
+        {
+            int dotDist = 15;
+            State state = simulation.state;
+
+            // Basic stats
+            Console.WriteLine($"Time: {simulation.state.time}");
+            Console.WriteLine();
+
+            DrawStationLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            DrawStationLine(true);
+            Console.WriteLine();
+
+            void DrawStationLine(bool nameAbove = false)
+            {
+                if (nameAbove)
+                    DrawStationNames();
+                else
+                    DrawOccupants(Direction.A);
+
+                Console.Write(new string(' ', dotDist / 2));
+                for (int i = 0; i * 2 < state.stations.Count; i++)
+                    Console.Write("O" + new string('-', dotDist - 1));
+                Console.WriteLine("O    ");
+
+                if (!nameAbove)
+                    DrawStationNames();
+                else
+                    DrawOccupants(Direction.B);
+            }
+
+            void DrawStationNames()
+            {
+                for (int i = 0; i * 2 <= state.stations.Count; i++)
+                {
+                    string name = state.stations[i].name;
+                    // Limit name length
+                    if (name.Length > 10)
+                        name = name.Substring(0, 10);
+
+                    // Calculate space between names
+                    string emptySpace = new string(' ', (dotDist - name.Length) / 2);
+                    string outt = emptySpace + name + emptySpace;
+
+                    // Account for rounding error
+                    if (outt.Length == dotDist - 1)
+                        outt = ' ' + outt;
+
+                    Console.Write(outt);
+                }
+                Console.WriteLine();
+            }
+
+            void DrawOccupants(Direction direction)
+            {
+                int i = direction == Direction.A ? 0 : state.stations.Count / 2 - 1;
+                int max = direction == Direction.A ? state.stations.Count / 2 + 1 : state.stations.Count - 1;
+
+                for (; i * 2 < max; i++)
+                {
+                    Tram? occupant = state.stations[i].occupant;
+                    if (occupant != null)
+                    {
+                        string occupantName = occupant.id.ToString();
+
+                        string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
+                        string outt = emptySpace + occupantName + emptySpace;
+                        if (outt.Length == dotDist - 1)
+                            outt = ' ' + outt;
+                        Console.Write(outt);
+                    }
+                    else Console.Write(new string(' ', dotDist));
+                }
+                Console.WriteLine();
+            }
         }
 
         #region Console argument parsing
@@ -45,6 +137,10 @@ namespace ADS_Simulation
                         case "-c":
                         case "-config":
                             configPath = args[i++];
+                            break;
+                        case "-s":
+                        case "-step":
+                            step = true;
                             break;
                         case "-h":
                         case "-help":
@@ -79,6 +175,6 @@ namespace ADS_Simulation
 +====================================+===================+====================================+
 ");
         }
-    #endregion
+        #endregion
     }
 }
