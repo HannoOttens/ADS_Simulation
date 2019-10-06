@@ -3,6 +3,7 @@ using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace ADS_Simulation
@@ -10,12 +11,13 @@ namespace ADS_Simulation
     class Program
     {
         static string configPath = "../../../config.json";
+
         static bool step = false;
         static bool gui = true;
 
         static void Main(string[] args)
         {
-            args = new string[] { "-s" };
+            //args = new string[] { "-s" };
             MarshallArgs(args);
 
             // Initialize config
@@ -25,13 +27,13 @@ namespace ADS_Simulation
             Simulation simulation = new Simulation();
             while (simulation.Step())
             {
-                if (step)
-                    Console.ReadKey();
-
                 if (gui)
                     DrawGUI(simulation);
 
-                // Graphical representation or addition between-step fuctionality
+                // Addition between-step fuctionality
+
+                if (step)
+                    Console.ReadKey();
             }
 
             // Print statistic output
@@ -62,7 +64,7 @@ namespace ADS_Simulation
                 if (nameAbove)
                     DrawStationNames();
                 else
-                    DrawOccupants(Direction.A);
+                    DrawOccupants(true);
 
                 Console.Write(new string(' ', dotDist / 2));
                 for (int i = 0; i * 2 < state.stations.Count; i++)
@@ -72,7 +74,7 @@ namespace ADS_Simulation
                 if (!nameAbove)
                     DrawStationNames();
                 else
-                    DrawOccupants(Direction.B);
+                    DrawOccupants(false);
             }
 
             void DrawStationNames()
@@ -97,34 +99,82 @@ namespace ADS_Simulation
                 Console.WriteLine();
             }
 
-            void DrawOccupants(Direction direction)
+            void DrawOccupants(bool above)
             {
-                if (direction == Direction.A)
+                if (above)
+                    DrawStationQueues(above);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                if (above)
                     for (int i = 0; i <= state.stations.Count / 2; i++)
-                    {
-                        DrawOccupant(i);
-                    }
+                        DrawOccupant(i, above);
                 else
+                {
+                    DrawOccupant(0, above);
                     for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
-                    {
-                        DrawOccupant(i);
-                    }
+                        DrawOccupant(i, above);
+                }
+                Console.ResetColor();
                 Console.WriteLine();
+
+                if (!above)
+                    DrawStationQueues(above);
             }
 
-            void DrawOccupant(int i)
+            void DrawOccupant(int i, bool above)
             {
                 Tram? occupant = state.stations[i].occupant;
+                if (state.stations[i] is Endstation endstation)
+                    if (i == 0 && !above) // 2e occupant P+R
+                        occupant = endstation.occupant2;
+                    else if (i != 0 && above) // 2e occupant UC
+                        occupant = endstation.occupant2;
+
                 if (occupant != null)
-                {
-                    string occupantName = occupant.id.ToString();
-                    string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
-                    string outt = emptySpace + occupantName + emptySpace;
-                    if (outt.Length == dotDist - 1)
-                        outt = ' ' + outt;
-                    Console.Write(outt);
-                }
+                    DrawTrainId(occupant.id);
                 else Console.Write(new string(' ', dotDist));
+            }
+
+            void DrawTrainId(int id)
+            {
+                string occupantName = id.ToString();
+                string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
+                string outt = emptySpace + occupantName + emptySpace;
+                if (outt.Length == dotDist - 1)
+                    outt = ' ' + outt;
+                Console.Write(outt);
+            }
+
+            void DrawStationQueues(bool above)
+            {
+                int biggestQueue = state.stations.Max(v => v.incomingTrams.Count);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                if (above)
+                {
+                    for (int q = biggestQueue - 1; q >= 0; q--)
+                    {
+                        for (int i = 0; i < state.stations.Count / 2; i++)
+                            if (q < state.stations[i].incomingTrams.Count)
+                                DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                            else
+                                Console.Write(new string(' ', dotDist));
+                        Console.WriteLine();
+                    }
+                }
+                else
+                    for (int q = 0; q < biggestQueue; q++)
+                    {
+                        Console.Write(new string(' ', dotDist));
+                        for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
+                            if (q < state.stations[i].incomingTrams.Count)
+                                DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                            else
+                                Console.Write(new string(' ', dotDist));
+                        Console.WriteLine();
+                    }
+
+                Console.ResetColor();
             }
         }
 
