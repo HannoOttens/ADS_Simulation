@@ -1,4 +1,4 @@
-﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.Configuration;
 using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
@@ -84,7 +84,7 @@ namespace ADS_Simulation
 
                 if (isEndStation)
                 {
-                    bool hasDepot = direction == Direction.A;
+                    bool hasDepot = stationData.from == Config.c.startStation;
                     stations.Add(new Endstation(stationData.from, hasDepot));
                 }
                 else
