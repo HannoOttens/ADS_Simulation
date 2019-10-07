@@ -1,4 +1,4 @@
-﻿using ADS_Simulation.NS_State;
+using ADS_Simulation.NS_State;
 using Priority_Queue;
 using System;
 
@@ -35,7 +35,7 @@ namespace ADS_Simulation.Events
             if (departingTram != null)
             {
                 // Queue the departure
-                SwitchLane departureLane = Switch.ArrivalLaneFor(departingPlatform);
+                SwitchLane departureLane = Switch.ExitLaneFor(departingPlatform);
                 station.Switch.UseSwitchLane(departureLane);
 
                 Event e = new DepartureStartstation(departingTram, station, departingPlatform);
