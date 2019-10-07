@@ -22,9 +22,6 @@ namespace ADS_Simulation.Events
             var station = state.stations[stationIndex];
             System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
 
-            // Occupy station with the tram
-            station.Occupy(tram);
-
             // Board and unboard passengers
             (int pOut, int pIn) = station.UnboardAndBoard(tram);
 

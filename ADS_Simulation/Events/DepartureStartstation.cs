@@ -38,7 +38,7 @@ namespace ADS_Simulation.Events
             // Queue next arrival
             int stationIndex = state.stations.IndexOf(station);
             int newStationIndex = stationIndex + 1;
-            eventQueue.Enqueue(new TramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime));
+            eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime));
         }
     }
 }

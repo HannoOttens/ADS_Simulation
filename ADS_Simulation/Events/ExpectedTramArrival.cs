@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using ADS_Simulation.NS_State;
@@ -25,7 +25,12 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"ExpectedTramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
 
             if (station.IsFree())
+            {
+                // Occupy station with the tram
+                station.Occupy(tram);
+
                 eventQueue.Enqueue(new TramArrival(tram, stationIndex), state.time);
         }
+            }
     }
 }
