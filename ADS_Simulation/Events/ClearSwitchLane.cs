@@ -28,7 +28,7 @@ namespace ADS_Simulation.Events
              * If the departing tram is on platform A, they can drive past eachother, so it's okay to queue the arrival. */
 
             // Clear the switch
-            station.Switch.FreeSwitch(lane);
+            station._switch.FreeSwitch(lane);
 
             // Check if tram is in queue at switch, give priority to departing trams
             (var departingTram, var departingPlatform) = station.GetFirstDepartingTram();
@@ -36,7 +36,7 @@ namespace ADS_Simulation.Events
             {
                 // Queue the departure
                 SwitchLane departureLane = Switch.ExitLaneFor(departingPlatform);
-                station.Switch.UseSwitchLane(departureLane);
+                station._switch.UseSwitchLane(departureLane);
 
                 Event e = new DepartureStartstation(departingTram, station, departingPlatform);
                 eventQueue.Enqueue(e, state.time);
@@ -51,7 +51,7 @@ namespace ADS_Simulation.Events
                 // Get best avaialbe platform && queue
                 Tram arrivingTram = station.OccupyFromQueue(arrivalPlatform);
                 SwitchLane lane = Switch.ArrivalLaneFor(arrivalPlatform);
-                station.Switch.UseSwitchLane(lane);
+                station._switch.UseSwitchLane(lane);
 
                 // Queue the arrival
                 Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform);

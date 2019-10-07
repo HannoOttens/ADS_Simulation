@@ -24,7 +24,7 @@ namespace ADS_Simulation.Events
             if(bestPlatform != Platform.None)
             {
                 station.Occupy(tram, bestPlatform);
-                station.Switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));
+                station._switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));
                 eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Sampling.switchClearanceTime());
             }
             else

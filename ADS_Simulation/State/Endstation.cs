@@ -21,7 +21,7 @@ namespace ADS_Simulation.NS_State
 
     class Endstation : Station
     {
-        public Switch Switch;
+        public Switch _switch;
         private bool hasDepot;
         private TimeTable timeTable;
 
@@ -31,7 +31,7 @@ namespace ADS_Simulation.NS_State
         public Endstation(string name, bool hasDepot) : base(name, Direction.END)
         {
             this.hasDepot = hasDepot;
-            Switch = new Switch();
+            _switch = new Switch();
             
             //TODO: Juiste start-offset
             timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
@@ -39,10 +39,20 @@ namespace ADS_Simulation.NS_State
 
         public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
         {
-            if (occupant != null && occupant.IsReadyForDeparture())
+            //TODO: Get the FIRST!! departing tram (A is not nesserily first)
+
+            if (occupant != null 
+                && occupant.IsReadyForDeparture() 
+                && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.A)))
+            {
                 return (occupant, Platform.A);
-            else if (occupant2 != null && occupant2.IsReadyForDeparture())
+            }
+            else if (occupant2 != null 
+                && occupant2.IsReadyForDeparture()
+                && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.B)))
+            {
                 return (occupant2, Platform.B);
+            }
 
             return (null, Platform.None);
         }
@@ -81,9 +91,9 @@ namespace ADS_Simulation.NS_State
         /// <returns>1 or 2 for platform, -1 if unable to enter</returns>
         public Platform BestFreePlatform()
         {
-            if (IsFree(Platform.A) && Switch.SwitchLaneFree(SwitchLane.Cross))
+            if (IsFree(Platform.A) && _switch.SwitchLaneFree(SwitchLane.Cross))
                 return Platform.A;
-            else if (IsFree(Platform.B) && Switch.SwitchLaneFree(SwitchLane.ArrivalLane))
+            else if (IsFree(Platform.B) && _switch.SwitchLaneFree(SwitchLane.ArrivalLane))
                 return Platform.B;
             else return Platform.None;
         }

@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ADS_Simulation": {
-      "commandName": "Project",
-      "commandLineArgs": "-gui"
+      "commandName": "Project"
     }
   }
 }

@@ -12,6 +12,8 @@ namespace ADS_Simulation
 {
     class Program
     {
+        static Stopwatch stopwatch = new Stopwatch();
+        
         static string configPath = "../../../config.json";
 
         static bool step = false;
@@ -19,6 +21,9 @@ namespace ADS_Simulation
 
         static void Main(string[] args)
         {
+            int eventCount = 0;
+            stopwatch.Start();
+
             MarshallArgs(args);
 
             // Initialize config
@@ -32,10 +37,16 @@ namespace ADS_Simulation
                     DrawGUI(simulation);
 
                 // Addition between-step fuctionality
+                eventCount++;
 
                 if (step)
                     Console.ReadKey();
             }
+
+            Console.WriteLine(@$"Went through {eventCount} events.
+The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
+The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
+================================");
 
             // Print statistic output
             foreach (var s in simulation.statistics)
