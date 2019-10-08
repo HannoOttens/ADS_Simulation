@@ -1,4 +1,0 @@
-﻿1. Haal constant values (nu op een paar classes) uit de config
-2. Implementeer flow van events
-3. Implementeer goede eventQueue init
-4. Voeg disturbuties toe (sampling.cs), heb al een NuGet lib (MathNet.Numerics)
