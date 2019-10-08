@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}"); 
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
 
-            // Check if tram can do another round trip if it is at endstaion with depot
+            // Check if tram can do another round trip if it is at endstation with depot
             if (!station.TramToDepot(state.time))
             {
                 // Board and unboard

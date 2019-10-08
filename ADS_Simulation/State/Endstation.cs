@@ -65,7 +65,7 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
-        /// Get platform corresponing to occupant
+        /// Get platform corresponding to occupant
         /// </summary>
         /// <param name="tram">Tram</param>
         /// <returns>Platform at which the tram is stationed</returns>

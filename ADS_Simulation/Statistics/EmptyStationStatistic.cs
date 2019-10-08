@@ -10,11 +10,11 @@ namespace ADS_Simulation.Statistics
     class EmptyStationStatistic : Statistic
     {
         int lastEventTime;
-        int stationCount;
+        readonly int stationCount;
 
         int totalEmptyTime;
-        int[] currentEmptyStationTime;
-        int[] longestEmptyStationTime;
+        readonly int[] currentEmptyStationTime;
+        readonly int[] longestEmptyStationTime;
 
         public EmptyStationStatistic(int stationCount)
         {
