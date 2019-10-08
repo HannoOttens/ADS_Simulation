@@ -1,12 +1,9 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
-using ADS_Simulation.Statistics;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace ADS_Simulation
 {
