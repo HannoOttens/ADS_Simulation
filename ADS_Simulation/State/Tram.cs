@@ -37,11 +37,11 @@ namespace ADS_Simulation.NS_State
         /// Empty the tram
         /// </summary>
         /// <returns>The amount of passengers that left the tram</returns>
-        public int EmptyPassengers()
+        public int EmptyPassengers(int maxUnboard)
         {
-            int t = passengerCount;
-            passengerCount = 0;
-            return t;
+            int unboarding = Math.Min(maxUnboard, passengerCount);
+            passengerCount -= unboarding;
+            return unboarding;
         }
 
         /// <summary>

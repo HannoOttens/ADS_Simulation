@@ -60,5 +60,10 @@ namespace ADS_Simulation
         {
             return 40;
         }
+
+        internal static int unboardingPassengerCount(int stationIndex, int time)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

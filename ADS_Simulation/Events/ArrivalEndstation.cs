@@ -30,7 +30,7 @@ namespace ADS_Simulation.Events
             if (!station.TramToDepot(state.time))
             {
                 // Board and unboard
-                (int pOut, int pIn) = station.UnboardAndBoard(tram);
+                (int pOut, int pIn) = station.UnboardAndBoard(tram, int.MaxValue);
 
                 // Calculate when to schedule departure
                 // If boarding/unboarding takes shorter than the turnaround, take the turnaround time
