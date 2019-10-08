@@ -58,9 +58,9 @@ namespace ADS_Simulation.Statistics
             lastEventTime = state.time;
         }
 
-        public List<int> AverageWaitingTime()
+        public int[] AverageWaitingTime()
         {
-            return totalWaitingTime.Select((record) => record.passengers == 0 ? 0 : record.totalTime / record.passengers).ToList();
+            return totalWaitingTime.Select((record) => record.passengers == 0 ? 0 : record.totalTime / record.passengers).ToArray();
         } 
 
         public override void Print(State state)
