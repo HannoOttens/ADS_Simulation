@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
             if (!tram.IsFull() && station.HasPassengers())
             {
                 int pIn = station.BoardPassengers(tram);
-                eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), Sampling.passengerExchangeTime(0, pIn));
+                eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), state.time + Sampling.passengerExchangeTime(0, pIn));
             }
             else
                 eventQueue.Enqueue(new TramDeparture(tram, stationIndex), state.time);
