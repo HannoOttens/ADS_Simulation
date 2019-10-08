@@ -37,8 +37,9 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int passengerExchangeTime(int pOut, int pIn)
         {
-            //TODO: Implement
-            return pOut + pIn;
+            var d = 12.5 + 0.22 * pIn + 0.13 * pOut;
+            var g = Gamma.Sample(2, 1/d); // TODO: No mention of rate (scale) parameter in assignment, is this correct?
+            return (int)Math.Min(0.8d, g);
         }
 
         /// <summary>
