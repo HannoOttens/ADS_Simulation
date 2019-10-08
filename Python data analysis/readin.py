@@ -24,12 +24,13 @@ class Table:
     def sort_on(self, header):
         header_index = self.headers.index(header)
         self.rows.sort(key=sort_on_column(header_index))
+
         self.columns = columnize(self.headers, self.rows)
 
     def remove(self, header):
         header_index = self.headers.index(header)
         for row in self.rows:
-            del row[header_index]        
+            del row[header_index]
         del self.columns[header]
         del self.headers[header_index]
 
@@ -40,7 +41,7 @@ class Table:
         for idx, row in enumerate(self.rows):
             if row[header_index] == value:
                 to_delete.append(idx)
-        
+
         for s, idx in enumerate(to_delete):
             del self.rows[idx - s]
 
@@ -53,9 +54,85 @@ class Table:
     def replace_in(self, header, rval, newval):
         header_index = self.headers.index(header)
         for row in self.rows:
-             row[header_index] = row[header_index].replace(rval, newval)
+            row[header_index] = row[header_index].replace(rval, newval)
         self.columns = columnize(self.headers, self.rows)
 
+    def average(self, header):
+        column = self.columns[header]
+        return sum(column) / len(column)
+
+    def bin_time_interval(self, header, interval, interval_header):
+        # Sort data on header interval
+        self.sort_on(interval_header)
+
+        # Get the columns
+        target_column = self.columns[header]
+        interval_column = self.columns[interval_header]
+
+        # Get start point and endpoint
+        start = interval_column[0]
+        start = start - (start % interval)  # Round to start of interval
+        end = interval_column[-1]
+
+        # Make intervals
+        index = 0
+        max_value = start + interval
+        out = []
+        while index < len(interval_column):
+            curData = []
+            while index < len(interval_column) and interval_column[index] < max_value:
+                curData.append(target_column[index])
+                index += 1
+            out.append((max_value-interval,curData))
+            max_value += interval
+        return out
+
+    def from_filter(self, filter):
+        new_data = [self.headers]
+        for row in self.rows:
+            if filter(self.headers, row):
+                new_data.append(row)
+        return Table(new_data)
+
+    def unique_values_from(self, header):
+        column = self.columns[header]
+        return set(column)
+
+    def add_rows(self, new_rows):
+        self.rows.extend(new_rows)
+        self.columns = columnize(self.headers, self.rows)
+
+    def save_as_csv(self, filepath):
+        outs = [array_to_csv(self.headers)]
+        for row in self.rows:
+            outs.append(array_to_csv(row))
+
+        out = '\n'.join(outs)
+        with open(filepath, 'w') as f:
+            f.write(out)
+
+    def merge_columns(self, col_a, col_b, col_new):
+        idx_a = self.headers.index(col_a)
+        idx_b = self.headers.index(col_b)
+
+        col_data = []
+        for val_a, val_b in zip(self.columns[col_a], self.columns[col_b]):
+            if val_a is not None:
+                col_data.append(val_a)
+            elif val_b is not None:
+                col_data.append(val_b)
+            else: col_data.append(None)
+        
+        self.remove(col_a)
+        self.remove(col_b)
+        self.columns[col_new] = col_data
+        self.headers = list(self.columns.keys())
+        self.rows = rowize(self.columns)
+
+
+def array_to_csv(arr):
+    strs = [str(v) for v in arr]
+    return ','.join(strs)
 
 # Sort key for rows
 def sort_on_column(index):
@@ -78,6 +155,13 @@ def columnize(headers, data):
         tbl[headers[i]] = l
     return tbl
 
+def rowize(columns):
+    rows = []
+    for tupl in zip(*columns.values()):
+        row = [v for v in tupl]
+        rows.append(row)
+    return rows
+
 # Remove the \n and split
 def separate(line):
     return line.replace('\n', '').split(';')
@@ -89,4 +173,3 @@ def read_in(filepath):
     data = list(map(separate, lines))
 
     return Table(data)
-

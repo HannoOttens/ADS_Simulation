@@ -8,6 +8,7 @@
   "turnAroundTimeMinutes": 5,
   "oneWayTripTimeMinutes": 17,
   "ucDualDriverSwitch": false,
+  "sdDrivingTimes":  0.1,
   "startStation": "P+R De Uithof",
   "endStation": "Centraal Station",
   "transferTimes": [

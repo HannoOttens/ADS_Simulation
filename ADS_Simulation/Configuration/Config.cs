@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 // All instantiated at start-of-app with JSON.
 #nullable disable
@@ -31,6 +29,7 @@ namespace ADS_Simulation.Configuration
         public int startTime;
         public int endTime;
         public bool ucDualDriverSwitch;
+        public float sdDrivingTimes;
         public string[] stations;
         public string startStation;
         public string endStation;
