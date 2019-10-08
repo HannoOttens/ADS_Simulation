@@ -38,8 +38,8 @@ namespace ADS_Simulation
         public static int passengerExchangeTime(int pOut, int pIn)
         {
             var d = 12.5 + 0.22 * pIn + 0.13 * pOut;
-            var g = Gamma.Sample(2, 1/d); // TODO: No mention of rate (scale) parameter in assignment, is this correct?
-            return (int)Math.Min(0.8d, g);
+            var g = Gamma.Sample(2, 2/d);
+            return (int)Math.Max(0.8 * d, g);
         }
 
         /// <summary>
