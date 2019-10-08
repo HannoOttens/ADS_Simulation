@@ -182,7 +182,7 @@ def rowize(columns):
 
 # Remove the \n and split
 def separate(line):
-    return line.replace('\n', '').split(',')
+    return line.replace('\n', '').split(';')
 
 # Read in a file as a table
 def read_in(filepath):
