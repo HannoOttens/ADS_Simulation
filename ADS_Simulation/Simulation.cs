@@ -27,7 +27,7 @@ namespace ADS_Simulation
             statistics = new List<Statistic>()
             {
                 //new PassengerWaitStatistic(),
-                //new TramLoadStatistic(),
+                new TramLoadStatistic(trams.Count),
                 new EmptyStationStatistic(stations.Count)
             };
         }
