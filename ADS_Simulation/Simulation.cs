@@ -39,6 +39,10 @@ namespace ADS_Simulation
             for (int i = 0; i < state.trams.Count; i++)
                 queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), Config.c.startTime + i * interval * 60);
 
+            // Initialize passenger arrivals
+            for (int i = 0; i < state.stations.Count; i++)
+                queue.Enqueue(new PassengerArrival(i), state.time + Sampling.timeUntilNextPassenger(state.time));
+
             return queue;
         }
 

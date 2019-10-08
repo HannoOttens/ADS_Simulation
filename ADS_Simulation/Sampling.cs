@@ -49,7 +49,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int timeUntilNextPassenger(int time)
         {
-            throw new NotImplementedException();
+            return 10; // TODO: time until next passenger 
         }
 
         /// <summary>
