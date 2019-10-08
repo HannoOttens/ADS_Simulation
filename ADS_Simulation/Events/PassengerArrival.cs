@@ -8,7 +8,7 @@ namespace ADS_Simulation.Events
 {
     class PassengerArrival : Event
     {
-        private int _stationIdx;
+        private readonly int _stationIdx;
 
         public PassengerArrival(int stationIdx)
         {

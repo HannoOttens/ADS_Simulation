@@ -23,7 +23,7 @@ namespace ADS_Simulation.NS_State
                 SwitchLane.ArrivalLane => state.arrival = false,
                 SwitchLane.DepartureLane => state.departure = false,
                 SwitchLane.Cross => state.cross = false,
-                _ => throw new Exception("Unknown switchlane")
+                _ => throw new Exception("Unknown switch lane")
             };
         }
 
@@ -37,7 +37,7 @@ namespace ADS_Simulation.NS_State
                 SwitchLane.ArrivalLane => state.arrival = true,
                 SwitchLane.DepartureLane => state.departure = true,
                 SwitchLane.Cross => state.cross = true,
-                _ => throw new Exception("Unknown switchlane")
+                _ => throw new Exception("Unknown switch lane")
             };
         }
 
@@ -64,7 +64,7 @@ namespace ADS_Simulation.NS_State
                 SwitchLane.ArrivalLane => !state.cross && !state.arrival,
                 SwitchLane.DepartureLane => !state.cross && !state.departure,
                 SwitchLane.Cross => !state.cross && !state.arrival && !state.departure,
-                _ => throw new Exception("Unknown switchlane")
+                _ => throw new Exception("Unknown switch lane")
             };
         }
     }

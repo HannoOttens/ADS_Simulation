@@ -7,15 +7,15 @@ namespace ADS_Simulation.NS_State
     public enum Direction
     {
         /// <summary>
-        /// P+R naar Centraal Station
+        /// P+R to Centraal Station
         /// </summary>
         A,
         /// <summary>
-        /// Centraal Station naar P+R
+        /// Centraal Station to P+R
         /// </summary>
         B,
         /// <summary>
-        /// Eindstation (P+R of Centraal Station)
+        /// Endstation (P+R or Centraal Station)
         /// </summary>
         END
     }
@@ -120,7 +120,7 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
-        /// Check if the station has waiting passenges
+        /// Check if the station has waiting passengers
         /// </summary>
         /// <returns>True when there are passengers waiting</returns>
         public bool HasPassengers()

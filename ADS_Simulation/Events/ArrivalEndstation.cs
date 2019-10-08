@@ -6,9 +6,9 @@ namespace ADS_Simulation.Events
 {
     class ArrivalEndstation : Event
     {
-        Tram tram;
-        Endstation station;
-        Platform platform;
+        readonly Tram tram;
+        readonly Endstation station;
+        readonly Platform platform;
 
         public ArrivalEndstation(Tram tram, Endstation station, Platform platform)
         {
@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}"); 
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
 
-            // Check if tram can do another round trip if it is at endstaion with depot
+            // Check if tram can do another round trip if it is at endstation with depot
             if (!station.TramToDepot(state.time))
             {
                 // Board and unboard
@@ -35,6 +35,8 @@ namespace ADS_Simulation.Events
                 int passengerTransferTime = state.time + Sampling.passengerExchangeTime(pOut, pIn);
                 int nextDepartureTime = station.NextDeparture();
                 int nextEventTime = Math.Max(passengerTransferTime, nextDepartureTime);
+
+                // TODO: Turn around time??
 
                 // Queue event
                 Event e = new ExpectedDepartureStartstation(tram, station, platform, nextDepartureTime);

@@ -6,8 +6,8 @@ namespace ADS_Simulation.Events
 {
     class ClearSwitchLane : Event
     {
-        Endstation station;
-        SwitchLane lane;
+        readonly Endstation station;
+        readonly SwitchLane lane;
 
         public ClearSwitchLane(Endstation station, SwitchLane lane)
         {
@@ -25,13 +25,13 @@ namespace ADS_Simulation.Events
              * - We have a possible incoming tram
              * - The incoming tram can never go to the departing tram platform (not free yet)
              * This means that if the departing tram is on platform B, the arriving tram cannot enter because the cross will be used.
-             * If the departing tram is on platform A, they can drive past eachother, so it's okay to queue the arrival. */
+             * If the departing tram is on platform A, they can drive past each other, so it's okay to queue the arrival. */
 
             // Clear the switch
             station._switch.FreeSwitch(lane);
 
             // Check if tram is in queue at switch, give priority to departing trams
-            (var departingTram, var departingPlatform) = station.GetFirstDepartingTram();
+            var (departingTram, departingPlatform) = station.GetFirstDepartingTram();
             if (departingTram != null)
             {
                 // Queue the departure
@@ -48,7 +48,7 @@ namespace ADS_Simulation.Events
                 && station.HasQueue() 
                 && (departingPlatform == Platform.None || departingPlatform == Platform.A))
             {
-                // Get best avaialbe platform && queue
+                // Get best available platform && queue
                 Tram arrivingTram = station.OccupyFromQueue(arrivalPlatform);
                 SwitchLane lane = Switch.ArrivalLaneFor(arrivalPlatform);
                 station._switch.UseSwitchLane(lane);
