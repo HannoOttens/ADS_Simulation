@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 
@@ -10,11 +8,11 @@ namespace ADS_Simulation.Statistics
     class EmptyStationStatistic : Statistic
     {
         int lastEventTime;
-        int stationCount;
+        readonly int stationCount;
 
         int totalEmptyTime;
-        int[] currentEmptyStationTime;
-        int[] longestEmptyStationTime;
+        readonly int[] currentEmptyStationTime;
+        readonly int[] longestEmptyStationTime;
 
         public EmptyStationStatistic(int stationCount)
         {

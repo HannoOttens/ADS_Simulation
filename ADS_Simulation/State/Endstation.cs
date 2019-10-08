@@ -1,8 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace ADS_Simulation.NS_State
 {
@@ -24,6 +22,7 @@ namespace ADS_Simulation.NS_State
         public readonly Switch _switch;
         private readonly bool hasDepot;
         private readonly TimeTable timeTable;
+        private Platform first;
 
         // tram at platform 2
         public Tram? occupant2;
@@ -33,32 +32,37 @@ namespace ADS_Simulation.NS_State
             this.hasDepot = hasDepot;
             _switch = new Switch();
             
-            //TODO: Juiste start-offset
-            timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
+            timeTable = new TimeTable(Config.c.startTime, Config.c.GetIntervalSeconds());
         }
 
         public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
         {
-            //TODO: Get the FIRST!! departing tram (A is not nesserily first)
-
-            if (occupant != null 
-                && occupant.IsReadyForDeparture() 
-                && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.A)))
+            // Tram on platform A arrived earlier
+            if (first == Platform.A)
             {
-                return (occupant, Platform.A);
+                if (occupant != null
+                    && occupant.IsReadyForDeparture()
+                    && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.A)))
+                {
+                    return (occupant, Platform.A);
+                }
             }
-            else if (occupant2 != null 
-                && occupant2.IsReadyForDeparture()
-                && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.B)))
+            // Tram on platform B arrived earlier
+            else if (first == Platform.B)
             {
-                return (occupant2, Platform.B);
+                if (occupant2 != null
+                    && occupant2.IsReadyForDeparture()
+                    && _switch.SwitchLaneFree(Switch.ExitLaneFor(Platform.B)))
+                {
+                    return (occupant2, Platform.B);
+                }
             }
 
             return (null, Platform.None);
         }
 
         /// <summary>
-        /// Get platform corresponing to occupant
+        /// Get platform corresponding to occupant
         /// </summary>
         /// <param name="tram">Tram</param>
         /// <returns>Platform at which the tram is stationed</returns>
@@ -118,13 +122,19 @@ namespace ADS_Simulation.NS_State
             {
                 Trace.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant?.id}");
                 occupant = tram;
+                occupant.IsDriving = false;
             }
             else if (platform == Platform.B)
             {
                 Trace.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2?.id}");
                 occupant2 = tram;
+                occupant2.IsDriving = false;
             }
             else throw new Exception($"Unknown platform {platform}.");
+
+            // No tram yet, so first arrival
+            if (first == Platform.None)
+                first = platform;
         }
 
         /// <summary>
@@ -136,11 +146,19 @@ namespace ADS_Simulation.NS_State
             if (platform == Platform.A)
             {
                 Trace.Assert(occupant != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+                if (first == Platform.A & occupant2 != null)
+                    first = Platform.B; // Tram on other platform is now first
+                else first = Platform.None;
+                occupant.IsDriving = true;
                 occupant = null;
             }
             else
             {
                 Trace.Assert(occupant2 != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+                if (first == Platform.B & occupant != null)
+                    first = Platform.A; // Tram on other platform is now first
+                else first = Platform.None;
+                occupant2.IsDriving = true;
                 occupant2 = null;
             }
         }

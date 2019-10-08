@@ -1,8 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace ADS_Simulation.NS_State
 {
@@ -12,9 +10,13 @@ namespace ADS_Simulation.NS_State
         public int passengerCount;
         private bool readyForDeparture;
 
+        // auxiliary variable for statistics 
+        private bool isDriving;
+
         public Tram(int id) {
             this.id = id;
             passengerCount = 0;
+            isDriving = false;
         }
 
         /// <summary>
@@ -74,6 +76,12 @@ namespace ADS_Simulation.NS_State
             passengerCount += count;
             if (passengerCount > Config.c.tramCapacity)
                 throw new Exception($"Tram capacity exceeded in tram {id} by {passengerCount - Config.c.tramCapacity}");
+        }
+
+        public bool IsDriving
+        {
+            set { isDriving = value; }
+            get { return isDriving; }
         }
     }
 }

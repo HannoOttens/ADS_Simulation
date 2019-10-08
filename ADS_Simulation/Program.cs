@@ -1,12 +1,9 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
-using ADS_Simulation.Statistics;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace ADS_Simulation
 {
@@ -36,7 +33,7 @@ namespace ADS_Simulation
                 if (gui)
                     DrawGUI(simulation);
 
-                // Addition between-step fuctionality
+                // Addition between-step functionality
                 eventCount++;
 
                 if (step)
@@ -201,12 +198,12 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
             void DrawTransitTrams(bool above)
             {
                 // Get correct events
-                var groupedTranits = simulation.eventQueue.OfType<ExpectedTramArrival>()
+                var groupedTransits = simulation.eventQueue.OfType<ExpectedTramArrival>()
                     .GroupBy(e => e.stationIndex);
                 var endTransits = simulation.eventQueue.OfType<ExpectedArrivalEndstation>()
                     .GroupBy(e => e.station.name);
                 int maxTransits = Math.Max(
-                    groupedTranits.Select(g => g.Count()).DefaultIfEmpty(0).Max(), 
+                    groupedTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max(), 
                     endTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max());
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -219,7 +216,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                         // Middle stations
                         for (int i = 1; i < state.stations.Count / 2; i++)
                         {
-                            var ts = groupedTranits.SingleOrDefault(k => k.Key == i);
+                            var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
                                 DrawTrainId(ts.ToList()[q].tram.id);
                             else
@@ -251,7 +248,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                         Console.Write(new string(' ', dotDist));
                         for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
                         {
-                            var ts = groupedTranits.SingleOrDefault(k => k.Key == i);
+                            var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
                                 DrawTrainId(ts.ToList()[q].tram.id);
                             else

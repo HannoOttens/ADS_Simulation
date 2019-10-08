@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ADS_Simulation.NS_State
 {
     class TimeTable
     {
-        int startAt;
-        int interval;
-        IEnumerator<int> timeTableEnumerator;
+        readonly int startAt;
+        readonly int interval;
+        readonly IEnumerator<int> timeTableEnumerator;
 
         public TimeTable(int startAt, int interval)
         {

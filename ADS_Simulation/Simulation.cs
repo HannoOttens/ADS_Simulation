@@ -3,16 +3,14 @@ using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using Priority_Queue;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace ADS_Simulation
 {
     class Simulation
     {
-        private const int MAX_EVENTS = 10000; // NOG GEEN IDEE OF DIT PAST
+        private const int MAX_EVENTS = 10000; // TODO: NOG GEEN IDEE OF DIT PAST
 
         public State state;
         public FastPriorityQueue<Event> eventQueue;
@@ -27,7 +25,7 @@ namespace ADS_Simulation
             statistics = new List<Statistic>()
             {
                 //new PassengerWaitStatistic(),
-                //new TramLoadStatistic(),
+                new TramLoadStatistic(trams.Count),
                 new EmptyStationStatistic(stations.Count)
             };
         }

@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ADS_Simulation.NS_State
 {
     public enum Direction
     {
         /// <summary>
-        /// P+R naar Centraal Station
+        /// P+R to Centraal Station
         /// </summary>
         A,
         /// <summary>
-        /// Centraal Station naar P+R
+        /// Centraal Station to P+R
         /// </summary>
         B,
         /// <summary>
-        /// Eindstation (P+R of Centraal Station)
+        /// Endstation (P+R or Centraal Station)
         /// </summary>
         END
     }
@@ -71,6 +70,7 @@ namespace ADS_Simulation.NS_State
                 occupant = tram;
             else
                 throw new Exception($"{tram.id} tried to occupy {name} in direction {direction}, but the station was full.");
+            tram.IsDriving = false;
         }
 
         // Put tram in station queue
@@ -94,6 +94,7 @@ namespace ADS_Simulation.NS_State
         /// <returns>True when station has no more trains in queue</returns>
         public void Free()
         {
+            occupant.IsDriving = true;
             occupant = null;
         }
 
@@ -118,7 +119,7 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
-        /// Check if the station has waiting passenges
+        /// Check if the station has waiting passengers
         /// </summary>
         /// <returns>True when there are passengers waiting</returns>
         public bool HasPassengers()

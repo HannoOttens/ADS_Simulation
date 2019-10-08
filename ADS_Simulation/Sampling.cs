@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using ADS_Simulation.Configuration;
 using MathNet.Numerics.Distributions;
-using MathNet.Numerics.Random;
 
 namespace ADS_Simulation
 {
@@ -28,7 +26,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int drivingTime(int averageForPart)
         {
-            return (int)LogNormal.Sample(Math.Log(averageForPart), 0.1);
+            return (int)LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
         }
 
         /// <summary>
@@ -39,8 +37,9 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int passengerExchangeTime(int pOut, int pIn)
         {
-            //TODO: Implement
-            return pOut + pIn;
+            var d = 12.5 + 0.22 * pIn + 0.13 * pOut;
+            var g = Gamma.Sample(2, 2/d);
+            return (int)Math.Max(0.8 * d, g);
         }
 
         /// <summary>

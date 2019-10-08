@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -8,7 +5,7 @@ namespace ADS_Simulation.Events
 {
     class ExpectedTramArrival : Event
     {
-        // Public wegens GUI
+        // Public because of GUI
         public readonly Tram tram;
         public readonly int stationIndex;
 

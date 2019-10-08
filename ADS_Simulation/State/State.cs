@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-// NS_ prefix wegens namespace conflict
+// NS_ prefix due to namespace conflict
 namespace ADS_Simulation.NS_State
 {
     public class State
