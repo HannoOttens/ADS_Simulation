@@ -19,7 +19,7 @@ namespace ADS_Simulation.Statistics
             counter = 0;
 
             totalPassengerCount = new int[tramCount];
-            lowestPassengerCount = new int[tramCount];
+            lowestPassengerCount = Enumerable.Repeat(int.MaxValue, tramCount).ToArray();
             isDriving = new bool[tramCount];
         }
 
@@ -36,8 +36,8 @@ namespace ADS_Simulation.Statistics
 
                 isDriving[tramIndex] = true;
                 totalPassengerCount[tramIndex] += tram.passengerCount;
-                if (totalPassengerCount[tramIndex] < lowestPassengerCount[tramIndex])
-                    lowestPassengerCount[tramIndex] = lowestPassengerCount[tramIndex];
+                if (tram.passengerCount < lowestPassengerCount[tramIndex])
+                    lowestPassengerCount[tramIndex] = tram.passengerCount;
                 counter++;
             }
         }
@@ -47,10 +47,15 @@ namespace ADS_Simulation.Statistics
             return (float)totalPassengerCount.Sum() / (counter * Configuration.Config.c.tramCapacity);
         }
 
+        public int LowestTramLoad()
+        {
+            return lowestPassengerCount.Min();
+        }
+
         public override void Print(State state)
         {
-            Console.WriteLine($"Average passenger load: {TotalAverageTramLoad()}");
-            
+            Console.WriteLine($"Average tram load: {TotalAverageTramLoad()}");
+            Console.WriteLine($"Lowest tram load: {LowestTramLoad()}");
         }
     }
 }
