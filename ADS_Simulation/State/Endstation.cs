@@ -34,8 +34,7 @@ namespace ADS_Simulation.NS_State
             this.hasDepot = hasDepot;
             _switch = new Switch();
             
-            //TODO: Juiste start-offset
-            timeTable = new TimeTable(0, Config.c.GetIntervalSeconds());
+            timeTable = new TimeTable(Config.c.startTime, Config.c.GetIntervalSeconds());
         }
 
         public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
