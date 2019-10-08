@@ -41,7 +41,7 @@ namespace ADS_Simulation
 
             // Initialize passenger arrivals
             for (int i = 0; i < state.stations.Count; i++)
-                queue.Enqueue(new PassengerArrival(i), state.time + Sampling.timeUntilNextPassenger(state.time));
+                queue.Enqueue(new PassengerArrival(i), state.time + Sampling.timeUntilNextPassenger(state.time, state.stations[i]));
 
             return queue;
         }

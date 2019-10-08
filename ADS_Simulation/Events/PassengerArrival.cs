@@ -18,7 +18,7 @@ namespace ADS_Simulation.Events
             state.stations[_stationIdx].waitingPassengers.Enqueue(state.time);
 
             //Enqueue next passenger arrival
-            int timeUntilNext = Sampling.timeUntilNextPassenger(state.time);
+            int timeUntilNext = Sampling.timeUntilNextPassenger(state.time, state.stations[_stationIdx]);
             eventQueue.Enqueue(new PassengerArrival(_stationIdx), state.time + timeUntilNext);
         }
     }

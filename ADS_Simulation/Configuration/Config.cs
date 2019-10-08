@@ -10,11 +10,19 @@ namespace ADS_Simulation.Configuration
     static class Config
     {
         public static ConfigData c;
+        public static List<string[]> indata = new List<string[]>();
+        public static List<string[]> outdata = new List<string[]>();
 
-        public static void readConfig(string pathToConfig)
+        public static void readConfig(string pathToConfig, string inPath, string outPath)
         {
             string configStr = File.ReadAllText(pathToConfig);
             c = JsonConvert.DeserializeObject<ConfigData>(configStr);
+            using (var reader = new StreamReader(inPath))
+                while (!reader.EndOfStream)
+                    indata.Add(reader.ReadLine().Split(','));
+            using (var reader = new StreamReader(outPath))
+                while (!reader.EndOfStream)
+                    outdata.Add(reader.ReadLine().Split(','));
         }
     }
 

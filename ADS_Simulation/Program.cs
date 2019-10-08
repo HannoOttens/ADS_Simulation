@@ -12,6 +12,8 @@ namespace ADS_Simulation
         static readonly Stopwatch stopwatch = new Stopwatch();
 
         static string configPath = "../../../config.json";
+        static string inPath = "../../../in.csv";
+        static string outPath = "../../../out.csv";
 
         static bool step = false;
         static bool gui = false;
@@ -24,7 +26,7 @@ namespace ADS_Simulation
             MarshallArgs(args);
 
             // Initialize config
-            Config.readConfig(configPath);
+            Config.readConfig(configPath, inPath, outPath);
 
             // Initialize simulation
             Simulation simulation = new Simulation();
