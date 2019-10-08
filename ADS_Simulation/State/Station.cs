@@ -71,6 +71,7 @@ namespace ADS_Simulation.NS_State
                 occupant = tram;
             else
                 throw new Exception($"{tram.id} tried to occupy {name} in direction {direction}, but the station was full.");
+            tram.IsDriving = false;
         }
 
         // Put tram in station queue
@@ -94,6 +95,7 @@ namespace ADS_Simulation.NS_State
         /// <returns>True when station has no more trains in queue</returns>
         public void Free()
         {
+            occupant.IsDriving = true;
             occupant = null;
         }
 
