@@ -146,6 +146,7 @@ namespace ADS_Simulation.NS_State
             if (platform == Platform.A)
             {
                 Trace.Assert(occupant != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+
                 if (first == Platform.A & occupant2 != null)
                     first = Platform.B; // Tram on other platform is now first
                 else first = Platform.None;
@@ -155,6 +156,7 @@ namespace ADS_Simulation.NS_State
             else
             {
                 Trace.Assert(occupant2 != null, $"Tried to free platform {platform} on {name}, but platform was free already.");
+
                 if (first == Platform.B & occupant != null)
                     first = Platform.A; // Tram on other platform is now first
                 else first = Platform.None;

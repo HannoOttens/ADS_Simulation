@@ -10,7 +10,7 @@ namespace ADS_Simulation
     class Program
     {
         static readonly Stopwatch stopwatch = new Stopwatch();
-        
+
         static string configPath = "../../../config.json";
 
         static bool step = false;
@@ -42,7 +42,7 @@ namespace ADS_Simulation
 
             Console.WriteLine(@$"Went through {eventCount} events.
 The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
-The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
+The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");
 
             // Print statistic output
@@ -78,10 +78,11 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                 else
                     DrawOccupants(true);
 
-                Console.Write(new string(' ', dotDist / 2));
+                string toOut = new string(' ', dotDist / 2);
                 for (int i = 0; i * 2 < state.stations.Count; i++)
-                    Console.Write("O" + new string('-', dotDist - 1));
-                Console.WriteLine("O    ");
+                    toOut += "O" + new string('-', dotDist - 1);
+                toOut += "O    ";
+                Console.WriteLine(toOut);
 
                 if (!nameAbove)
                     DrawStationNames();
@@ -91,6 +92,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
 
             void DrawStationNames()
             {
+                string toOut = "";
                 for (int i = 0; i * 2 <= state.stations.Count; i++)
                 {
                     string name = state.stations[i].name;
@@ -106,9 +108,9 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                     if (outt.Length == dotDist - 1)
                         outt = ' ' + outt;
 
-                    Console.Write(outt);
+                    toOut += outt;
                 }
-                Console.WriteLine();
+                Console.WriteLine(toOut);
             }
 
             void DrawOccupants(bool above)
@@ -119,18 +121,20 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                     DrawStationQueues(above);
                 }
 
-                Console.ForegroundColor = ConsoleColor.Green;
+                string toOut = "";
                 if (above)
                     for (int i = 0; i <= state.stations.Count / 2; i++)
-                        DrawOccupant(i, above);
+                        toOut += OccupantString(i, above);
                 else
                 {
-                    DrawOccupant(0, above);
+                    toOut += OccupantString(0, above);
                     for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
-                        DrawOccupant(i, above);
+                        toOut += OccupantString(i, above);
                 }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(toOut);
                 Console.ResetColor();
-                Console.WriteLine();
 
                 if (!above)
                 {
@@ -139,7 +143,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                 }
             }
 
-            void DrawOccupant(int i, bool above)
+            string OccupantString(int i, bool above)
             {
                 Tram? occupant = state.stations[i].occupant;
                 if (state.stations[i] is Endstation endstation)
@@ -149,113 +153,114 @@ The simulation took {(stopwatch.ElapsedMilliseconds/1000f).ToString("n2")}s
                         occupant = endstation.occupant2;
 
                 if (occupant != null)
-                    DrawTrainId(occupant.id);
-                else Console.Write(new string(' ', dotDist));
+                    return DrawTrainId(occupant.id);
+                else return new string(' ', dotDist);
             }
 
-            void DrawTrainId(int id)
+            string DrawTrainId(int id)
             {
                 string occupantName = id.ToString();
                 string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
                 string outt = emptySpace + occupantName + emptySpace;
                 if (outt.Length == dotDist - 1)
                     outt = ' ' + outt;
-                Console.Write(outt);
+                return outt;
             }
 
             void DrawStationQueues(bool above)
             {
                 int biggestQueue = state.stations.Max(v => v.incomingTrams.Count);
-                Console.ForegroundColor = ConsoleColor.Yellow;
 
+                string toOut = "";
                 if (above)
                 {
                     for (int q = biggestQueue - 1; q >= 0; q--)
                     {
                         for (int i = 0; i < state.stations.Count / 2; i++)
                             if (q < state.stations[i].incomingTrams.Count)
-                                DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                                toOut += DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
                             else
-                                Console.Write(new string(' ', dotDist));
-                        Console.WriteLine();
+                                toOut += new string(' ', dotDist);
+                        toOut += "\n";
                     }
                 }
                 else
                     for (int q = 0; q < biggestQueue; q++)
                     {
-                        Console.Write(new string(' ', dotDist));
+                        toOut += new string(' ', dotDist);
                         for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
                             if (q < state.stations[i].incomingTrams.Count)
-                                DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                                toOut += DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
                             else
-                                Console.Write(new string(' ', dotDist));
-                        Console.WriteLine();
+                                toOut += new string(' ', dotDist);
+                        toOut += "\n";
                     }
 
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(toOut);
                 Console.ResetColor();
             }
 
             void DrawTransitTrams(bool above)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                
                 // Get correct events
                 var groupedTransits = simulation.eventQueue.OfType<ExpectedTramArrival>()
                     .GroupBy(e => e.stationIndex);
                 var endTransits = simulation.eventQueue.OfType<ExpectedArrivalEndstation>()
                     .GroupBy(e => e.station.name);
                 int maxTransits = Math.Max(
-                    groupedTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max(), 
+                    groupedTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max(),
                     endTransits.Select(g => g.Count()).DefaultIfEmpty(0).Max());
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
 
                 if (above)
                     for (int q = maxTransits - 1; q >= 0; q--)
                     {
-                        Console.Write(new string(' ', dotDist/2));
+                        string toOut = new string(' ', dotDist / 2);
 
                         // Middle stations
                         for (int i = 1; i < state.stations.Count / 2; i++)
                         {
                             var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
-                                DrawTrainId(ts.ToList()[q].tram.id);
+                                toOut += DrawTrainId(ts.ToList()[q].tram.id);
                             else
-                                Console.Write(new string(' ', dotDist));
+                                toOut += new string(' ', dotDist);
                         }
 
                         // Utrecht Centraal
                         var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.endStation);
                         if (q < tes?.Count())
-                            DrawTrainId(tes.ToList()[q].tram.id);
+                            toOut += DrawTrainId(tes.ToList()[q].tram.id);
                         else
-                            Console.Write(new string(' ', dotDist));
+                            toOut += new string(' ', dotDist);
 
-                        Console.WriteLine();
+                        Console.WriteLine(toOut);
                     }
                 else
                     for (int q = 0; q < maxTransits; q++)
                     {
-                        Console.Write(new string(' ', dotDist / 2));
+                        string toOut = new string(' ', dotDist / 2);
 
                         // P+R
                         var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.startStation);
                         if (q < tes?.Count())
-                            DrawTrainId(tes.ToList()[q].tram.id);
+                            toOut += DrawTrainId(tes.ToList()[q].tram.id);
                         else
-                            Console.Write(new string(' ', dotDist));
+                            toOut += new string(' ', dotDist);
 
                         // Middle stations
-                        Console.Write(new string(' ', dotDist));
                         for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
                         {
                             var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
-                                DrawTrainId(ts.ToList()[q].tram.id);
+                                toOut += DrawTrainId(ts.ToList()[q].tram.id);
                             else
-                                Console.Write(new string(' ', dotDist));
+                                toOut += new string(' ', dotDist);
                         }
 
-                        Console.WriteLine();
+                        Console.WriteLine(toOut);
                     }
 
                 Console.ResetColor();

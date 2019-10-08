@@ -2,6 +2,7 @@ import readin
 import datetime
 import time
 import statistics
+import fit
 from tabulate import tabulate
 
 
@@ -55,7 +56,7 @@ stations = data_table.unique_values_from('haltenaam')
 directions = [0,1]
 
 def to_normal_values(column):
-    new_headers = ['stop', 'direction', 'time', 'average', 'sd']
+    new_headers = ['stop', 'direction', 'time', 'average', 'sd', 'distribution', 'params']
     t_result = readin.Table([new_headers])
     for station in stations:
         for direction in directions:
@@ -76,7 +77,9 @@ def to_normal_values(column):
                 else:
                     average = statistics.mean(c)
                     sd = statistics.stdev(c)
-                b.add_rows([[station, direction, interval, average, sd]])
+
+                (distrubution, best_params) = fit.best_fit_distribution(c)
+                b.add_rows([[station, direction, interval, average, sd, distrubution, best_params]])
             # print("================================")
             # print(station, direction)
             # print("================================")
