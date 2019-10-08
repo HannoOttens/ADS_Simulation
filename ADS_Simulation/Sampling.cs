@@ -11,12 +11,6 @@ namespace ADS_Simulation
     /// </summary>
     static class Sampling
     {
-        static void initializeDistributions()
-        {
-            //TODO: Maak distributie objecten hier
-        }
-
-
         /// <summary>
         /// The time it takes to clear a switch
         /// </summary>

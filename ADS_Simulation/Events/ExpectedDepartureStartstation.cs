@@ -8,10 +8,10 @@ namespace ADS_Simulation.Events
 {
     class ExpectedDepartureStartstation : Event
     {
-        private Tram tram;
-        private Endstation station;
-        private Platform platform;
-        private int timeTableTime;
+        private readonly Tram tram;
+        private readonly Endstation station;
+        private readonly Platform platform;
+        private readonly int timeTableTime;
 
         public ExpectedDepartureStartstation(Tram tram, Endstation station, Platform platform, int timeTableTime)
         {

@@ -9,8 +9,8 @@ namespace ADS_Simulation.Events
     class ExpectedTramArrival : Event
     {
         // Public wegens GUI
-        public Tram tram;
-        public int stationIndex;
+        public readonly Tram tram;
+        public readonly int stationIndex;
 
         public ExpectedTramArrival(Tram tram, int stationIndex)
         {

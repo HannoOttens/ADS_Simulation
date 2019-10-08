@@ -21,9 +21,9 @@ namespace ADS_Simulation.NS_State
 
     class Endstation : Station
     {
-        public Switch _switch;
-        private bool hasDepot;
-        private TimeTable timeTable;
+        public readonly Switch _switch;
+        private readonly bool hasDepot;
+        private readonly TimeTable timeTable;
         private Platform first;
 
         // tram at platform 2
