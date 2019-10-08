@@ -135,7 +135,7 @@ namespace ADS_Simulation.NS_State
         public (int pOut, int pIn) UnboardAndBoard(Tram tram, int maxUnboard)
         {
             // First empty the tram
-            int pOut = tram.EmptyPassengers(maxUnboard); //TODO: Don;t empty, but stochastic number
+            int pOut = tram.EmptyPassengers(maxUnboard); 
 
             // Then board the passengers
             int pIn = BoardPassengers(tram);

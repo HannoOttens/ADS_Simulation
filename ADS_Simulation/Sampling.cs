@@ -63,7 +63,7 @@ namespace ADS_Simulation
 
         internal static int unboardingPassengerCount(int stationIndex, int time)
         {
-            throw new NotImplementedException();
+            return int.MaxValue; // TODO: Dist
         }
     }
 }
