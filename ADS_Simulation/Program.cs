@@ -12,7 +12,7 @@ namespace ADS_Simulation
 {
     class Program
     {
-        static Stopwatch stopwatch = new Stopwatch();
+        static readonly Stopwatch stopwatch = new Stopwatch();
         
         static string configPath = "../../../config.json";
 

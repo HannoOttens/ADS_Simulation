@@ -6,8 +6,8 @@ namespace ADS_Simulation.Events
 {
     class ClearSwitchLane : Event
     {
-        Endstation station;
-        SwitchLane lane;
+        readonly Endstation station;
+        readonly SwitchLane lane;
 
         public ClearSwitchLane(Endstation station, SwitchLane lane)
         {

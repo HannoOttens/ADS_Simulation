@@ -8,8 +8,8 @@ namespace ADS_Simulation.Events
 {
     class ExpectedArrivalEndstation : Event
     {
-        public Tram tram;
-        public Endstation station;
+        public readonly Tram tram;
+        public readonly Endstation station;
 
         public ExpectedArrivalEndstation(Tram tram, Endstation station)
         {

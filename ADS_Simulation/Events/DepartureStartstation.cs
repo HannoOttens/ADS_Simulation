@@ -9,9 +9,9 @@ namespace ADS_Simulation.Events
 {
     class DepartureStartstation : Event
     {
-        private Tram tram;
-        private Endstation station;
-        private Platform platform;
+        private readonly Tram tram;
+        private readonly Endstation station;
+        private readonly Platform platform;
 
         public DepartureStartstation(Tram tram, Endstation station, Platform platform)
         {
