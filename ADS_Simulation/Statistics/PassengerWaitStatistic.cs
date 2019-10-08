@@ -15,10 +15,10 @@ namespace ADS_Simulation.Statistics
         (int totalTime, int passengers)[] totalWaitingTime;
         int[] longestWaitTime;
 
-        public PassengerWaitStatistic(int stationCount, int startTime)
+        public PassengerWaitStatistic(int stationCount)
         {
             this.stationCount = stationCount;
-            lastEventTime = startTime;
+            lastEventTime = Configuration.Config.c.startTime;
 
             currentTotalWaitingTime = new (int, int)[stationCount];
             totalWaitingTime = new (int, int)[stationCount];
@@ -31,16 +31,27 @@ namespace ADS_Simulation.Statistics
             for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
             {
                 station = state.stations[stationIdx];
+
+                // Check if tram has just departed from station
                 if (station.HasPassengers())
                 {
-                    var current = (station.waitingPassengers.Aggregate((sum, queueTime) => sum += state.time - queueTime), station.waitingPassengers.Count);
+                    var current = currentTotalWaitingTime[stationIdx];
+
+                    // Calculate total waiting time of passengers arrived in de mean time
+                    int newPassengers = station.waitingPassengers.Count - current.passengers;
+                    current.totalTime += station.waitingPassengers.TakeLast(newPassengers).Aggregate(0, (sum, queueTime) => sum + state.time - queueTime)
+                        + (state.time - lastEventTime) * current.passengers;
+                    current.passengers += newPassengers;
                     currentTotalWaitingTime[stationIdx] = current;
+
+                    // Check if longest wait time has changed
                     int waitTime = state.time - station.waitingPassengers.Peek();
                     if (waitTime > longestWaitTime[stationIdx])
                         longestWaitTime[stationIdx] = waitTime;
                 }
                 else
                 {
+                    // Add intermeadiate waiting times to total waiting time on station
                     totalWaitingTime[stationIdx].passengers += currentTotalWaitingTime[stationIdx].passengers;
                     totalWaitingTime[stationIdx].totalTime += currentTotalWaitingTime[stationIdx].totalTime;
                     currentTotalWaitingTime[stationIdx] = (0, 0);
@@ -49,9 +60,21 @@ namespace ADS_Simulation.Statistics
             lastEventTime = state.time;
         }
 
+        public List<int> AverageWaitingTime()
+        {
+            return totalWaitingTime.Select((record) => record.passengers == 0 ? 0 : record.totalTime / record.passengers).ToList();
+        } 
+
         public override void Print(State state)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Average waiting time per station (station, average, max):");
+
+            var average = AverageWaitingTime();
+            for (int i = 0; i < stationCount; i++)
+            {
+                Station station = state.stations[i];
+                Console.WriteLine($"{station.name} - {station.direction} - {average[i]} - {longestWaitTime[i]}");
+            }
         }
     }
 }
