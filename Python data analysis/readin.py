@@ -1,3 +1,4 @@
+from collections import defaultdict
 
 class Table:
     def __init__(self, data):
@@ -129,6 +130,23 @@ class Table:
         self.headers = list(self.columns.keys())
         self.rows = rowize(self.columns)
 
+    def most_common_value(self, header):
+        column = self.columns[header]
+        value_counters = list(set(column))
+        value_counters_map = defaultdict(lambda : 0)
+        for v in column:
+            value_counters_map[v]+=1
+
+        max_val = 0
+        v_max = None
+
+        for k, v in value_counters_map.items():
+            if v > max_val:
+                max_val = v
+                v_max = k
+
+        return v_max
+
 
 def array_to_csv(arr):
     strs = [str(v) for v in arr]
@@ -164,7 +182,7 @@ def rowize(columns):
 
 # Remove the \n and split
 def separate(line):
-    return line.replace('\n', '').split(';')
+    return line.replace('\n', '').split(',')
 
 # Read in a file as a table
 def read_in(filepath):

@@ -60,6 +60,7 @@ def to_normal_values(column):
     t_result = readin.Table([new_headers])
     for station in stations:
         for direction in directions:
+            print(station, direction)
             t2 = data_table.from_filter(stationDirectionFilter(station,direction))
 
             # Bin Dta
@@ -67,6 +68,7 @@ def to_normal_values(column):
                 column, 15, 'time')
 
             b = readin.Table([new_headers])
+            (distrubution, best_params) = (None, None)
             for interval, c in data:
                 if(len(c) == 0):
                     average = 0
@@ -77,8 +79,8 @@ def to_normal_values(column):
                 else:
                     average = statistics.mean(c)
                     sd = statistics.stdev(c)
+                    (distrubution, best_params) = fit.best_fit_distribution(c)
 
-                (distrubution, best_params) = fit.best_fit_distribution(c)
                 b.add_rows([[station, direction, interval, average, sd, distrubution, best_params]])
             # print("================================")
             # print(station, direction)
