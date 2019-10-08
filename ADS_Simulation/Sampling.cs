@@ -1,4 +1,5 @@
 ﻿using System;
+using ADS_Simulation.Configuration;
 using MathNet.Numerics.Distributions;
 
 namespace ADS_Simulation
@@ -25,7 +26,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int drivingTime(int averageForPart)
         {
-            return (int)LogNormal.Sample(Math.Log(averageForPart), 0.1);
+            return (int)LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
         }
 
         /// <summary>
