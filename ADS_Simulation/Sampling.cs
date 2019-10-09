@@ -77,9 +77,9 @@ namespace ADS_Simulation
                      values[1] == "1" && station.direction == Direction.B) &&
                     int.Parse(values[2]) * 60 <= time && time <= (int.Parse(values[2]) + 15) * 60)
                 {
-                    var mean = double.Parse(values[3]);
-                    var sd = double.Parse(values[4]);
-                    return (int)Normal.Sample(mean, sd);
+                    var mean = Math.Log(double.Parse(values[3]));
+                    var sd = Math.Log(double.Parse(values[4]));
+                    return (int)LogNormal.Sample(mean, sd);
                 }
             return 10;// TODO: in and out files don't have all data yet
         }
