@@ -75,10 +75,12 @@ namespace ADS_Simulation
                 if (values[0] == station.name &&
                     (values[1] == "0" && station.direction == Direction.A ||
                      values[1] == "1" && station.direction == Direction.B) &&
-                    int.Parse(values[2]) * 60 <= time && time <= (int.Parse(values[2]) + 15) * 60)
+                    int.Parse(values[2]) * 60 <= time && time < (int.Parse(values[2]) + 15) * 60)
                 {
                     var mean = Math.Log(double.Parse(values[3]));
+                    if (mean <= 0) mean = 0.00001;
                     var sd = Math.Log(double.Parse(values[4]));
+                    if (sd <= 0) sd = 0.00001;
                     return (int)LogNormal.Sample(mean, sd);
                 }
             return 10;// TODO: in and out files don't have all data yet
