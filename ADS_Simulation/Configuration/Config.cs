@@ -28,9 +28,9 @@ namespace ADS_Simulation.Configuration
             Dictionary<(string, int), int> nameToIndex = new Dictionary<(string, int), int>();
             for (int i = 0; i < c.transferTimes.Length; i++)
             {
-                c.transferTimes[i].averageExit = new float[maxIndex];
-                c.transferTimes[i].standardDeviationExit = new float[maxIndex];
-                c.transferTimes[i].arivalRate = new float[maxIndex];
+                c.transferTimes[i].averageExit = new double[maxIndex];
+                c.transferTimes[i].standardDeviationExit = new double[maxIndex];
+                c.transferTimes[i].arivalRate = new double[maxIndex];
                 nameToIndex.Add((c.transferTimes[i].from, direction), i);
 
                 // Swap direction halfway
@@ -50,8 +50,8 @@ namespace ADS_Simulation.Configuration
 
                     var idx = (data[0], int.Parse(data[1]));
                     var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = float.Parse(data[3]); 
-                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = float.Parse(data[4]);
+                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3]); 
+                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4]);
                 }
             header = true;
             using (var reader = new StreamReader(outPath))
@@ -62,7 +62,7 @@ namespace ADS_Simulation.Configuration
 
                     var idx = (data[0], int.Parse(data[1]));
                     var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].arivalRate[idxT] = float.Parse(data[3]);
+                    c.transferTimes[nameToIndex[idx]].arivalRate[idxT] = double.Parse(data[3]);
                 }
         }
     }
@@ -98,8 +98,8 @@ namespace ADS_Simulation.Configuration
         public int index;
 
         // Arrays for distrubutions, indexed on x-th 15 minute range
-        public float[] averageExit;
-        public float[] standardDeviationExit;
-        public float[] arivalRate;
+        public double[] averageExit;
+        public double[] standardDeviationExit;
+        public double[] arivalRate;
     }
 }

@@ -49,15 +49,11 @@ namespace ADS_Simulation
         /// <param name="time">Needed to get the correct poisson time range</param>
         /// <param name="station">Station where the passenger arrives</param>
         /// <returns></returns>
-        public static int timeUntilNextPassenger(int time, Station station)
+        public static int timeUntilNextPassenger(int time, int stationIndex)
         {
-            foreach(string[] values in Config.indata)
-                    if (values[0] == station.name &&
-                        (values[1] == "0" && station.direction == Direction.A ||
-                         values[1] == "1" && station.direction == Direction.B) &&
-                        int.Parse(values[2]) * 60 <= time && time <= (int.Parse(values[2]) + 15) * 60)
-                        return Poisson.Sample(Math.Max(0.1, double.Parse(values[3])));
-            return 10; // TODO: in and out files don't have all data yet
+            int idxT = Math.Min(time / 15, Config.c.transferTimes[stationIndex].arivalRate.Length - 1);
+            double mean = Config.c.transferTimes[stationIndex].arivalRate[idxT];
+            return Poisson.Sample(Math.Max(0.1, mean));
         }
 
         /// <summary>
@@ -69,21 +65,16 @@ namespace ADS_Simulation
             return 40;
         }
 
-        internal static int unboardingPassengerCount(int time, Station station)
+        internal static int unboardingPassengerCount(int time, int stationIndex)
         {
-            foreach (string[] values in Config.outdata)
-                if (values[0] == station.name &&
-                    (values[1] == "0" && station.direction == Direction.A ||
-                     values[1] == "1" && station.direction == Direction.B) &&
-                    int.Parse(values[2]) * 60 <= time && time < (int.Parse(values[2]) + 15) * 60)
-                {
-                    var mean = Math.Log(double.Parse(values[3]));
-                    if (mean <= 0) mean = 0.00001;
-                    var sd = Math.Log(double.Parse(values[4]));
-                    if (sd <= 0) sd = 0.00001;
-                    return (int)LogNormal.Sample(mean, sd);
-                }
-            return 10;// TODO: in and out files don't have all data yet
+            int idxT = Math.Min(time / 15, Config.c.transferTimes[stationIndex].arivalRate.Length - 1);
+            double mean = Config.c.transferTimes[stationIndex].averageExit[idxT];
+            double sd = Config.c.transferTimes[stationIndex].standardDeviationExit[idxT];
+
+            double log_mean = Math.Max(0.000001, Math.Log(mean));
+            double log_sd = Math.Max(0.000001, Math.Log(sd));
+
+            return (int)LogNormal.Sample(log_mean, log_sd);
         }
     }
 }
