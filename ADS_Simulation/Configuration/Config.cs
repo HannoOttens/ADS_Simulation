@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -17,12 +18,52 @@ namespace ADS_Simulation.Configuration
         {
             string configStr = File.ReadAllText(pathToConfig);
             c = JsonConvert.DeserializeObject<ConfigData>(configStr);
+
+            // Sort stations on index
+            Array.Sort(c.transferTimes, (a, b) => a.index.CompareTo(b.index));
+
+            // Read in the data & create dictionary to quickly index stations
+            int maxIndex = c.endTime / 15;
+            int direction = 0;
+            Dictionary<(string, int), int> nameToIndex = new Dictionary<(string, int), int>();
+            for (int i = 0; i < c.transferTimes.Length; i++)
+            {
+                c.transferTimes[i].averageExit = new float[maxIndex];
+                c.transferTimes[i].standardDeviationExit = new float[maxIndex];
+                c.transferTimes[i].arivalRate = new float[maxIndex];
+                nameToIndex.Add((c.transferTimes[i].from, direction), i);
+
+                // Swap direction halfway
+                if (direction == 0 && i == c.transferTimes.Length / 2)
+                {
+                    direction = 1;  i--;
+                }
+            }
+
+            // Parse in the CSVs
+            bool header = true;
             using (var reader = new StreamReader(inPath))
                 while (!reader.EndOfStream)
-                    indata.Add(reader.ReadLine().Split(','));
+                {
+                    string[] data = reader.ReadLine().Split(',');
+                    if (header) { header = false; continue; } // Skip header
+
+                    var idx = (data[0], int.Parse(data[1]));
+                    var idxT = int.Parse(data[2]) / 15;
+                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = float.Parse(data[3]); 
+                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = float.Parse(data[4]);
+                }
+            header = true;
             using (var reader = new StreamReader(outPath))
                 while (!reader.EndOfStream)
-                    outdata.Add(reader.ReadLine().Split(','));
+                {
+                    string[] data = reader.ReadLine().Split(',');
+                    if (header) { header = false; continue; } // Skip header
+
+                    var idx = (data[0], int.Parse(data[1]));
+                    var idxT = int.Parse(data[2]) / 15;
+                    c.transferTimes[nameToIndex[idx]].arivalRate[idxT] = float.Parse(data[3]);
+                }
         }
     }
 
@@ -38,10 +79,9 @@ namespace ADS_Simulation.Configuration
         public int endTime;
         public bool ucDualDriverSwitch;
         public float sdDrivingTimes;
-        public string[] stations;
         public string startStation;
         public string endStation;
-        public List<StationData> transferTimes;
+        public StationData[] transferTimes;
 
         internal int GetIntervalSeconds()
         {
@@ -56,5 +96,10 @@ namespace ADS_Simulation.Configuration
         public float distance;
         public int averageTime;
         public int index;
+
+        // Arrays for distrubutions, indexed on x-th 15 minute range
+        public float[] averageExit;
+        public float[] standardDeviationExit;
+        public float[] arivalRate;
     }
 }

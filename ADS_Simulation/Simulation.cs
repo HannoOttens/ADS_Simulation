@@ -3,6 +3,7 @@ using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using Priority_Queue;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -72,9 +73,6 @@ namespace ADS_Simulation
         /// <returns>The list of stations</returns>
         private List<Station> CreateStations()
         {
-            // Sort stations on index
-            Config.c.transferTimes.Sort((a, b) => a.index.CompareTo(b.index));
-
             var stations = new List<Station>();
 
             // Start in direction A
