@@ -27,7 +27,7 @@ namespace ADS_Simulation
                 // Whole simulation
                 (Config.c.startTime,  int.MaxValue),
                 // 7:30 - 9:30
-                ((int)7.5*60*60,  (int)9.5*60*60),
+                (75*6*60,  95*6*60),
                 // 16:00 - 18:00
                 (16*60*60,  18*60*60)
             });
