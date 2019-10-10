@@ -13,6 +13,8 @@ namespace ADS_Simulation.NS_State
             this.startAt = startAt;
             this.interval = interval;
             timeTableEnumerator = MakeEnumerator().GetEnumerator();
+            // Init value
+            timeTableEnumerator.MoveNext();
         }
 
         private IEnumerable<int> MakeEnumerator()
@@ -30,6 +32,11 @@ namespace ADS_Simulation.NS_State
             int t = timeTableEnumerator.Current;
             timeTableEnumerator.MoveNext();
             return t;
+        }
+
+        public int Current()
+        {
+            return timeTableEnumerator.Current;
         }
     }
 }

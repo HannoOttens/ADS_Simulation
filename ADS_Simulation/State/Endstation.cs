@@ -112,6 +112,15 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
+        /// Get the time of next departure without incrementing
+        /// </summary>
+        /// <returns>The time of next departure</returns>
+        public int PeekNextDeparture()
+        {
+            return timeTable.Current();
+        }
+
+        /// <summary>
         /// Occupy a platform of the station
         /// </summary>
         /// <param name="tram">The new occupant</param>
