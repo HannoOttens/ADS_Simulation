@@ -22,7 +22,8 @@ namespace ADS_Simulation.Configuration
             Array.Sort(c.transferTimes, (a, b) => a.index.CompareTo(b.index));
 
             // Read in the data & create dictionary to quickly index stations
-            int maxIndex = c.endTime / 15;
+            // Data contains entries with time at end of simulation
+            int maxIndex = c.endTime / 900 + 1;
             int direction = 0;
             Dictionary<(string, int), int> nameToIndex = new Dictionary<(string, int), int>();
             for (int i = 0; i < c.transferTimes.Length; i++)
