@@ -122,13 +122,11 @@ namespace ADS_Simulation.NS_State
             {
                 Trace.Assert(occupant == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant?.id}");
                 occupant = tram;
-                occupant.IsDriving = false;
             }
             else if (platform == Platform.B)
             {
                 Trace.Assert(occupant2 == null, $"Tram {tram.id} tried to occupy {name} with platform {platform} but that platform was already occupied by {occupant2?.id}");
                 occupant2 = tram;
-                occupant2.IsDriving = false;
             }
             else throw new Exception($"Unknown platform {platform}.");
 
@@ -150,7 +148,6 @@ namespace ADS_Simulation.NS_State
                 if (first == Platform.A & occupant2 != null)
                     first = Platform.B; // Tram on other platform is now first
                 else first = Platform.None;
-                occupant.IsDriving = true;
                 occupant = null;
             }
             else
@@ -160,7 +157,6 @@ namespace ADS_Simulation.NS_State
                 if (first == Platform.B & occupant != null)
                     first = Platform.A; // Tram on other platform is now first
                 else first = Platform.None;
-                occupant2.IsDriving = true;
                 occupant2 = null;
             }
         }

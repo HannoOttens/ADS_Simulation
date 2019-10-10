@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.NS_State;
+﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.NS_State;
 using Priority_Queue;
 
 namespace ADS_Simulation.Events
@@ -16,6 +17,9 @@ namespace ADS_Simulation.Events
         {
             // Add passenger to station
             state.stations[_stationIdx].waitingPassengers.Enqueue(state.time);
+
+            // Don't queue new passengers after end time
+            if (state.time > Config.c.endTime) return;
 
             //Enqueue next passenger arrival
             int timeUntilNext = Sampling.timeUntilNextPassenger(state.time, _stationIdx);

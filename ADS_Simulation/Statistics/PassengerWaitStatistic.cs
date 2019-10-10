@@ -9,58 +9,58 @@ namespace ADS_Simulation.Statistics
         int lastEventTime;
         int stationCount;
 
-        (int totalTime, int passengers)[] currentTotalWaitingTime;
-        (int totalTime, int passengers)[] totalWaitingTime;
+        int[] totalWaitingTime;
         int[] longestWaitTime;
+        int[] totalPassengers;
+        int[] previousQueueLength;
 
         public PassengerWaitStatistic(int stationCount)
         {
             this.stationCount = stationCount;
             lastEventTime = Configuration.Config.c.startTime;
 
-            currentTotalWaitingTime = new (int, int)[stationCount];
-            totalWaitingTime = new (int, int)[stationCount];
+            totalWaitingTime = new int[stationCount];
             longestWaitTime = new int[stationCount];
+            previousQueueLength = new int[stationCount];
+
+            totalPassengers = new int[stationCount];
         }
 
         public override void measure(State state)
         {
-            Station station;
             for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
             {
-                station = state.stations[stationIdx];
+                var station = state.stations[stationIdx];
 
-                // Check if tram has just departed from station
-                if (station.HasPassengers())
+                int currentQueue = station.waitingPassengers.Count;
+                int queueDelta = currentQueue - previousQueueLength[stationIdx];
+                previousQueueLength[stationIdx] = currentQueue;
+
+                // Passengers got in tram, calculate waiting time of remaining passengers
+                if(queueDelta < 0)
                 {
-                    var current = currentTotalWaitingTime[stationIdx];
-
-                    // Calculate total waiting time of passengers arrived in de mean time
-                    int newPassengers = station.waitingPassengers.Count - current.passengers;
-                    current.totalTime += station.waitingPassengers.TakeLast(newPassengers).Aggregate(0, (sum, queueTime) => sum + state.time - queueTime)
-                        + (state.time - lastEventTime) * current.passengers;
-                    current.passengers += newPassengers;
-                    currentTotalWaitingTime[stationIdx] = current;
-
-                    // Check if longest wait time has changed
-                    int waitTime = state.time - station.waitingPassengers.Peek();
-                    if (waitTime > longestWaitTime[stationIdx])
-                        longestWaitTime[stationIdx] = waitTime;
+                    totalWaitingTime[stationIdx] += (state.time - lastEventTime) * currentQueue;
                 }
+                // New passengers have arrived, calculate their waiting time
                 else
                 {
-                    // Add intermeadiate waiting times to total waiting time on station
-                    totalWaitingTime[stationIdx].passengers += currentTotalWaitingTime[stationIdx].passengers;
-                    totalWaitingTime[stationIdx].totalTime += currentTotalWaitingTime[stationIdx].totalTime;
-                    currentTotalWaitingTime[stationIdx] = (0, 0);
+                    totalWaitingTime[stationIdx] 
+                        += station.waitingPassengers.TakeLast(queueDelta).Aggregate(0, (sum, queueTime) => sum + state.time - queueTime)
+                        + (state.time - lastEventTime) * (currentQueue - queueDelta);
+                    totalPassengers[stationIdx] += queueDelta;
                 }
+
+                // Update longest waiting time, person first in queue has the longest waiting time
+                int waitTime = state.time - station.waitingPassengers.Peek();
+                if (waitTime > longestWaitTime[stationIdx])
+                    longestWaitTime[stationIdx] = waitTime;
             }
             lastEventTime = state.time;
         }
 
         public int[] AverageWaitingTime()
         {
-            return totalWaitingTime.Select((record) => record.passengers == 0 ? 0 : record.totalTime / record.passengers).ToArray();
+            return totalWaitingTime.Zip(totalPassengers).Select(tuple => tuple.First / tuple.Second).ToArray();
         } 
 
         public override void Print(State state)
