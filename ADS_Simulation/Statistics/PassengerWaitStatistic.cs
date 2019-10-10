@@ -13,8 +13,12 @@ namespace ADS_Simulation.Statistics
 
         int[] totalWaitingTime;
         int[] longestWaitTime;
-        int[] totalPassengers;
         int[] previousQueueLength;
+
+        int[] totalPassengers;
+        int[] totalPassengersLeftWaiting;
+        int[] mostPassengersLeftWaiting;
+        int longestQueue;
 
         public PassengerWaitStatistic(int startTime, int endTime, int stationCount) : base(startTime, endTime)
         {
@@ -24,8 +28,11 @@ namespace ADS_Simulation.Statistics
             totalWaitingTime = new int[stationCount];
             longestWaitTime = new int[stationCount];
             previousQueueLength = new int[stationCount];
-
             totalPassengers = new int[stationCount];
+
+            totalPassengersLeftWaiting = new int[stationCount];
+            mostPassengersLeftWaiting = new int[stationCount];
+            longestQueue = 0;
         }
 
         public override void measure(State state)
@@ -41,10 +48,17 @@ namespace ADS_Simulation.Statistics
                 int queueDelta = currentQueue - previousQueueLength[stationIdx];
                 previousQueueLength[stationIdx] = currentQueue;
 
+                if (longestQueue < currentQueue)
+                    longestQueue = currentQueue;
+
                 // Passengers got in tram, calculate waiting time of remaining passengers
                 if(queueDelta <= 0)
                 {
                     totalWaitingTime[stationIdx] += timeDelta * currentQueue;
+
+                    totalPassengersLeftWaiting[stationIdx] += currentQueue;
+                    if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
+                        mostPassengersLeftWaiting[stationIdx] = currentQueue;
                 }
                 // New passengers have arrived, calculate their waiting time
                 else
@@ -82,14 +96,16 @@ namespace ADS_Simulation.Statistics
 
         public override void Print(State state)
         {
-            Console.WriteLine("Average waiting time per station (station, average, max):");
+            Console.WriteLine("Average waiting time per station (station, average, max, most left waiting):");
 
             var average = AverageWaitingTime();
             for (int i = 0; i < stationCount; i++)
             {
                 Station station = state.stations[i];
-                Console.WriteLine($"{station.name} - {station.direction} - {average[i]} - {longestWaitTime[i]}");
+                Console.WriteLine($"{station.name} - {station.direction} - {average[i]} - {longestWaitTime[i]} - {mostPassengersLeftWaiting[i]}");
             }
+
+            Console.WriteLine($"Longest queue length: {longestQueue}");
         }
     }
 }
