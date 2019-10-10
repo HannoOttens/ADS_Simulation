@@ -51,7 +51,7 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int timeUntilNextPassenger(int time, int stationIndex)
         {
-            int idxT = Math.Min(time / 60 / 15, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
+            int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
             double mean = Config.c.transferTimes[stationIndex].arrivalRate[idxT];
             return Poisson.Sample(Math.Max(0.1, mean));
         }
@@ -67,7 +67,7 @@ namespace ADS_Simulation
 
         internal static int unboardingPassengerCount(int time, int stationIndex)
         {
-            int idxT = Math.Min(time / 60 / 15, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
+            int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
             double mean = Config.c.transferTimes[stationIndex].averageExit[idxT];
             double sd = Config.c.transferTimes[stationIndex].standardDeviationExit[idxT];
 
