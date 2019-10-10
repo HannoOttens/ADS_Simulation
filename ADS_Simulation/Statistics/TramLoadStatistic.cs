@@ -17,6 +17,7 @@ namespace ADS_Simulation.Statistics
         public TramLoadStatistic(int startTime, int endTime, int tramCount) : base(startTime, endTime)
         {
             this.tramCount = tramCount;
+            this.lastEventTime = startTime;
             totalPassengerCount = new int[tramCount];
             lowestPassengerCount = Enumerable.Repeat(int.MaxValue, tramCount).ToArray();
             highestPassengerCount = Enumerable.Repeat(int.MinValue, tramCount).ToArray();
