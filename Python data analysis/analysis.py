@@ -28,7 +28,6 @@ data_table = readin.read_in(
     "C:/Users/hanno/Documents/UU/ADS_Simulation/Python data analysis/Data/data bus 12 sept 2017.csv")
 
 # Remove columns that we dont need
-data_table.remove('datum')
 data_table.remove('lijnnummer')
 data_table.remove('haltenummer')
 data_table.remove('afstand')
@@ -37,10 +36,15 @@ data_table.remove('geplande aankomsttijd')
 
 # Clean data
 data_table.replace(' (Utrecht)', '')
-data_table.replace(' (Utr', '')
 data_table.replace(' (Utrec', '')
+data_table.replace(' (Utr', '')
+data_table.replace('UMC Utrecht', 'UMC')
+data_table.replace('De Kromme Rijn', 'Kromme Rijn')
+data_table.replace('Stadion Galgenwaard', 'Galgenwaard')
+data_table.replace('CS Jaarbeurszijde', 'Centraal Station')
 
-data_table.delete_rows_where('haltenaam', 'Rubenslaan')
+data_table.replace('Rubenslaan', 'Vaartsche Rijn')
+data_table.replace('Sterrenwijk', 'Vaartsche Rijn')
 
 # Change to correct types
 data_table.change_type('ritnummer', int)
@@ -64,21 +68,28 @@ def to_normal_values(column):
             t2 = data_table.from_filter(stationDirectionFilter(station,direction))
 
             # Bin Dta
-            data = t2.bin_time_interval(
-                column, 15, 'time')
+            data = t2.bin_time_interval(15, 'time')
 
             b = readin.Table([new_headers])
             (distrubution, best_params) = (None, None)
-            for interval, c in data:
-                if(len(c) == 0):
+            for interval, rows in data:
+                counts = []
+                for row in rows:
+                    counts.append(row[t2.headers.index(column)])
+                dates = []
+                for row in rows:
+                    dates.append(row[t2.headers.index('datum')])
+                unique_dates_count = len(set(dates))
+
+                if(len(counts) == 0):
                     average = 0
                     sd = 0
-                elif(len(c) == 1):
-                    average = c[0]
+                elif(len(counts) == 1):
+                    average = counts[0]
                     sd = 0
                 else:
-                    average = statistics.mean(c)
-                    sd = statistics.stdev(c)
+                    average = sum(counts) / unique_dates_count
+                    sd = statistics.stdev(counts)
                     # (distrubution, best_params) = fit.best_fit_distribution(c)
 
                 b.add_rows([[station, direction, interval, average, sd]])

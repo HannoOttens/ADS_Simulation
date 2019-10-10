@@ -62,12 +62,11 @@ class Table:
         column = self.columns[header]
         return sum(column) / len(column)
 
-    def bin_time_interval(self, header, interval, interval_header):
+    def bin_time_interval(self, interval, interval_header):
         # Sort data on header interval
         self.sort_on(interval_header)
 
         # Get the columns
-        target_column = self.columns[header]
         interval_column = self.columns[interval_header]
 
         # Get start point and endpoint
@@ -82,7 +81,7 @@ class Table:
         while index < len(interval_column):
             curData = []
             while index < len(interval_column) and interval_column[index] < max_value:
-                curData.append(target_column[index])
+                curData.append(self.rows[index])
                 index += 1
             out.append((max_value-interval,curData))
             max_value += interval
