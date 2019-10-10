@@ -28,6 +28,9 @@ namespace ADS_Simulation.Statistics
 
         public override void measure(State state)
         {
+            int timeDelta = state.time - lastEventTime;
+            if (timeDelta == 0) return; // No time has passed - not interesting
+
             for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
             {
                 var station = state.stations[stationIdx];
@@ -39,21 +42,24 @@ namespace ADS_Simulation.Statistics
                 // Passengers got in tram, calculate waiting time of remaining passengers
                 if(queueDelta < 0)
                 {
-                    totalWaitingTime[stationIdx] += (state.time - lastEventTime) * currentQueue;
+                    totalWaitingTime[stationIdx] += timeDelta * currentQueue;
                 }
                 // New passengers have arrived, calculate their waiting time
                 else
                 {
                     totalWaitingTime[stationIdx] 
                         += station.waitingPassengers.TakeLast(queueDelta).Aggregate(0, (sum, queueTime) => sum + state.time - queueTime)
-                        + (state.time - lastEventTime) * (currentQueue - queueDelta);
+                        +  timeDelta * (currentQueue - queueDelta);
                     totalPassengers[stationIdx] += queueDelta;
                 }
 
                 // Update longest waiting time, person first in queue has the longest waiting time
-                int waitTime = state.time - station.waitingPassengers.Peek();
-                if (waitTime > longestWaitTime[stationIdx])
-                    longestWaitTime[stationIdx] = waitTime;
+                if (station.HasPassengers())
+                {
+                    int waitTime = state.time - station.waitingPassengers.Peek();
+                    if (waitTime > longestWaitTime[stationIdx])
+                        longestWaitTime[stationIdx] = waitTime;
+                }
             }
             lastEventTime = state.time;
         }
