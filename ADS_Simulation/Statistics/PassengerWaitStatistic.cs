@@ -25,10 +25,9 @@ namespace ADS_Simulation.Statistics
 
         public override void measure(State state)
         {
-            Station station;
             for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
             {
-                station = state.stations[stationIdx];
+                var station = state.stations[stationIdx];
 
                 // Check if tram has just departed from station
                 if (station.HasPassengers())
@@ -49,7 +48,7 @@ namespace ADS_Simulation.Statistics
                 }
                 else
                 {
-                    // Add intermeadiate waiting times to total waiting time on station
+                    // Add intermediate waiting times to total waiting time on station
                     totalWaitingTime[stationIdx].passengers += currentTotalWaitingTime[stationIdx].passengers;
                     totalWaitingTime[stationIdx].totalTime += currentTotalWaitingTime[stationIdx].totalTime;
                     currentTotalWaitingTime[stationIdx] = (0, 0);

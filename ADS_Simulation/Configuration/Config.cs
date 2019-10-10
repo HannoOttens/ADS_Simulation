@@ -12,8 +12,6 @@ namespace ADS_Simulation.Configuration
     static class Config
     {
         public static ConfigData c;
-        public static List<string[]> indata = new List<string[]>();
-        public static List<string[]> outdata = new List<string[]>();
 
         public static void readConfig(string pathToConfig, string inPath, string outPath)
         {
@@ -98,7 +96,7 @@ namespace ADS_Simulation.Configuration
         public int averageTime;
         public int index;
 
-        // Arrays for distrubutions, indexed on x-th 15 minute range
+        // Arrays for distributions, indexed on x-th 15 minute range
         public double[] averageExit;
         public double[] standardDeviationExit;
         public double[] arrivalRate;
