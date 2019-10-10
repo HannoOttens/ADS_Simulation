@@ -13,7 +13,7 @@ namespace ADS_Simulation.Statistics
         (int totalTime, int passengers)[] totalWaitingTime;
         int[] longestWaitTime;
 
-        public PassengerWaitStatistic(int stationCount)
+        public PassengerWaitStatistic(int startTime, int endTime, int stationCount) : base(startTime, endTime)
         {
             this.stationCount = stationCount;
             lastEventTime = Configuration.Config.c.startTime;

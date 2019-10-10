@@ -13,7 +13,7 @@ namespace ADS_Simulation.Statistics
         int[] lowestPassengerCount;
         int[] highestPassengerCount;
 
-        public TramLoadStatistic(int tramCount)
+        public TramLoadStatistic(int startTime, int endTime, int tramCount) : base(startTime, endTime)
         {
             this.tramCount = tramCount;
             totalPassengerCount = new int[tramCount];

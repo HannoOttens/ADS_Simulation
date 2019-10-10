@@ -15,7 +15,7 @@ namespace ADS_Simulation
 
         public State state;
         public FastPriorityQueue<Event> eventQueue;
-        public List<Statistic> statistics;
+        public StatisticsManager statisticsManager;
 
         public Simulation()
         {
@@ -23,12 +23,14 @@ namespace ADS_Simulation
             List<Tram> trams = CreateTrams();
             state = new State(Config.c.startTime, trams, stations);
             eventQueue = InitializeEventQueue();
-            statistics = new List<Statistic>()
-            {
-                //new PassengerWaitStatistic(),
-                new TramLoadStatistic(trams.Count),
-                new EmptyStationStatistic(stations.Count)
-            };
+            statisticsManager = new StatisticsManager(state, new (int, int)[] { 
+                // Whole simulation
+                (Config.c.startTime,  int.MaxValue),
+                // 7:30 - 9:30
+                ((int)7.5*60*60,  (int)9.5*60*60),
+                // 16:00 - 18:00
+                (16*60*60,  18*60*60)
+            });
         }
 
         private FastPriorityQueue<Event> InitializeEventQueue()
@@ -113,8 +115,7 @@ namespace ADS_Simulation
             _event.Execute(state, eventQueue);
 
             // Measure statistics
-            foreach (var statistic in statistics)
-                statistic.measure(state);
+            statisticsManager.measureStatistics(state);
 
             return !StoppingConditionMet();
         }

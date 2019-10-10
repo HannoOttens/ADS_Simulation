@@ -14,7 +14,7 @@ namespace ADS_Simulation.Statistics
         readonly int[] currentEmptyStationTime;
         readonly int[] longestEmptyStationTime;
 
-        public EmptyStationStatistic(int stationCount)
+        public EmptyStationStatistic(int startTime, int endTime, int stationCount) : base(startTime, endTime)
         {
             totalEmptyTime = 0;
             lastEventTime = Config.c.startTime;

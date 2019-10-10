@@ -47,9 +47,8 @@ The situation ended at {simulation.state.time} and should end at {Config.c.endTi
 The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");
 
-            // Print statistic output
-            foreach (var s in simulation.statistics)
-                s.Print(simulation.state);
+            // Print statistic information
+            simulation.statisticsManager.printStatistics(simulation.state);
         }
 
         /// <summary>
