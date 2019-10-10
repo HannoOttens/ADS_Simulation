@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using ADS_Simulation.NS_State;
 
@@ -23,6 +24,8 @@ namespace ADS_Simulation.Statistics
 
         public override void measure(State state)
         {
+            Debug.Assert(state.time >= startTime && state.time <= endTime, "Measured statistic outside of time bounds");
+
             int timeDelta = state.time - lastEventTime;
             if (timeDelta == 0) return; // No time has passed - not interesting
 
@@ -41,9 +44,10 @@ namespace ADS_Simulation.Statistics
             lastEventTime = state.time;
         }
 
-        public float TotalAverageTramLoad(int endtime, int tramCount)
+        public float TotalAverageTramLoad(int stateEndtime, int tramCount)
         {
-            return totalPassengerCount.Sum() / (endtime * tramCount);
+            int runtime = Math.Min(stateEndtime, endTime) - startTime;
+            return totalPassengerCount.Sum() / (runtime * tramCount);
         }
 
         public int LowestTramLoad()
