@@ -11,7 +11,7 @@ namespace ADS_Simulation
 {
     class Simulation
     {
-        private const int MAX_EVENTS = 10000;
+        private const int MAX_EVENTS = 100;
 
         public State state;
         public FastPriorityQueue<Event> eventQueue;
