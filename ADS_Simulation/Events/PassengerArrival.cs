@@ -18,7 +18,7 @@ namespace ADS_Simulation.Events
             // Add passenger to station
             state.stations[_stationIdx].waitingPassengers.Enqueue(state.time);
 
-            // Don't queue new passengers after endtime
+            // Don't queue new passengers after end time
             if (state.time > Config.c.endTime) return;
 
             //Enqueue next passenger arrival

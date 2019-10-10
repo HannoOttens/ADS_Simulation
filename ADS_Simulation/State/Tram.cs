@@ -11,12 +11,11 @@ namespace ADS_Simulation.NS_State
         private bool readyForDeparture;
 
         // auxiliary variable for statistics 
-        private bool isDriving;
 
         public Tram(int id) {
             this.id = id;
             passengerCount = 0;
-            isDriving = false;
+            IsDriving = false;
         }
 
         /// <summary>
@@ -78,10 +77,6 @@ namespace ADS_Simulation.NS_State
                 throw new Exception($"Tram capacity exceeded in tram {id} by {passengerCount - Config.c.tramCapacity}");
         }
 
-        public bool IsDriving
-        {
-            set { isDriving = value; }
-            get { return isDriving; }
-        }
+        public bool IsDriving { set; get; }
     }
 }
