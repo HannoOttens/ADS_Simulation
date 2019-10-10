@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 // All instantiated at start-of-app with JSON.
@@ -30,7 +31,7 @@ namespace ADS_Simulation.Configuration
             {
                 c.transferTimes[i].averageExit = new double[maxIndex];
                 c.transferTimes[i].standardDeviationExit = new double[maxIndex];
-                c.transferTimes[i].arivalRate = new double[maxIndex];
+                c.transferTimes[i].arrivalRate = new double[maxIndex];
                 nameToIndex.Add((c.transferTimes[i].from, direction), i);
 
                 // Swap direction halfway
@@ -50,8 +51,7 @@ namespace ADS_Simulation.Configuration
 
                     var idx = (data[0], int.Parse(data[1]));
                     var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3]); 
-                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4]);
+                    c.transferTimes[nameToIndex[idx]].arrivalRate[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
                 }
             header = true;
             using (var reader = new StreamReader(outPath))
@@ -62,7 +62,8 @@ namespace ADS_Simulation.Configuration
 
                     var idx = (data[0], int.Parse(data[1]));
                     var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].arivalRate[idxT] = double.Parse(data[3]);
+                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
+                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4], CultureInfo.InvariantCulture);
                 }
         }
     }
@@ -100,6 +101,6 @@ namespace ADS_Simulation.Configuration
         // Arrays for distrubutions, indexed on x-th 15 minute range
         public double[] averageExit;
         public double[] standardDeviationExit;
-        public double[] arivalRate;
+        public double[] arrivalRate;
     }
 }
