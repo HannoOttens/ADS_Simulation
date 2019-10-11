@@ -50,6 +50,7 @@ namespace ADS_Simulation.Statistics
 
         private string stateTimeToString(int stateTime)
         {
+            if (stateTime == int.MaxValue) return "END";
             stateTime /= 60;
             return $"{(stateTime / 60).ToString("00")}:{(stateTime % 60).ToString("00")}";
         }

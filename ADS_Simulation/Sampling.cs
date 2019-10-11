@@ -53,7 +53,10 @@ namespace ADS_Simulation
         {
             int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
             double mean = Config.c.transferTimes[stationIndex].arrivalRate[idxT];
-            return Poisson.Sample(Math.Max(0.1, mean));
+
+            if (mean == 0)
+                return 60*15;
+            return Poisson.Sample(mean);
         }
 
         /// <summary>
