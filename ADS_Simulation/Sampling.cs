@@ -1,6 +1,5 @@
 ﻿using System;
 using ADS_Simulation.Configuration;
-using ADS_Simulation.NS_State;
 using MathNet.Numerics.Distributions;
 
 namespace ADS_Simulation
@@ -44,19 +43,17 @@ namespace ADS_Simulation
         }
 
         /// <summary>
-        /// Time until next passenger arrives
+        /// Determine the number of arrivals in time window (15 minutes) and their arrival times
         /// </summary>
-        /// <param name="time">Needed to get the correct poisson time range</param>
-        /// <param name="station">Station where the passenger arrives</param>
+        /// <param name="mean">Average number of arrivals</param>
         /// <returns></returns>
-        public static int timeUntilNextPassenger(int time, int stationIndex)
+        public static int[] arrivingPassengers(double mean)
         {
-            int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
-            double mean = Config.c.transferTimes[stationIndex].arrivalRate[idxT];
-
-            if (mean == 0)
-                return 60*15;
-            return Poisson.Sample(mean);
+            var arrivals = Poisson.Sample(mean);
+            var times = new int[arrivals];
+            for (int i = 0; i < arrivals; i++)
+                times[i] = DiscreteUniform.Sample(0, 900);
+            return times;
         }
 
         /// <summary>
@@ -68,6 +65,12 @@ namespace ADS_Simulation
             return 40;
         }
 
+        /// <summary>
+        /// Calculate number of unboarding passengers
+        /// </summary>
+        /// <param name="time">Current time</param>
+        /// <param name="stationIndex">Index of station where passengers unboard</param>
+        /// <returns></returns>
         internal static int unboardingPassengerCount(int time, int stationIndex)
         {
             int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);

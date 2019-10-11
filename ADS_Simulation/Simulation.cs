@@ -3,7 +3,6 @@ using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using Priority_Queue;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,7 +10,7 @@ namespace ADS_Simulation
 {
     class Simulation
     {
-        private const int MAX_EVENTS = 100;
+        private const int MAX_EVENTS = 100000;
 
         public State state;
         public FastPriorityQueue<Event> eventQueue;
@@ -46,9 +45,16 @@ namespace ADS_Simulation
             for (int i = 0; i < state.trams.Count; i++)
                 queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), Config.c.startTime + i * interval * 60);
 
-            // Initialize passenger arrivals
+            // Create passenger arrivals
             for (int i = 0; i < state.stations.Count; i++)
-                queue.Enqueue(new PassengerArrival(i), state.time + Sampling.timeUntilNextPassenger(state.time, i));
+            for (int j = 0; j < Config.c.transferTimes[i].arrivalRate.Length; j++)
+            {
+                if (Config.c.transferTimes[i].arrivalRate[j] == 0)
+                    continue; // No arrival in this window
+                var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j]);
+                foreach(var time in times)
+                    queue.Enqueue(new PassengerArrival(i), j * 900 + time);
+            }
 
             return queue;
         }
