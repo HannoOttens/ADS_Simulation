@@ -38,7 +38,6 @@ namespace ADS_Simulation.Statistics
         public override void measure(State state)
         {
             int timeDelta = state.time - lastEventTime;
-            if (timeDelta == 0) return; // No time has passed - not interesting
 
             for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
             {
@@ -55,10 +54,7 @@ namespace ADS_Simulation.Statistics
                 if(queueDelta <= 0)
                 {
                     totalWaitingTime[stationIdx] += timeDelta * currentQueue;
-
-                    totalPassengersLeftWaiting[stationIdx] += currentQueue;
-                    if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
-                        mostPassengersLeftWaiting[stationIdx] = currentQueue;
+                    
                 }
                 // New passengers have arrived, calculate their waiting time
                 else
@@ -68,6 +64,14 @@ namespace ADS_Simulation.Statistics
                     Debug.Assert(waitingTime >= 0, "Negative waiting time");
                     totalWaitingTime[stationIdx] += waitingTime;  
                     totalPassengers[stationIdx] += queueDelta;
+                }
+
+                // Check if passengers are left waiting for the next tram
+                if (queueDelta < 0 && currentQueue != 0)
+                {
+                    totalPassengersLeftWaiting[stationIdx] += currentQueue;
+                    if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
+                        mostPassengersLeftWaiting[stationIdx] = currentQueue;
                 }
 
                 // Update longest waiting time, person first in queue has the longest waiting time
@@ -91,7 +95,7 @@ namespace ADS_Simulation.Statistics
 
         public int[] AverageWaitingTime()
         {
-            return totalWaitingTime.Zip(totalPassengers).Select(tuple => tuple.First / tuple.Second).ToArray();
+            return totalWaitingTime.Zip(totalPassengers).Select(tuple => tuple.Second == 0 ? 0 : tuple.First / tuple.Second).ToArray();
         } 
 
         public override void Print(State state)
