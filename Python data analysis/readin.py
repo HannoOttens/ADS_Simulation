@@ -26,7 +26,6 @@ class Table:
     def sort_on(self, header):
         header_index = self.headers.index(header)
         self.rows.sort(key=sort_on_column(header_index))
-
         self.columns = columnize(self.headers, self.rows)
 
     def remove(self, header):
@@ -47,6 +46,16 @@ class Table:
         for s, idx in enumerate(to_delete):
             del self.rows[idx - s]
 
+        self.columns = columnize(self.headers, self.rows)
+
+    def delete_rows_where_lamda(self, lamda):
+        to_delete = []
+        for idx, row in enumerate(self.rows):
+            if lamda(row):
+                to_delete.append(idx)
+
+        for s, idx in enumerate(to_delete):
+            del self.rows[idx - s]
         self.columns = columnize(self.headers, self.rows)
 
     def replace(self, rval, newval):
@@ -152,7 +161,6 @@ class Table:
         split_index = self.headers.index(split_on_column)
         splits = set(self.columns[split_on_column])
 
-
         new_col = []
         for split in splits:
             v = init_val
@@ -160,7 +168,7 @@ class Table:
                 if row[split_index] == split:
                     v = lamda(v, row)
                     new_col.append(v)
-        
+
         self.headers.append(target_column_name)
         for idx, row in enumerate(self.rows):
             row.append(new_col[idx])
@@ -171,6 +179,21 @@ class Table:
         for row in self.rows:
             row.append(lamda(row))
         self.columns = columnize(self.headers, self.rows)
+
+    def merge_rows(self, lr1, lr2, lmatch, lcombine):
+        for r1 in self.rows:
+            if not lr1(r1):
+                continue
+
+            for r2 in self.rows:
+                if not lr2(r2)\
+                        or not lmatch(r1, r2):
+                    continue
+
+                self.rows.append(lcombine(r1, r2))
+
+        self.delete_rows_where_lamda(lr1)
+        self.delete_rows_where_lamda(lr2)
 
 def array_to_csv(arr):
     strs = [str(v) for v in arr]

@@ -26,8 +26,7 @@ def stationDirectionFilter(station, direction):
 
 
 # Example
-data_table = readin.read_in(
-    "C:/Users/hanno/Documents/UU/ADS_Simulation/Python data analysis/Data/data bus 12 sept 2017.csv")
+data_table = readin.read_in("Data/data bus 12 sept 2017.csv")
 
 # Remove columns that we dont need
 data_table.remove('lijnnummer')
@@ -45,9 +44,6 @@ data_table.replace('De Kromme Rijn', 'Kromme Rijn')
 data_table.replace('Stadion Galgenwaard', 'Galgenwaard')
 data_table.replace('CS Jaarbeurszijde', 'Centraal Station')
 
-data_table.replace('Rubenslaan', 'Vaartsche Rijn')
-data_table.replace('Sterrenwijk', 'Vaartsche Rijn')
-
 # Change to correct types
 data_table.change_type('ritnummer', int)
 data_table.change_type('aantal uitstappers', int)
@@ -60,9 +56,24 @@ data_table.merge_columns('geregistreerde vertrektijd',
                          'geregistreerde aankomsttijd', 'time')
 data_table.delete_rows_where('time', None)
 
-# Aggregate people who get in
+# Some indexing for rows
+hidx_stop = data_table.headers.index('haltenaam')
+hidx_rn = data_table.headers.index('ritnummer')
 hidx_in = data_table.headers.index('aantal instappers')
 hidx_out = data_table.headers.index('aantal uitstappers')
+
+# Merge Rubenslaan and Sterrenwijk
+lr1 = lambda row : row[hidx_stop] == 'Sterrenwijk'
+lr2 = lambda row : row[hidx_stop] == 'Rubenslaan'
+lmatch = lambda r1, r2 : r1[hidx_rn] == r2[hidx_rn]
+def combine_stations(r1,r2):
+    r1[hidx_in] += r2[hidx_in]
+    r1[hidx_out] += r2[hidx_out]
+    r1[hidx_stop] = 'Vaartsche Rijn'
+    return r1
+data_table.merge_rows(lr1, lr2, lmatch, combine_stations)
+
+# Aggregate people who get in
 data_table.sort_on('time')
 data_table.aggregate_into(
     0, lambda v, row: v + row[hidx_in] + row[hidx_out], 'passenger_count', 'ritnummer')

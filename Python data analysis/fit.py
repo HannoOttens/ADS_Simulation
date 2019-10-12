@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import scipy.stats as st
 import warnings
 
@@ -52,13 +51,6 @@ def best_fit_distribution(data, bins=200, ax=None):
                 # Calculate fitted PDF and error with fit in distribution
                 pdf = distribution.pdf(x, loc=loc, scale=scale, *arg)
                 sse = np.sum(np.power(y - pdf, 2.0))
-
-                # if axis pass in add to plot
-                try:
-                    if ax:
-                        pd.Series(pdf, x).plot(ax=ax)
-                except Exception:
-                    pass
 
                 # identify if this distribution is better
                 if best_sse > sse > 0:
