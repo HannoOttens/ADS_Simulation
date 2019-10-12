@@ -6,14 +6,14 @@ import fit
 from tabulate import tabulate
 
 
-def timeStrToMinutes(string):
-    if(string == ''):
-        return None
+# def timeStrToMinutes(string):
+#     if(string == ''):
+#         return None
 
-    x = time.strptime(string, '%H:%M:%S')
-    minute = x.tm_min
-    hour = x.tm_hour
-    return (60*hour + minute)
+#     x = time.strptime(string, '%H:%M:%S')
+#     minute = x.tm_min
+#     hour = x.tm_hour
+#     return (60*hour + minute)
 
 
 def stationDirectionFilter(station, direction):
@@ -25,36 +25,43 @@ def stationDirectionFilter(station, direction):
     return f
 
 
-# Example
-data_table = readin.read_in("Data/data bus 12 sept 2017.csv")
+# # Example
+# data_table = readin.read_in("Data/data bus 12 sept 2017.csv")
 
-# Remove columns that we dont need
-data_table.remove('lijnnummer')
-data_table.remove('haltenummer')
-data_table.remove('afstand')
-data_table.remove('geplande vertrektijd')
-data_table.remove('geplande aankomsttijd')
+# # Remove columns that we dont need
+# data_table.remove('lijnnummer')
+# data_table.remove('haltenummer')
+# data_table.remove('afstand')
+# data_table.remove('geplande vertrektijd')
+# data_table.remove('geplande aankomsttijd')
 
-# Clean data
-data_table.replace(' (Utrecht)', '')
-data_table.replace(' (Utrec', '')
-data_table.replace(' (Utr', '')
-data_table.replace('UMC Utrecht', 'UMC')
-data_table.replace('De Kromme Rijn', 'Kromme Rijn')
-data_table.replace('Stadion Galgenwaard', 'Galgenwaard')
-data_table.replace('CS Jaarbeurszijde', 'Centraal Station')
+# # Clean data
+# data_table.replace(' (Utrecht)', '')
+# data_table.replace(' (Utrec', '')
+# data_table.replace(' (Utr', '')
+# data_table.replace('UMC Utrecht', 'UMC')
+# data_table.replace('De Kromme Rijn', 'Kromme Rijn')
+# data_table.replace('Stadion Galgenwaard', 'Galgenwaard')
+# data_table.replace('CS Jaarbeurszijde', 'Centraal Station')
 
-# Change to correct types
+# # Change to correct types
+# data_table.change_type('ritnummer', int)
+# data_table.change_type('aantal uitstappers', int)
+# data_table.change_type('geregistreerde vertrektijd', timeStrToMinutes)
+# data_table.change_type('aantal instappers', int)
+# data_table.change_type('geregistreerde aankomsttijd', timeStrToMinutes)
+
+# # Combine the columns to get a timestamp on most data
+# data_table.merge_columns('geregistreerde vertrektijd',
+#                          'geregistreerde aankomsttijd', 'time')
+# data_table.delete_rows_where('time', None)
+
+# data_table.save_as_csv('cleaned_data_a.csv')
+data_table = readin.read_in("cleaned_data_a.csv")
 data_table.change_type('ritnummer', int)
 data_table.change_type('aantal uitstappers', int)
-data_table.change_type('geregistreerde vertrektijd', timeStrToMinutes)
+data_table.change_type('time', int)
 data_table.change_type('aantal instappers', int)
-data_table.change_type('geregistreerde aankomsttijd', timeStrToMinutes)
-
-# Combine the columns to get a timestamp on most data
-data_table.merge_columns('geregistreerde vertrektijd',
-                         'geregistreerde aankomsttijd', 'time')
-data_table.delete_rows_where('time', None)
 
 # Some indexing for rows
 hidx_stop = data_table.headers.index('haltenaam')
@@ -73,10 +80,12 @@ def combine_stations(r1,r2):
     return r1
 data_table.merge_rows(lr1, lr2, lmatch, combine_stations)
 
+data_table.save_as_csv('cleaned_data_b.csv')
+
 # Aggregate people who get in
-data_table.sort_on('time')
+data_table.sort_on('haltevolgorde')
 data_table.aggregate_into(
-    0, lambda v, row: v + row[hidx_in] + row[hidx_out], 'passenger_count', 'ritnummer')
+    0, lambda v, row: v + row[hidx_in] - row[hidx_out], 'passenger_count', 'ritnummer')
 
 # Calculate % of people who get out
 hidx_count = data_table.headers.index('passenger_count')

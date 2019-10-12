@@ -181,18 +181,23 @@ class Table:
         self.columns = columnize(self.headers, self.rows)
 
     def merge_rows(self, lr1, lr2, lmatch, lcombine):
-        for r1 in self.rows:
+        for idx, r1 in enumerate(self.rows):
+            if(idx%1000 == 0): print(idx)
+
             if not lr1(r1):
                 continue
 
-            for r2 in self.rows:
+            for idx2, r2 in enumerate(self.rows):
+                if(idx2 >= idx):
+                    break
+
                 if not lr2(r2)\
                         or not lmatch(r1, r2):
                     continue
 
-                self.rows.append(lcombine(r1, r2))
-
-        self.delete_rows_where_lamda(lr1)
+                # Combine r1 and r2 into r1
+                lcombine(r1, r2)
+                
         self.delete_rows_where_lamda(lr2)
 
 def array_to_csv(arr):
@@ -238,7 +243,7 @@ def rowize(columns):
 
 
 def separate(line):
-    return line.replace('\n', '').split(';')
+    return line.replace('\n', '').split(',')
 
 # Read in a file as a table
 
