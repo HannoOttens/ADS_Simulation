@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 class Table:
     def __init__(self, data):
         self.headers = data[0]
@@ -83,7 +84,7 @@ class Table:
             while index < len(interval_column) and interval_column[index] < max_value:
                 curData.append(self.rows[index])
                 index += 1
-            out.append((max_value-interval,curData))
+            out.append((max_value-interval, curData))
             max_value += interval
         return out
 
@@ -121,8 +122,9 @@ class Table:
                 col_data.append(val_a)
             elif val_b is not None:
                 col_data.append(val_b)
-            else: col_data.append(None)
-        
+            else:
+                col_data.append(None)
+
         self.remove(col_a)
         self.remove(col_b)
         self.columns[col_new] = col_data
@@ -132,9 +134,9 @@ class Table:
     def most_common_value(self, header):
         column = self.columns[header]
         value_counters = list(set(column))
-        value_counters_map = defaultdict(lambda : 0)
+        value_counters_map = defaultdict(lambda: 0)
         for v in column:
-            value_counters_map[v]+=1
+            value_counters_map[v] += 1
 
         max_val = 0
         v_max = None
@@ -146,16 +148,43 @@ class Table:
 
         return v_max
 
+    def aggregate_into(self, init_val, lamda, target_column_name, split_on_column):
+        split_index = self.headers.index(split_on_column)
+        splits = set(self.columns[split_on_column])
+
+
+        new_col = []
+        for split in splits:
+            v = init_val
+            for row in self.rows:
+                if row[split_index] == split:
+                    v = lamda(v, row)
+                    new_col.append(v)
+        
+        self.headers.append(target_column_name)
+        for idx, row in enumerate(self.rows):
+            row.append(new_col[idx])
+        self.columns = columnize(self.headers, self.rows)
+
+    def calc_new(self, lamda, target_column_name):
+        self.headers.append(target_column_name)
+        for row in self.rows:
+            row.append(lamda(row))
+        self.columns = columnize(self.headers, self.rows)
 
 def array_to_csv(arr):
     strs = [str(v) for v in arr]
     return ','.join(strs)
 
 # Sort key for rows
+
+
 def sort_on_column(index):
     return lambda v: v[index]
 
 # Change the type of the item at the index
+
+
 def change_type(_type, index):
     def f(row):
         row[index] = _type(row[index])
@@ -163,6 +192,8 @@ def change_type(_type, index):
     return f
 
 # Columnize data rows
+
+
 def columnize(headers, data):
     tbl = {}
     for i in range(len(headers)):
@@ -172,6 +203,7 @@ def columnize(headers, data):
         tbl[headers[i]] = l
     return tbl
 
+
 def rowize(columns):
     rows = []
     for tupl in zip(*columns.values()):
@@ -180,10 +212,14 @@ def rowize(columns):
     return rows
 
 # Remove the \n and split
+
+
 def separate(line):
     return line.replace('\n', '').split(';')
 
 # Read in a file as a table
+
+
 def read_in(filepath):
     with open(filepath) as f:
         lines = f.readlines()

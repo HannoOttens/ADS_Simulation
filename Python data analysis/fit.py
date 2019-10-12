@@ -24,6 +24,7 @@ def best_fit_distribution(data, bins=200, ax=None):
         st.norm, 
         st.pareto,
         st.uniform,
+        st.binom
     ]
 
     # Best holders
