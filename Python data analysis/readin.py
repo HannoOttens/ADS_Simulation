@@ -158,20 +158,27 @@ class Table:
         return v_max
 
     def aggregate_into(self, init_val, lamda, target_column_name, split_on_column):
-        split_index = self.headers.index(split_on_column)
-        splits = set(self.columns[split_on_column])
+        self.sort_on('ritnummer')
+
+        col_idx = self.headers.index('haltevolgorde')
+        split_index = self.headers.index('ritnummer')
+        date_indx = self.headers.index('datum')
+        splits = set(zip(self.columns[split_on_column],self.columns['datum']))
 
         new_col = []
-        for split in splits:
+        for idx, (ritnummer, date) in enumerate(splits):
+            if idx % 100 == 0: print(str(int(100*idx/len(splits))) + '%')
+
+            split_rows = list(filter(lambda row: row[split_index] == ritnummer and row[date_indx] == date, self.rows))
+            split_rows.sort(key=sort_on_column(col_idx))
             v = init_val
-            for row in self.rows:
-                if row[split_index] == split:
-                    v = lamda(v, row)
-                    new_col.append(v)
+            for row in split_rows:
+                row.append(v)
+                v = lamda(v, row)
+                if v < 0:
+                    raise v
 
         self.headers.append(target_column_name)
-        for idx, row in enumerate(self.rows):
-            row.append(new_col[idx])
         self.columns = columnize(self.headers, self.rows)
 
     def calc_new(self, lamda, target_column_name):
@@ -197,7 +204,7 @@ class Table:
 
                 # Combine r1 and r2 into r1
                 lcombine(r1, r2)
-                
+
         self.delete_rows_where_lamda(lr2)
 
 def array_to_csv(arr):

@@ -57,40 +57,79 @@ def stationDirectionFilter(station, direction):
 # data_table.delete_rows_where('time', None)
 
 # data_table.save_as_csv('cleaned_data_a.csv')
-data_table = readin.read_in("cleaned_data_a.csv")
+# data_table = readin.read_in("cleaned_data_a.csv")
+# data_table.change_type('ritnummer', int)
+# data_table.change_type('aantal uitstappers', int)
+# data_table.change_type('time', int)
+# data_table.change_type('aantal instappers', int)
+
+# # Some indexing for rows
+# hidx_stop = data_table.headers.index('haltenaam')
+# hidx_rn = data_table.headers.index('ritnummer')
+# hidx_in = data_table.headers.index('aantal instappers')
+# hidx_out = data_table.headers.index('aantal uitstappers')
+
+# # Merge Rubenslaan and Sterrenwijk
+# lr1 = lambda row : row[hidx_stop] == 'Sterrenwijk'
+# lr2 = lambda row : row[hidx_stop] == 'Rubenslaan'
+# lmatch = lambda r1, r2 : r1[hidx_rn] == r2[hidx_rn]
+# def combine_stations(r1,r2):
+#     r1[hidx_in] += r2[hidx_in]
+#     r1[hidx_out] += r2[hidx_out]
+#     r1[hidx_stop] = 'Vaartsche Rijn'
+#     return r1
+# data_table.merge_rows(lr1, lr2, lmatch, combine_stations)
+
+# data_table.save_as_csv('cleaned_data_b.csv')
+
+# data_table = readin.read_in("cleaned_data_b.csv")
+
+# data_table.change_type('ritnummer', int)
+# data_table.change_type('aantal uitstappers', int)
+# data_table.change_type('time', int)
+# data_table.change_type('aantal instappers', int)
+
+# # Some header indexes
+# hidx_stop = data_table.headers.index('haltenaam')
+# hidx_rn = data_table.headers.index('ritnummer')
+# hidx_date = data_table.headers.index('datum')
+# hidx_in = data_table.headers.index('aantal instappers')
+# hidx_out = data_table.headers.index('aantal uitstappers')
+
+# # remove routes with unmatched sterrenwijkjes
+# unmatched_sterrenwijk = list(filter(lambda row: row[hidx_stop] == 'Sterrenwijk', data_table.rows))
+# delete_tlps = []
+# for row in unmatched_sterrenwijk:
+#     delete_tlps.append((row[hidx_rn],row[hidx_date]))
+# print(len(data_table.rows))
+# data_table.delete_rows_where_lamda(lambda row: (row[hidx_rn],row[hidx_date]) in delete_tlps)
+# print(len(data_table.rows))
+
+
+data_table = readin.read_in("cleaned_data_c.csv")
+
 data_table.change_type('ritnummer', int)
 data_table.change_type('aantal uitstappers', int)
 data_table.change_type('time', int)
 data_table.change_type('aantal instappers', int)
 
-# Some indexing for rows
+# Some header indexes
 hidx_stop = data_table.headers.index('haltenaam')
 hidx_rn = data_table.headers.index('ritnummer')
+hidx_date = data_table.headers.index('datum')
 hidx_in = data_table.headers.index('aantal instappers')
 hidx_out = data_table.headers.index('aantal uitstappers')
 
-# Merge Rubenslaan and Sterrenwijk
-lr1 = lambda row : row[hidx_stop] == 'Sterrenwijk'
-lr2 = lambda row : row[hidx_stop] == 'Rubenslaan'
-lmatch = lambda r1, r2 : r1[hidx_rn] == r2[hidx_rn]
-def combine_stations(r1,r2):
-    r1[hidx_in] += r2[hidx_in]
-    r1[hidx_out] += r2[hidx_out]
-    r1[hidx_stop] = 'Vaartsche Rijn'
-    return r1
-data_table.merge_rows(lr1, lr2, lmatch, combine_stations)
-
-data_table.save_as_csv('cleaned_data_b.csv')
-
 # Aggregate people who get in
-data_table.sort_on('haltevolgorde')
 data_table.aggregate_into(
-    0, lambda v, row: v + row[hidx_in] - row[hidx_out], 'passenger_count', 'ritnummer')
+    0, lambda v, row: max(0, v + row[hidx_in] - row[hidx_out]), 'passenger_count', 'ritnummer')
 
 # Calculate % of people who get out
 hidx_count = data_table.headers.index('passenger_count')
 data_table.calc_new(lambda row: 0 if row[hidx_count] ==
                     0 else row[hidx_out]/row[hidx_count], 'percentage_out')
+
+data_table.save_as_csv("cleaned_data_d.csv")
 
 # Get the station names
 stations = data_table.unique_values_from('haltenaam')
