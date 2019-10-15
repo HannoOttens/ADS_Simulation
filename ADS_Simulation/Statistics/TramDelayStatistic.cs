@@ -47,7 +47,7 @@ namespace ADS_Simulation.Statistics
         public override void Print(State state)
         {
             Console.WriteLine($"Total delay P+R: {totalDelay[0]}; UC: {totalDelay[1]}");
-            Console.WriteLine($"Delayed %: {(float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams)}");
+            Console.WriteLine($"Delayed %: {100 * (float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams)}");
         }
     }
 }

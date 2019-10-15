@@ -98,7 +98,7 @@ namespace ADS_Simulation.Configuration
         internal int roundTripOffsetFor(string name)
         {
             if (name != endStation) return 0;
-            return RoundTripTimeMinutes() / 2;
+            return 60 * RoundTripTimeMinutes() / 2;
         }
     }
 
