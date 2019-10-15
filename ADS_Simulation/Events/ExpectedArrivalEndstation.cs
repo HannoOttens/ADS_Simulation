@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
                 eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Sampling.switchClearanceTime());
             }
             else
-                station.incomingTrams.Enqueue(tram);
+                station.Enqueue(tram);
         }
     }
 }

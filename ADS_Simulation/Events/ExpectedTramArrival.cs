@@ -28,6 +28,8 @@ namespace ADS_Simulation.Events
 
                 eventQueue.Enqueue(new TramArrival(tram, stationIndex), state.time);
             }
+            else
+                station.Enqueue(tram);
         }
     }
 }
