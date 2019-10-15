@@ -3,6 +3,7 @@ using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using ADS_Simulation.Statistics;
 using Priority_Queue;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -139,7 +140,21 @@ namespace ADS_Simulation
                     || s.first == Platform.A && !s.IsFree(Platform.A)
                     || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
+            //Only trams with upfollowing ids can be on endstation at same time
+            Debug.Assert(state.stations.OfType<Endstation>()
+                    .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
+
             return !StoppingConditionMet();
+        }
+
+        private bool? Abs(int? v)
+        {
+            if (v != null)
+            {
+                int diff = Math.Abs(v.Value);
+                return diff == 1 || diff == 13;
+            }
+            return null;
         }
 
         /// <summary>
