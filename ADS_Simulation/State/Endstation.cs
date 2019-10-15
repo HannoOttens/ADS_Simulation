@@ -22,7 +22,7 @@ namespace ADS_Simulation.NS_State
         public readonly Switch _switch;
         private readonly bool hasDepot;
         private readonly TimeTable timeTable;
-        private Platform first;
+        public Platform first;
 
         // tram at platform 2
         public Tram? occupant2;
@@ -31,6 +31,7 @@ namespace ADS_Simulation.NS_State
         {
             this.hasDepot = hasDepot;
             _switch = new Switch();
+            first = Platform.None;
             
             timeTable = new TimeTable(Config.c.startTime + Config.c.roundTripOffsetFor(name), Config.c.GetIntervalSeconds());
         }
@@ -188,6 +189,10 @@ namespace ADS_Simulation.NS_State
                 occupant = tram;
             else
                 occupant2 = tram;
+
+            // No tram yet, so first arrival
+            if (first == Platform.None)
+                first = platform;
 
             return tram;
         }

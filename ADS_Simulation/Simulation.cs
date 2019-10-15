@@ -5,6 +5,7 @@ using ADS_Simulation.Statistics;
 using Priority_Queue;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ADS_Simulation
 {
@@ -131,6 +132,12 @@ namespace ADS_Simulation
 
             // Measure statistics
             statisticsManager.measureStatistics(state, _event);
+
+            // First cannot be None if there is a tram at the platform
+            Debug.Assert(state.stations.OfType<Endstation>()
+                    .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
+                    || s.first == Platform.A && !s.IsFree(Platform.A)
+                    || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
             return !StoppingConditionMet();
         }
