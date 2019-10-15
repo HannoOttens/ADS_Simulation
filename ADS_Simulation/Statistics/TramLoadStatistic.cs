@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
@@ -23,21 +24,26 @@ namespace ADS_Simulation.Statistics
             highestPassengerCount = Enumerable.Repeat(int.MinValue, tramCount).ToArray();
         }
 
-        public override void measure(State state)
+        public override void measure(State state, Event currentEvent)
         {
             Debug.Assert(state.time >= startTime && state.time <= endTime, "Measured statistic outside of time bounds");
 
             int timeDelta = state.time - lastEventTime;
-            if (timeDelta == 0) return; // No time has passed - not interesting
+
+            // No time has passed - not interesting
+            if (timeDelta == 0) return; 
 
             for(int tramIndex = 0; tramIndex < tramCount; tramIndex++)
             {
                 Tram tram = state.trams[tramIndex];
-                
                 totalPassengerCount[tramIndex] += tram.passengerCount * timeDelta;
-                
+                if (totalPassengerCount[tramIndex] < 0) throw new Exception("OVERFLOW :O");
+
+                // Lowest passenger count
                 if (tram.passengerCount < lowestPassengerCount[tramIndex])
                     lowestPassengerCount[tramIndex] = tram.passengerCount;
+
+                // Highest passenger count
                 if (tram.passengerCount > highestPassengerCount[tramIndex])
                     highestPassengerCount[tramIndex] = tram.passengerCount;
             }

@@ -32,7 +32,7 @@ namespace ADS_Simulation.NS_State
             this.hasDepot = hasDepot;
             _switch = new Switch();
             
-            timeTable = new TimeTable(Config.c.startTime, Config.c.GetIntervalSeconds());
+            timeTable = new TimeTable(Config.c.startTime + Config.c.roundTripOffsetFor(name), Config.c.GetIntervalSeconds());
         }
 
         public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
@@ -109,15 +109,6 @@ namespace ADS_Simulation.NS_State
         public int NextDeparture()
         {
             return timeTable.Next();
-        }
-
-        /// <summary>
-        /// Get the time of next departure without incrementing
-        /// </summary>
-        /// <returns>The time of next departure</returns>
-        public int PeekNextDeparture()
-        {
-            return timeTable.Current();
         }
 
         /// <summary>

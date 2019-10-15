@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ADS_Simulation.Configuration;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
@@ -23,7 +24,7 @@ namespace ADS_Simulation.Statistics
             longestEmptyStationTime = new int[stationCount];
         }
 
-        public override void measure(State state)
+        public override void measure(State state, Event currentEvent)
         {
             for (int stationIndex = 0; stationIndex < state.stations.Count; stationIndex++)
             {

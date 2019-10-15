@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
@@ -35,7 +36,7 @@ namespace ADS_Simulation.Statistics
             longestQueue = 0;
         }
 
-        public override void measure(State state)
+        public override void measure(State state, Event currentEvent)
         {
             int timeDelta = state.time - lastEventTime;
 

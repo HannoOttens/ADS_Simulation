@@ -9,9 +9,8 @@ namespace ADS_Simulation.NS_State
         public List<Tram> trams;
         public List<Station> stations;
 
-        public State(int startTime, List<Tram> ts, List<Station> ss)
+        public State(List<Tram> ts, List<Station> ss)
         {
-            time = startTime;
             trams = ts;
             stations = ss;
         }

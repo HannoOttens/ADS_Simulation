@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.NS_State;
+﻿using ADS_Simulation.Events;
+using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
 {
@@ -13,7 +14,7 @@ namespace ADS_Simulation.Statistics
             this.endTime = endTime;
         }
 
-        public abstract void measure(State state);
+        public abstract void measure(State state, Event currentEvent);
         public abstract void Print(State state);
     }
 }

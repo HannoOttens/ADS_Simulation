@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
@@ -17,20 +18,21 @@ namespace ADS_Simulation.Statistics
             statistics = new List<Statistic>();
             foreach ((int startTime, int endTime) in timeRanges)
                 statistics.AddRange(new List<Statistic>(){
-                    new PassengerWaitStatistic(startTime, endTime, startState.stations.Count),
+                    //new PassengerWaitStatistic(startTime, endTime, startState.stations.Count),
                     new TramLoadStatistic(startTime, endTime, startState.trams.Count),
+                    new TotalPassengerStatistic(startTime, endTime, startState.stations.Count),
                     new EmptyStationStatistic(startTime, endTime, startState.stations.Count),
-                    new TramDelayStatistic(startTime, endTime, startState.stations.Count)
+                    new TramDelayStatistic(startTime, endTime, (Endstation)startState.stations[0], (Endstation)startState.stations[8])
                 });
         }
 
-        public void measureStatistics(State state)
+        public void measureStatistics(State state, Event currentEvent)
         {
             foreach (Statistic statistic in statistics)
                 if (state.time >= statistic.startTime 
                     && state.time <= statistic.endTime)
                 {
-                    statistic.measure(state);
+                    statistic.measure(state, currentEvent);
                 }
         }
 

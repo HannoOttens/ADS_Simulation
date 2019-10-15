@@ -1,61 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
+using ADS_Simulation.Configuration;
+using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 
 namespace ADS_Simulation.Statistics
 {
     class TramDelayStatistic : Statistic
     {
-        int[] endstations;
-
-        (int a, int b)[] nextDeparture;
+        Dictionary<(Endstation, Platform), int> nextDeparture;
         int[] totalDelay;
-        (bool a, bool b)[] platformFree;
+        Endstation startStation;
+        int totalDelayedTrams = 0;
+        int totalOnTimeTrams = 0;
 
-        public TramDelayStatistic(int startTime, int endTime, int stationCount) : base(startTime, endTime)
+        public TramDelayStatistic(int startTime, int endTime, Endstation startStation, Endstation endStation) : base(startTime, endTime)
         {
-            endstations = new int[] { 0, 8 };
-
-            nextDeparture = new (int, int)[2];
+            this.startStation = startStation;
+            nextDeparture = new Dictionary<(Endstation, Platform), int>() {
+                { (startStation, Platform.A), 0 },
+                { (startStation, Platform.B), 0 },
+                { (endStation, Platform.A), 0 },
+                { (endStation, Platform.B), 0 },
+            };
             totalDelay = new int[2];
-            platformFree = new (bool, bool)[] { (true, true), (true, true) };
         }
 
-        public override void measure(State state)
+        public override void measure(State state, Event currentEvent)
         {
-            for (int i = 0; i < endstations.Length; i++)
+            // Check if tram has arrived on platform
+            if (currentEvent is ExpectedDepartureStartstation eds)
+                nextDeparture[(eds.station, eds.platform)] = eds.timeTableTime;
+            else if (currentEvent is DepartureStartstation ds)
             {
-                if (state.stations[endstations[i]] is Endstation endstation)
+                int delay = state.time - nextDeparture[(ds.station, ds.platform)];
+                if (delay >= Config.c.maximumDelayBeforeDelayed)
                 {
-                    // Check if tram has arrived on platform
-                    if (!endstation.IsFree(Platform.A) && platformFree[i].a)
-                    {
-                        platformFree[i].a = false;
-                        nextDeparture[i].a = endstation.PeekNextDeparture();
-                    }
-                    else if (!endstation.IsFree(Platform.B) && platformFree[i].b)
-                    {
-                        platformFree[i].b = false;
-                        nextDeparture[i].b = endstation.PeekNextDeparture();
-                    }
-                    else if (endstation.IsFree(Platform.A) && !platformFree[i].a)
-                    {
-                        platformFree[i].a = true;
-                        if (state.time - nextDeparture[i].a is int delay && delay >= 60)
-                            totalDelay[i] += delay;
-                    }
-                    else if (endstation.IsFree(Platform.B) && !platformFree[i].b)
-                    {
-                        platformFree[i].b = true;
-                        if (state.time - nextDeparture[i].b is int delay && delay >= 60)
-                            totalDelay[i] += delay;
-                    }
+                    totalDelay[startStation == ds.station ? 0 : 1] += delay;
+                    totalDelayedTrams++;
                 }
+                else
+                    totalOnTimeTrams++;
             }
         }
 
         public override void Print(State state)
         {
             Console.WriteLine($"Total delay P+R: {totalDelay[0]}; UC: {totalDelay[1]}");
+            Console.WriteLine($"Delayed %: {(float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams)}");
         }
     }
 }

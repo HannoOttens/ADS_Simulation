@@ -188,24 +188,29 @@ class Table:
         self.columns = columnize(self.headers, self.rows)
 
     def merge_rows(self, lr1, lr2, lmatch, lcombine):
-        for idx, r1 in enumerate(self.rows):
-            if(idx%1000 == 0): print(idx)
+        idx = -1
+        while idx < len(self.rows) - 1:
+            idx += 1
+            r1 = self.rows[idx]
 
-            if not lr1(r1):
-                continue
+            if(idx%1000 == 0): print(str(idx) + ' of ' + str(len(self.rows)))
+            if not lr1(r1): continue
+            
+            idx2 = 0
+            while idx2 < len(self.rows):
+                if(idx2 >= idx): break
 
-            for idx2, r2 in enumerate(self.rows):
-                if(idx2 >= idx):
-                    break
-
+                r2 = self.rows[idx2]
                 if not lr2(r2)\
                         or not lmatch(r1, r2):
+                    idx2 += 1
                     continue
+                else:
+                    lcombine(r1, r2)
+                    del self.rows[idx2]
+                    idx -= 1
+                    break
 
-                # Combine r1 and r2 into r1
-                lcombine(r1, r2)
-
-        self.delete_rows_where_lamda(lr2)
 
 def array_to_csv(arr):
     strs = [str(v) for v in arr]

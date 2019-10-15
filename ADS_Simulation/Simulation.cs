@@ -20,8 +20,12 @@ namespace ADS_Simulation
         {
             List<Station> stations = CreateStations();
             List<Tram> trams = CreateTrams();
-            state = new State(Config.c.startTime, trams, stations);
+            state = new State(trams, stations);
             eventQueue = InitializeEventQueue();
+
+            // Set the start time to the first event
+            state.time = (int)eventQueue.First.Priority;
+
             statisticsManager = new StatisticsManager(state, new (int, int)[] { 
                 // Whole simulation
                 (Config.c.startTime,  int.MaxValue),
@@ -43,18 +47,19 @@ namespace ADS_Simulation
 
             // Make an arrival event for every tram
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), Config.c.startTime + i * interval * 60);
+                queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), Config.c.startTime + i * interval * 60 - 60 * 6);
 
             // Create passenger arrivals
             for (int i = 0; i < state.stations.Count; i++)
-            for (int j = 0; j < Config.c.transferTimes[i].arrivalRate.Length; j++)
-            {
-                if (Config.c.transferTimes[i].arrivalRate[j] == 0)
-                    continue; // No arrival in this window
-                var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j]);
-                foreach(var time in times)
-                    queue.Enqueue(new PassengerArrival(i), j * 900 + time);
-            }
+                for (int j = 0; j < Config.c.transferTimes[i].arrivalRate.Length; j++)
+                {
+                    if (Config.c.transferTimes[i].arrivalRate[j] == 0)
+                        continue; // No arrival in this window
+
+                    var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j] * 2.65);
+                    foreach (var time in times)
+                        queue.Enqueue(new PassengerArrival(i), j * 900 + time);
+                }
 
             return queue;
         }
@@ -125,7 +130,7 @@ namespace ADS_Simulation
             _event.Execute(state, eventQueue);
 
             // Measure statistics
-            statisticsManager.measureStatistics(state);
+            statisticsManager.measureStatistics(state, _event);
 
             return !StoppingConditionMet();
         }

@@ -104,8 +104,8 @@ namespace ADS_Simulation.NS_State
         public int BoardPassengers(Tram tram)
         {
             int maxPassengers = tram.PassengerSpace();
+            
             int count = 0;
-
             while (count < maxPassengers && waitingPassengers.Count > 0)
             {
                 waitingPassengers.Dequeue();
