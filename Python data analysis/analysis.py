@@ -83,13 +83,15 @@ def stationDirectionFilter(station, direction):
 
 # data_table.save_as_csv('cleaned_data_b.csv')
 
-data_table = readin.read_in("cleaned_data_b.csv")
+# data_table = readin.read_in("cleaned_data_b.csv")
 
-data_table.replace('Rubenslaan', 'Vaartsche Rijn')
-data_table.replace('Sterrenwijk', 'Vaartsche Rijn')
+# data_table.replace('Rubenslaan', 'Vaartsche Rijn')
+# data_table.replace('Sterrenwijk', 'Vaartsche Rijn')
 
-data_table.save_as_csv('cleaned_data_c.csv')
+# data_table.save_as_csv('cleaned_data_c.csv')
 data_table = readin.read_in("cleaned_data_c.csv")
+data_table.replace('Vaarsche Rijn', 'Vaartsche Rijn')
+data_table.save_as_csv("cleaned_data_c.csv")
 
 data_table.change_type('ritnummer', int)
 data_table.change_type('aantal uitstappers', int)
@@ -103,16 +105,16 @@ hidx_date = data_table.headers.index('datum')
 hidx_in = data_table.headers.index('aantal instappers')
 hidx_out = data_table.headers.index('aantal uitstappers')
 
-# Aggregate people who get in
-data_table.aggregate_into(
-    0, lambda v, row: max(0, v + row[hidx_in] - row[hidx_out]), 'passenger_count', 'ritnummer')
+# # Aggregate people who get in
+# data_table.aggregate_into(
+#     0, lambda v, row: max(0, v + row[hidx_in] - row[hidx_out]), 'passenger_count', 'ritnummer')
 
-# Calculate % of people who get out
-hidx_count = data_table.headers.index('passenger_count')
-data_table.calc_new(lambda row: 0 if row[hidx_count] ==
-                    0 else row[hidx_out]/row[hidx_count], 'percentage_out')
+# # Calculate % of people who get out
+# hidx_count = data_table.headers.index('passenger_count')
+# data_table.calc_new(lambda row: 0 if row[hidx_count] ==
+#                     0 else row[hidx_out]/row[hidx_count], 'percentage_out')
 
-data_table.save_as_csv("cleaned_data_d.csv")
+# data_table.save_as_csv("cleaned_data_d.csv")
 
 # Get the station names
 stations = data_table.unique_values_from('haltenaam')
@@ -121,7 +123,7 @@ directions = [0, 1]
 
 def to_normal_values(column):
     new_headers = ['stop', 'direction', 'time', 'average',
-                   'sd', 'passenger_count', 'percentage_out']
+                   'sd', 'dist', 'param']
     t_result = readin.Table([new_headers])
     for station in stations:
         for direction in directions:
@@ -135,8 +137,6 @@ def to_normal_values(column):
             # Row indexes:
             c_idx = t2.headers.index(column)
             d_idx = t2.headers.index('datum')
-            pc_idx = t2.headers.index('passenger_count')
-            pout_idx = t2.headers.index('percentage_out')
 
             # Make new table
             b = readin.Table([new_headers])
@@ -144,7 +144,6 @@ def to_normal_values(column):
 
             # Insert data
             for interval, rows in data:
-
                 # Gather counts and dates
                 counts = []
                 for row in rows:
@@ -164,16 +163,16 @@ def to_normal_values(column):
                 else:
                     average = sum(counts) / unique_dates_count
                     sd = statistics.stdev(counts)
-                    # (distrubution, best_params) = fit.best_fit_distribution(c)
+                    (distrubution, best_params) = fit.best_fit_distribution(counts)
 
                 b.add_rows(
-                    [[station, direction, interval, average, sd, row[pc_idx], row[pout_idx]]])
+                    [[station, direction, interval, average, sd, distrubution, str(best_params).replace(',', ' ')]])
             t_result.add_rows(b.rows)
     return t_result
 
 
 t_result = to_normal_values('aantal uitstappers')
-t_result.save_as_csv('out.csv')
+t_result.save_as_csv('out_dist.csv')
 
 t_result = to_normal_values('aantal instappers')
-t_result.save_as_csv('in.csv')
+t_result.save_as_csv('in_dist.csv')
