@@ -18,7 +18,7 @@ namespace ADS_Simulation.Events
         {
             // Check if there is a free platform available and if switch lane is free
             Platform bestPlatform = station.BestFreePlatform();
-            if(bestPlatform != Platform.None)
+            if(station.depotQueue.Count == 0 && bestPlatform != Platform.None)
             {
                 station.Occupy(tram, bestPlatform);
                 station._switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));

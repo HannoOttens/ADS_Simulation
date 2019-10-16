@@ -45,11 +45,16 @@ namespace ADS_Simulation
         private FastPriorityQueue<Event> InitializeEventQueue()
         {
             var queue = new FastPriorityQueue<Event>(MAX_EVENTS);
-            int interval = 60 / Config.c.frequency;
 
             // Make an arrival event for every tram
+            var startStation = (Endstation)state.stations[0];
+
             for (int i = 0; i < state.trams.Count; i++)
-                queue.Enqueue(new ExpectedArrivalEndstation(state.trams[i], (Endstation)state.stations[0]), Config.c.startTime + i * interval * 60 - 60 * 6);
+                startStation.depotQueue.Enqueue(state.trams[i]);
+            startStation.OccupyFromDepotQueue(Platform.A);
+            startStation.OccupyFromDepotQueue(Platform.B);
+            queue.Enqueue(new ArrivalEndstation(state.trams[0], startStation, Platform.A, true), state.time);
+            queue.Enqueue(new ArrivalEndstation(state.trams[1], startStation, Platform.B, true), state.time);
 
             // Create passenger arrivals
             for (int i = 0; i < state.stations.Count; i++)
@@ -126,27 +131,7 @@ namespace ADS_Simulation
             // Measure statistics
             statisticsManager.measureStatistics(state, _event);
 
-            // First cannot be None if there is a tram at the platform
-            Debug.Assert(state.stations.OfType<Endstation>()
-                    .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
-                    || s.first == Platform.A && !s.IsFree(Platform.A)
-                    || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
-
-            //Only trams with upfollowing ids can be on endstation at same time
-            Debug.Assert(state.stations.OfType<Endstation>()
-                    .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
-
             return !StoppingConditionMet();
-        }
-
-        private bool? Abs(int? v)
-        {
-            if (v != null)
-            {
-                int diff = Math.Abs(v.Value);
-                return diff == 1 || diff == 13;
-            }
-            return null;
         }
 
         /// <summary>
