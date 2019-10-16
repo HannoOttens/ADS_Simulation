@@ -23,7 +23,8 @@ namespace ADS_Simulation.Events
             (int pOut, int pIn) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex));
 
             // Queue the expected tram departure
-            eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex), state.time + Sampling.passengerExchangeTime(pOut,pIn));
+            int scheduledDepartTime = state.time + Sampling.passengerExchangeTime(pOut, pIn);
+            eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex, scheduledDepartTime), scheduledDepartTime);
         }
     }
 }

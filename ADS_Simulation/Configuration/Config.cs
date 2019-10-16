@@ -78,6 +78,7 @@ namespace ADS_Simulation.Configuration
         public int startTime;
         public int endTime;
         public int maximumDelayBeforeDelayed;
+        public int maximumWaitForExtraPassengers;
         public bool ucDualDriverSwitch;
         public float sdDrivingTimes;
         public string startStation;

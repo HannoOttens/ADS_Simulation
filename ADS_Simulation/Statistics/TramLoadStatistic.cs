@@ -11,7 +11,7 @@ namespace ADS_Simulation.Statistics
         int tramCount;
         int lastEventTime;
 
-        int[] totalPassengerCount;
+        long[] totalPassengerCount;
         int[] lowestPassengerCount;
         int[] highestPassengerCount;
 
@@ -19,7 +19,7 @@ namespace ADS_Simulation.Statistics
         {
             this.tramCount = tramCount;
             this.lastEventTime = startTime;
-            totalPassengerCount = new int[tramCount];
+            totalPassengerCount = new long[tramCount];
             lowestPassengerCount = Enumerable.Repeat(int.MaxValue, tramCount).ToArray();
             highestPassengerCount = Enumerable.Repeat(int.MinValue, tramCount).ToArray();
         }

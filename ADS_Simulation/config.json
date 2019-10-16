@@ -12,6 +12,7 @@
   "startStation": "P+R De Uithof",
   "endStation": "Centraal Station",
   "maximumDelayBeforeDelayed": 60,
+  "maximumWaitForExtraPassengers": 10,
   "transferTimes": [
     {
       "from": "P+R De Uithof",

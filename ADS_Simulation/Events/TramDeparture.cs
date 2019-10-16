@@ -27,9 +27,10 @@ namespace ADS_Simulation.Events
             if (station.HasQueue())
             {
                 Tram newOccupant = station.OccupyFromQueue();
-                eventQueue.Enqueue(new ExpectedTramDeparture(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance() + Sampling.passengerExchangeTime(0, 0));
+                eventQueue.Enqueue(new TramArrival(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance());
             }
 
+            // Schedule arrival at next station
             int newStationIndex = stationIndex + 1 == state.stations.Count ? 0 : stationIndex + 1;
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
             Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {drivingTime}s");
