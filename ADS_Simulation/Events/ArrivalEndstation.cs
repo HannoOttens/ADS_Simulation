@@ -34,7 +34,7 @@ namespace ADS_Simulation.Events
 
                 // Calculate when to schedule departure
                 // If boarding/unboarding takes shorter than the turnaround, take the turnaround time
-                int passengerTransferTime = state.time + Math.Max(Sampling.passengerExchangeTime(pOut, pIn), Config.c.turnAroundTimeMinutes * 60);
+                int passengerTransferTime = state.time + Math.Max(Sampling.passengerExchangeTime(pOut, pIn), Config.c.turnAroundTimeFor(station));
                 int nextDepartureTime = station.NextDeparture();
                 int nextEventTime = Math.Max(passengerTransferTime, nextDepartureTime);
 

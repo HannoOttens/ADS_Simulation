@@ -87,9 +87,8 @@ namespace ADS_Simulation.NS_State
         public bool TramToDepot(int currentTime)
         {
             // Trip time is one-way driving time times two plus the turn-around time
-            int roundTripTime = Configuration.Config.c.oneWayTripTimeMinutes * 60 * 2
-                + Configuration.Config.c.turnAroundTimeMinutes * 60;
-            return hasDepot && Configuration.Config.c.endTime - currentTime <= roundTripTime;
+            int roundTripTime = Config.c.RoundTripTime();
+            return hasDepot && Config.c.endTime - currentTime <= roundTripTime;
         }
 
         /// <summary>

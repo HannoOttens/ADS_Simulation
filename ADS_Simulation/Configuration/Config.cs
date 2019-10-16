@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ADS_Simulation.NS_State;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -70,7 +71,8 @@ namespace ADS_Simulation.Configuration
     public class ConfigData
     {
         public int oneWayTripTimeMinutes;
-        public int turnAroundTimeMinutes;
+        public int turnAroundTime;
+        public int turnAroundTimeDualDriver;
         public int frequency;
         public int tramCapacity;
         public int stationClearanceTime;
@@ -91,16 +93,23 @@ namespace ADS_Simulation.Configuration
             return 3600 / frequency;
         }
 
-        internal int RoundTripTimeMinutes()
+        internal int RoundTripTime()
         {
-            return 2 * turnAroundTimeMinutes
-                + 2 * oneWayTripTimeMinutes;
+            return 2 * turnAroundTime
+                + 2 * 60 * oneWayTripTimeMinutes;
         }
 
         internal int roundTripOffsetFor(string name)
         {
             if (name != endStation) return 0;
-            return 60 * RoundTripTimeMinutes() / 2;
+            return RoundTripTime() / 2;
+        }
+
+        internal int turnAroundTimeFor(Endstation station)
+        {
+            if (ucDualDriverSwitch && station.name == endStation)
+                return turnAroundTimeDualDriver;
+            return turnAroundTime;
         }
     }
 

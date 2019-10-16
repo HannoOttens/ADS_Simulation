@@ -6,14 +6,15 @@
   "switchClearanceTime": 60,
   "startTime": 21600, // 6 AM
   "endTime": 77400, // 9 PM
-  "turnAroundTimeMinutes": 5,
   "oneWayTripTimeMinutes": 17,
-  "ucDualDriverSwitch": false,
+  "ucDualDriverSwitch": true,
+  "turnAroundTime": 180,
+  "turnAroundTimeDualDriver": 30,
   "sdDrivingTimes": 0.1,
   "startStation": "P+R De Uithof",
   "endStation": "Centraal Station",
   "maximumDelayBeforeDelayed": 60,
-  "maximumWaitForExtraPassengers": 10,
+  "maximumWaitForExtraPassengers": 20,
   "transferTimes": [
     {
       "from": "P+R De Uithof",
