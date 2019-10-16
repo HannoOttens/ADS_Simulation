@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
 
             // Clear switch (no lane cleared if coming from depot)
             SwitchLane lane = fromDepot ? SwitchLane.None : Switch.ArrivalLaneFor(platform);
-            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
+            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
             
             // Log
             System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}"); 
