@@ -38,9 +38,8 @@ namespace ADS_Simulation.Events
             int newStationIndex = stationIndex + 1;
 
             // Make sure trams do not take over eachother
-            int drivingTime = state.time + Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
-            int arrivalTime = Math.Max(state.time + drivingTime, station.lastSignaledArrivalTime + 1);
-            station.lastSignaledArrivalTime = arrivalTime;
+            int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
+            int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
             eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), arrivalTime);
         }
     }

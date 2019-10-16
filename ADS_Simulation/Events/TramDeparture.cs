@@ -35,8 +35,7 @@ namespace ADS_Simulation.Events
             Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {drivingTime}s");
 
             // Make sure trams do not take over eachother
-            int arrivalTime = Math.Max(state.time + drivingTime, station.lastSignaledArrivalTime + 1);
-            station.lastSignaledArrivalTime = arrivalTime;
+            int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
             if (state.stations[newStationIndex] is Endstation endstation)
                 eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), arrivalTime);
             else

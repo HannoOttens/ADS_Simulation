@@ -34,7 +34,7 @@ namespace ADS_Simulation.NS_State
         /// The time the previous tram would arrive at the next station.
         /// When departing a tram, it cannot arrive earlier at the next station than this timestamp.
         /// </summary>
-        public int lastSignaledArrivalTime = 0;
+        private int lastSignaledArrivalTime = 0;
 
         public Station(string name, Direction direction)
         {
@@ -152,6 +152,18 @@ namespace ADS_Simulation.NS_State
             int pIn = BoardPassengers(tram);
 
             return (pOut, pIn);
+        }
+
+        /// <summary>
+        /// Make sure trams do not take over eachother.
+        /// </summary>
+        /// <param name="stochasticArrivalTime">The stocasticly calculated arrival time</param>
+        /// <returns>Actual arrival time</returns>
+        public int SignalNextArrival(int stochasticArrivalTime)
+        {
+            int arrivalTime = Math.Max(stochasticArrivalTime, lastSignaledArrivalTime + 1);
+            lastSignaledArrivalTime = arrivalTime;
+            return arrivalTime;
         }
     }
 }
