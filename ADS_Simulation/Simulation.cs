@@ -12,7 +12,7 @@ namespace ADS_Simulation
 {
     class Simulation
     {
-        private const int MAX_EVENTS = 100000;
+        private const int MAX_EVENTS = 1000000;
 
         public State state;
         public FastPriorityQueue<Event> eventQueue;
@@ -38,7 +38,9 @@ namespace ADS_Simulation
                 // 16:00 - 18:00
                 (16*60*60,  18*60*60),
                 // 18:00 - End
-                (18*60*60,  int.MaxValue)
+                (18*60*60,  int.MaxValue),
+                // 07:00 - 19:00
+                (07*60*60,  19*60*60)
             });
         }
 
@@ -126,15 +128,15 @@ namespace ADS_Simulation
             // Measure statistics
             statisticsManager.measureStatistics(state, _event);
 
-            // First cannot be None if there is a tram at the platform
-            Debug.Assert(state.stations.OfType<Endstation>()
-                    .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
-                    || s.first == Platform.A && !s.IsFree(Platform.A)
-                    || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
+            //// First cannot be None if there is a tram at the platform
+            //Debug.Assert(state.stations.OfType<Endstation>()
+            //        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
+            //        || s.first == Platform.A && !s.IsFree(Platform.A)
+            //        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
-            //Only trams with upfollowing ids can be on endstation at same time
-            Debug.Assert(state.stations.OfType<Endstation>()
-                    .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
+            ////Only trams with upfollowing ids can be on endstation at same time
+            //Debug.Assert(state.stations.OfType<Endstation>()
+            //        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
 
             return !StoppingConditionMet();
         }

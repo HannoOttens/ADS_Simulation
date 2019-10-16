@@ -41,30 +41,87 @@ namespace ADS_Simulation.Configuration
                 }
             }
 
-            // Parse in the CSVs
-            bool header = true;
-            using (var reader = new StreamReader(inPath))
-                while (!reader.EndOfStream)
-                {
-                    string[] data = reader.ReadLine().Split(',');
-                    if (header) { header = false; continue; } // Skip header
+            //// Parse in the CSVs
+            //bool header = true;
+            //using (var reader = new StreamReader(inPath))
+            //    while (!reader.EndOfStream)
+            //    {
+            //        string[] data = reader.ReadLine().Split(',');
+            //        if (header) { header = false; continue; } // Skip header
 
-                    var idx = (data[0], int.Parse(data[1]));
-                    var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].arrivalRate[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
-                }
-            header = true;
-            using (var reader = new StreamReader(outPath))
-                while (!reader.EndOfStream)
-                {
-                    string[] data = reader.ReadLine().Split(',');
-                    if (header) { header = false; continue; } // Skip header
+            //        var idx = (data[0], int.Parse(data[1]));
+            //        var idxT = int.Parse(data[2]) / 15;
+            //        c.transferTimes[nameToIndex[idx]].arrivalRate[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
+            //    }
+            //header = true;
+            //using (var reader = new StreamReader(outPath))
+            //    while (!reader.EndOfStream)
+            //    {
+            //        string[] data = reader.ReadLine().Split(',');
+            //        if (header) { header = false; continue; } // Skip header
 
-                    var idx = (data[0], int.Parse(data[1]));
-                    var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
-                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4], CultureInfo.InvariantCulture);
-                }
+            //        var idx = (data[0], int.Parse(data[1]));
+            //        var idxT = int.Parse(data[2]) / 15;
+            //        c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
+            //        c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4], CultureInfo.InvariantCulture);
+            //    }
+
+            for (int i = 0; i <= 4; i++)
+            {
+                for (int j = 6 * 4; j < 7 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 160 / 4;
+                for (int j = 7 * 4; j < 9 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 1600 / 8;
+                for (int j = 9 * 4; j < 16 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 5600 / 32;
+                for (int j = 16 * 4; j < 18 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 1600 / 8;
+                for (int j = 18 * 4; j < 21.5 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 560 / 14;
+            }
+            for (int i = 7; i <= 8; i++)
+            {
+                for (int j = 6 * 4; j < 7 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 400 / 4;
+                for (int j = 7 * 4; j < 9 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 4000 / 8;
+                for (int j = 9 * 4; j < 16 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 14000 / 32;
+                for (int j = 16 * 4; j < 18 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 4000 / 8;
+                for (int j = 18 * 4; j < 21.5 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 1400 / 14;
+            }
+            for (int i = 8; i <= 9; i++)
+            {
+                for (int j = 6 * 4; j < 7 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 400 / 4;
+                for (int j = 7 * 4; j < 9 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 4000 / 8;
+                for (int j = 9 * 4; j < 16 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 14000 / 32;
+                for (int j = 16 * 4; j < 18 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 4000 / 8;
+                for (int j = 18 * 4; j < 21.5 * 4; j ++)
+                    c.transferTimes[i].arrivalRate[j] = 1400 / 14;
+            }
+            for (int i = 12; i <= 16; i++)
+            {
+                if (i == 16)
+                    i = 0;
+                for (int j = 6 * 4; j < 7 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 160 / 4;
+                for (int j = 7 * 4; j < 9 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 1600 / 8;
+                for (int j = 9 * 4; j < 16 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 5600 / 32;
+                for (int j = 16 * 4; j < 18 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 1600 / 8;
+                for (int j = 18 * 4; j < 21.5 * 4; j ++)
+                    c.transferTimes[i].averageExit[j] = 560 / 14;
+                if (i == 0)
+                    break;
+            }
         }
     }
 

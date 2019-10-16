@@ -26,7 +26,15 @@ namespace ADS_Simulation
         /// <returns></returns>
         public static int drivingTime(int averageForPart)
         {
-            return (int)LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
+            //return (int)LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
+            var x = ContinuousUniform.Sample(0, 1);
+            if (x >= 0.6)
+                return (int) (0.8 * averageForPart);
+            if (x >= 0.3)
+                return averageForPart;
+            if (x >= 0.2)
+                return (int) (1.2 * averageForPart);
+            else return (int) (1.4 * averageForPart);
         }
 
         /// <summary>
