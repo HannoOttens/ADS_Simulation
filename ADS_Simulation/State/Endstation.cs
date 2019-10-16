@@ -24,7 +24,9 @@ namespace ADS_Simulation.NS_State
         private readonly TimeTable timeTable;
         public Platform first;
 
-        // tram at platform 2
+        /// <summary>
+        /// Tram at platform B
+        /// </summary>
         public Tram? occupant2;
 
         public Endstation(string name, bool hasDepot) : base(name, Direction.END)

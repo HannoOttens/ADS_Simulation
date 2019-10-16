@@ -1,6 +1,7 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
+using System;
 using System.Diagnostics;
 
 namespace ADS_Simulation.Events
@@ -33,11 +34,12 @@ namespace ADS_Simulation.Events
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
             Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {drivingTime}s");
 
-
+            // Make sure trams do not take over eachother
+            int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
             if (state.stations[newStationIndex] is Endstation endstation)
-                eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), state.time + drivingTime);
+                eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), arrivalTime);
             else
-                eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), state.time + drivingTime);
+                eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), arrivalTime);
         }
     }
 }

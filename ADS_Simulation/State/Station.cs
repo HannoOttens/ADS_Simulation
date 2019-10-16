@@ -30,6 +30,12 @@ namespace ADS_Simulation.NS_State
         public Tram? occupant;
         private int lastOccupantId = -1;
 
+        /// <summary>
+        /// The time the previous tram would arrive at the next station.
+        /// When departing a tram, it cannot arrive earlier at the next station than this timestamp.
+        /// </summary>
+        private int lastSignaledArrivalTime = 0;
+
         public Station(string name, Direction direction)
         {
             this.name = name;
@@ -72,7 +78,7 @@ namespace ADS_Simulation.NS_State
             {
                 occupant = tram;
                 Trace.Assert(lastOccupantId < 0 || occupant.id - 1 == lastOccupantId || occupant.id == 6001, 
-                    $"Tram arrived in wrong order, {lastOccupantId} arrived before {occupant.id}");
+                    $"Tram arrived in wrong order, {occupant.id} arrived after {lastOccupantId} at {name} ({direction})");
                 lastOccupantId = occupant.id;
             }
             else
@@ -148,5 +154,16 @@ namespace ADS_Simulation.NS_State
             return (pOut, pIn);
         }
 
+        /// <summary>
+        /// Make sure trams do not take over eachother.
+        /// </summary>
+        /// <param name="stochasticArrivalTime">The stocasticly calculated arrival time</param>
+        /// <returns>Actual arrival time</returns>
+        public int SignalNextArrival(int stochasticArrivalTime)
+        {
+            int arrivalTime = Math.Max(stochasticArrivalTime, lastSignaledArrivalTime + 1);
+            lastSignaledArrivalTime = arrivalTime;
+            return arrivalTime;
+        }
     }
 }
