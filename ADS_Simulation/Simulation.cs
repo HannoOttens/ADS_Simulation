@@ -72,16 +72,8 @@ namespace ADS_Simulation
         /// <returns>List of trams</returns>
         public List<Tram> CreateTrams()
         {
-            // Interval at which trains leave the station
-            float interval = 60 / Config.c.frequency;
-
-            // Calculate the amount needed to fill a 44 minute cycle 
-            // and the first tram is scheduled to leave P+R again
-            int roundTripTime = 2 * (Config.c.oneWayTripTimeMinutes + Config.c.turnAroundTimeMinutes);
-            int numberOfTrains = (int)(roundTripTime / interval);
-
             var trams = new List<Tram>();
-            for (int i = 1; i <= numberOfTrains; i++)
+            for (int i = 1; i <= Config.c.numberOfTrams; i++)
                 trams.Add(new Tram(6000 + i));
             return trams;
         }
