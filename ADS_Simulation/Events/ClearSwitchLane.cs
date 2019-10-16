@@ -54,7 +54,7 @@ namespace ADS_Simulation.Events
 
                 // Queue the arrival
                 Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform);
-                eventQueue.Enqueue(e, state.time + Sampling.switchClearanceTime());
+                eventQueue.Enqueue(e, state.time);
             }
         }
     }

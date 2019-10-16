@@ -16,13 +16,14 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
+            System.Diagnostics.Debug.WriteLine($"ExpectedArrivalEndstation: tram {tram.id}, station: {station.name}, time: {state.time}");
             // Check if there is a free platform available and if switch lane is free
             Platform bestPlatform = station.BestFreePlatform();
             if(bestPlatform != Platform.None)
             {
                 station.Occupy(tram, bestPlatform);
                 station._switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));
-                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Sampling.switchClearanceTime());
+                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time);
             }
             else
                 station.Enqueue(tram);

@@ -23,8 +23,8 @@ namespace ADS_Simulation.Events
 
             // Clear switch
             SwitchLane lane = Switch.ArrivalLaneFor(platform);
-            System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}"); 
-            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time);
+            System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}, time: {state.time}"); 
+            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
 
             // Check if tram can do another round trip if it is at endstation with depot
             if (!station.TramToDepot(state.time))

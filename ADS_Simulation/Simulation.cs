@@ -60,7 +60,7 @@ namespace ADS_Simulation
                     if (Config.c.transferTimes[i].arrivalRate[j] == 0)
                         continue; // No arrival in this window
 
-                    var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j] * 2.65);
+                    var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j]);
                     foreach (var time in times)
                         queue.Enqueue(new PassengerArrival(i), j * 900 + time);
                 }

@@ -20,7 +20,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             var station = state.stations[stationIndex];
-            System.Diagnostics.Debug.WriteLine($"ExpectedTramDeparture: tram {tram.id}, station: {station.name}, dir: {station.direction}");
+            System.Diagnostics.Debug.WriteLine($"ExpectedTramDeparture: tram {tram.id}, station: {station.name}, dir: {station.direction}, time: {state.time}");
 
             bool forceDepart = state.time >= initialScheduledDeparture + Config.c.maximumWaitForExtraPassengers;
             if (!forceDepart && !tram.IsFull() && station.HasPassengers())

@@ -28,7 +28,7 @@ namespace ADS_Simulation.Events
 
             // Claim lane
             SwitchLane lane = Switch.ExitLaneFor(platform);
-            System.Diagnostics.Debug.WriteLine($"DepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, {lane}");
+            System.Diagnostics.Debug.WriteLine($"DepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, {lane}, time: {state.time}");
 
             // Clear the lane it's leaving over in 60s
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
