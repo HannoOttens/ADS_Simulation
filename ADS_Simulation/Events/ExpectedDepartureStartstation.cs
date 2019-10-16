@@ -30,7 +30,8 @@ namespace ADS_Simulation.Events
 
                 // Start leaving directly when possible
                 SwitchLane lane = Switch.ExitLaneFor(platform);
-                if (station._switch.SwitchLaneFree(lane))
+                bool isFirst = station.first == platform;
+                if (isFirst && station._switch.SwitchLaneFree(lane))
                 {
                     station._switch.UseSwitchLane(lane);
                     eventQueue.Enqueue(new DepartureStartstation(tram, station, platform), state.time);

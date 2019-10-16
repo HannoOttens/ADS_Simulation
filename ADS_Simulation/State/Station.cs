@@ -78,7 +78,7 @@ namespace ADS_Simulation.NS_State
             {
                 occupant = tram;
                 Trace.Assert(lastOccupantId < 0 || occupant.id - 1 == lastOccupantId || occupant.id == 6001, 
-                    $"Tram arrived in wrong order, {lastOccupantId} arrived before {occupant.id}");
+                    $"Tram arrived in wrong order, {occupant.id} arrived after {lastOccupantId} at {name} ({direction})");
                 lastOccupantId = occupant.id;
             }
             else

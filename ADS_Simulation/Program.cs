@@ -28,27 +28,30 @@ namespace ADS_Simulation
             // Initialize config
             Config.readConfig(configPath, inPath, outPath);
 
-            // Initialize simulation
-            Simulation simulation = new Simulation();
-            while (simulation.Step())
+            while(true)
             {
-                if (gui)
-                    DrawGUI(simulation);
+                // Initialize simulation
+                Simulation simulation = new Simulation();
+                while (simulation.Step())
+                {
+                    if (gui)
+                        DrawGUI(simulation);
 
-                // Addition between-step functionality
-                eventCount++;
+                    // Addition between-step functionality
+                    eventCount++;
 
-                if (step)
-                    Console.ReadKey();
-            }
+                    if (step)
+                        Console.ReadKey();
+                }
 
-            Console.WriteLine(@$"Went through {eventCount} events.
+                Console.WriteLine(@$"Went through {eventCount} events.
 The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
 The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");
 
-            // Print statistic information
-            simulation.statisticsManager.printStatistics(simulation.state);
+                //// Print statistic information
+                //simulation.statisticsManager.printStatistics(simulation.state);
+            }
         }
 
         /// <summary>
