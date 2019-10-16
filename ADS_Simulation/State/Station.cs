@@ -30,6 +30,12 @@ namespace ADS_Simulation.NS_State
         public Tram? occupant;
         private int lastOccupantId = -1;
 
+        /// <summary>
+        /// The time the previous tram would arrive at the next station.
+        /// When departing a tram, it cannot arrive earlier at the next station than this timestamp.
+        /// </summary>
+        public int lastSignaledArrivalTime = 0;
+
         public Station(string name, Direction direction)
         {
             this.name = name;
@@ -147,6 +153,5 @@ namespace ADS_Simulation.NS_State
 
             return (pOut, pIn);
         }
-
     }
 }
