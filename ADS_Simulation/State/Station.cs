@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ADS_Simulation.NS_State
 {
@@ -21,12 +22,13 @@ namespace ADS_Simulation.NS_State
 
     public class Station
     {
-        public Queue<Tram> incomingTrams;
-        public string name;
-        public Direction direction;
-        public Queue<int> waitingPassengers;
+        public readonly Queue<Tram> incomingTrams;
+        public readonly string name;
+        public readonly Direction direction;
+        public readonly Queue<int> waitingPassengers;
 
         public Tram? occupant;
+        private int lastOccupantId = -1;
 
         public Station(string name, Direction direction)
         {
@@ -44,7 +46,7 @@ namespace ADS_Simulation.NS_State
         {
             if (occupant is null)
             {
-                occupant = incomingTrams.Dequeue();
+                Occupy(incomingTrams.Dequeue());
                 return occupant;
             }
             else throw new Exception($"Tried to occupy {name} in direction {direction} from the incomingTrams queue, but the station was full.");
@@ -67,7 +69,12 @@ namespace ADS_Simulation.NS_State
         public void Occupy(Tram tram)
         {
             if (occupant is null)
+            {
                 occupant = tram;
+                Trace.Assert(lastOccupantId < 0 || occupant.id - 1 == lastOccupantId || occupant.id == 6001, 
+                    $"Tram arrived in wrong order, {lastOccupantId} arrived before {occupant.id}");
+                lastOccupantId = occupant.id;
+            }
             else
                 throw new Exception($"{tram.id} tried to occupy {name} in direction {direction}, but the station was full.");
         }
