@@ -33,5 +33,15 @@ namespace ADS_Simulation.Statistics
             }
             Console.WriteLine($"Total: {totalPassengers.Sum()}");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[] { "total_passengers" };
+        }
+
+        public override string[] GetValues(State state)
+        {
+            return new string[] { totalPassengers.Sum().ToString() };
+        }
     }
 }
