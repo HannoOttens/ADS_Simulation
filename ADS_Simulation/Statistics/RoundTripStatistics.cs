@@ -48,5 +48,18 @@ namespace ADS_Simulation.Statistics
             Console.WriteLine($"Average RTT: {(int)averageRtt / 60} minutes");
             Console.WriteLine($"Max RTT: {(int)maxRtt / 60} minutes");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[] { "average_rtt", "max_rtt" };
+        }
+
+        public override string[] GetValues(State state)
+        {
+            return new string[] {
+                averageRtt.ToString(),
+                maxRtt.ToString()
+            };
+        }
     }
 }
