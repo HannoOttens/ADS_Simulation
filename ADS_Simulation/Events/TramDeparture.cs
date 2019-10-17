@@ -33,7 +33,7 @@ namespace ADS_Simulation.Events
             // Schedule arrival at next station
             int newStationIndex = stationIndex + 1 == state.stations.Count ? 0 : stationIndex + 1;
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
-            Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {drivingTime}s");
+            Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {state.time}");
 
             // Make sure trams do not take over eachother
             int arrivalTime = station.SignalNextArrival(state.time + drivingTime);

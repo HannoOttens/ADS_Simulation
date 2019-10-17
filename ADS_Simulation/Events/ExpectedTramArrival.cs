@@ -19,7 +19,7 @@ namespace ADS_Simulation.Events
         {
             var station = state.stations[stationIndex];
 
-            System.Diagnostics.Debug.WriteLine($"ExpectedTramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
+            System.Diagnostics.Debug.WriteLine($"ExpectedTramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}, time: {state.time}");
 
             if (station.IsFree())
             {
