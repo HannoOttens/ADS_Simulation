@@ -137,6 +137,8 @@ namespace ADS_Simulation.Configuration
         public string startStation;
         public string endStation;
         public StationData[] transferTimes;
+        public int runs;
+        public string outputFile;
 
         internal int GetIntervalSeconds()
         {
