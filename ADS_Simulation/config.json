@@ -1,5 +1,5 @@
 ﻿{
-  "runs": 10,
+  "runs": 5,
   "frequency": 16,
   "numberOfTrams": 12,
   "tramCapacity": 420,
@@ -16,7 +16,8 @@
   "endStation": "Centraal Station",
   "maximumDelayBeforeDelayed": 60,
   "maximumWaitForExtraPassengers": 0,
-  "outputFile": "../../output.csv",
+  "outputFilePath": "../../../Output/",
+  "outputFileName": "run_a",
   "transferTimes": [
     {
       "from": "P+R De Uithof",

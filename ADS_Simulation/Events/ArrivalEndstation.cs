@@ -48,10 +48,7 @@ namespace ADS_Simulation.Events
             }
             // Transfer tram to depot
             else
-            {
-                Console.WriteLine(tram.id);
                 station.Free(platform);
-            }
         }
     }
 }

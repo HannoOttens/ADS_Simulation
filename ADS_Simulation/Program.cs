@@ -40,7 +40,7 @@ namespace ADS_Simulation
                 (int events, Simulation simulation) = Simulate();
 
                 // Add headers on first run
-                if(runNo == 0)
+                if (runNo == 0)
                     foreach (var timeRange in simulation.statisticsManager.timeRanges)
                         statisticalData.Add(timeRange, new List<string> { simulation.statisticsManager.GetSimulationResultHeaders() });
 
@@ -61,7 +61,16 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
             {
                 List<string> results = statisticalData[timeRange];
                 string output = String.Join('\n', results);
-                File.WriteAllText(Config.c.outputFile, output);
+                
+                string path = Path.Combine(Config.c.outputFilePath, Config.c.outputFileName);
+
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+                
+                string timerangename = timeRange.ToString().Replace("(", "").Replace(")", "").Replace(", ", "_");
+                string filepath = Path.Combine(path, timerangename + Config.c.outputFileName + ".csv");
+                
+                File.WriteAllText(filepath, output);
             }
         }
 

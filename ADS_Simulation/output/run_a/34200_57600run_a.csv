@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+120,386,337,0,0,2700.1616,2769,64,0,337,23714,28419,12886,Padualaan,69,7858,32.692307
+118,366,293,0,0,2699.527,2775,65,0,298,23985,29966,12919,WKZ,75,8100,33.653847
+119,387,281,0,0,2701.826,2775,65,0,352,23942,29220,12835,Padualaan,213,41835,33.492825
+120,399,272,0,0,2702.1724,2841,68,0,314,24136,29253,12826,WKZ,376,8614,33.492825
+123,480,305,0,0,2702.4841,2813,67,0,305,23952,28432,12813,WKZ,404,9434,37.68116
