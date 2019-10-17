@@ -73,5 +73,23 @@ namespace ADS_Simulation.Statistics
             Station station = state.stations[stationIndex];
             Console.WriteLine($"Longest empty: {station.name} for {longestTime}s");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[] { "average_empty_time", "longest_empty_time", "longest_empty_time_station" };
+        }
+
+        public override string[] GetValues(State state)
+        {
+            var averageEmpty = AverageEmptyTime();
+            (var stationIndex, var emptyTime) = LongestEmptyTime();
+            var station = state.stations[stationIndex].name;
+
+            return new string[] {
+                averageEmpty.ToString(),
+                emptyTime.ToString(),
+                station
+            };
+        }
     }
 }

@@ -122,5 +122,26 @@ namespace ADS_Simulation.Statistics
             Console.WriteLine($"Most passengers left waiting: {mostLeftWaiting}");
             Console.WriteLine($"Percentage of passengers left waiting: {averageLeftWaiting}");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[] { "average_waiting_time", "longest_waiting_time", "longest_queue", "most_left_waiting", "percentage_left_waiting" };
+        }
+
+        public override string[] GetValues(State state)
+        {
+            var average = AverageWaitingTime();
+            var maxWaitTime = longestWaitTime.Max();
+            var mostLeftWaiting = mostPassengersLeftWaiting.Max();
+            var averageLeftWaiting = AverageLeftWaiting();
+
+            return new string[] {
+                average.ToString(),
+                maxWaitTime.ToString(),
+                longestQueue.ToString(),
+                mostLeftWaiting.ToString(),
+                averageLeftWaiting.ToString()
+            };
+        }
     }
 }
