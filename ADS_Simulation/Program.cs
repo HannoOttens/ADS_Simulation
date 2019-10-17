@@ -2,7 +2,9 @@
 using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace ADS_Simulation
@@ -28,7 +30,44 @@ namespace ADS_Simulation
             // Initialize config
             Config.readConfig(configPath, inPath, outPath);
 
-            // Initialize simulation
+            // Bookkeep data
+            var statisticalData = new Dictionary<(int, int), List<string>>();
+
+            // Run the number of simulations
+            for (int runNo = 0; runNo < Config.c.runs; runNo++)
+            {
+                // Initialize simulation
+                (int events, Simulation simulation) = Simulate();
+
+                // Add headers on first run
+                if(runNo == 0)
+                    foreach (var timeRange in simulation.statisticsManager.timeRanges)
+                        statisticalData.Add(timeRange, new List<string> { simulation.statisticsManager.GetSimulationResultHeaders() });
+
+                // Add data
+                foreach (var timeRange in simulation.statisticsManager.timeRanges)
+                    statisticalData[timeRange].Add(simulation.statisticsManager.GetSimulationResultForRange(simulation.state, timeRange));
+
+                // Print run result
+                Console.WriteLine(@$"Run: {runNo}
+Went through {eventCount} events.
+The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
+The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
+================================");
+            }
+
+            // Save result
+            foreach (var timeRange in statisticalData.Keys)
+            {
+                List<string> results = statisticalData[timeRange];
+                string output = String.Join('\n', results);
+                File.WriteAllText(Config.c.outputFile, output);
+            }
+        }
+
+        private static (int events, Simulation simulation) Simulate()
+        {
+            int eventCount = 0;
             Simulation simulation = new Simulation();
             while (simulation.Step())
             {
@@ -51,13 +90,8 @@ namespace ADS_Simulation
                 if (step)
                     Console.ReadKey();
             }
-            Console.WriteLine(@$"Went through {eventCount} events.
-The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
-The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
-================================");
-            //Print statistic information
-            simulation.statisticsManager.printStatistics(simulation.state);
 
+            return (eventCount, simulation);
         }
 
         private static bool? Abs(int? v)
