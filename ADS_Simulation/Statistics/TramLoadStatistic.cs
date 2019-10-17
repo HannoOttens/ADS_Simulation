@@ -73,5 +73,25 @@ namespace ADS_Simulation.Statistics
             Console.WriteLine($"Lowest tram load: {LowestTramLoad()}");
             Console.WriteLine($"Highest tram load: {HigestTramLoad()}");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[]
+            {
+                "avg_tram_load",
+                "lowest_tram_load",
+                "higest_tram_load",
+            };
+        }
+
+        public override string[] GetValues(State state)
+        {
+            return new string[]
+            {
+                TotalAverageTramLoad(state.time, state.trams.Count).ToString(),
+                LowestTramLoad().ToString(),
+                HigestTramLoad().ToString()
+            };
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace ADS_Simulation.Statistics
             return new string[] { "total_delay_pr", "total_delay_uc", "punctuality" };
         }
 
-        public override string[] GetValues()
+        public override string[] GetValues(State state)
         {
             float punct = 100 * (float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams);
 
