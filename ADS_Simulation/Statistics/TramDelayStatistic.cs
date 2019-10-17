@@ -49,5 +49,21 @@ namespace ADS_Simulation.Statistics
             Console.WriteLine($"Total delay P+R: {totalDelay[0]}; UC: {totalDelay[1]}");
             Console.WriteLine($"Delayed %: {100 * (float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams)}");
         }
+
+        public override string[] GetHeaders()
+        {
+            return new string[] { "total_delay_pr", "total_delay_uc", "punctuality" };
+        }
+
+        public override string[] GetValues()
+        {
+            float punct = 100 * (float)totalDelayedTrams / (totalDelayedTrams + totalOnTimeTrams);
+
+            return new string[] { 
+                totalDelay[0].ToString(), 
+                totalDelay[1].ToString(),
+                punct.ToString(),
+            };
+        }
     }
 }

@@ -16,5 +16,7 @@ namespace ADS_Simulation.Statistics
 
         public abstract void measure(State state, Event currentEvent);
         public abstract void Print(State state);
+        public abstract string[] GetHeaders();
+        public abstract string[] GetValues();
     }
 }
