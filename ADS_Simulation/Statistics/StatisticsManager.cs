@@ -18,7 +18,8 @@ namespace ADS_Simulation.Statistics
             statistics = new List<Statistic>();
             foreach ((int startTime, int endTime) in timeRanges)
                 statistics.AddRange(new List<Statistic>(){
-                    //new PassengerWaitStatistic(startTime, endTime, startState.stations.Count),
+                    new PassengerWaitStatistic(startTime, endTime, startState.stations.Count),
+                    new RoundTripStatistics(startTime, endTime, startState.trams),
                     new TramLoadStatistic(startTime, endTime, startState.trams.Count),
                     new TotalPassengerStatistic(startTime, endTime, startState.stations.Count),
                     new EmptyStationStatistic(startTime, endTime, startState.stations.Count),

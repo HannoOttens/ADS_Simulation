@@ -55,7 +55,6 @@ namespace ADS_Simulation.Statistics
                 if(queueDelta <= 0)
                 {
                     totalWaitingTime[stationIdx] += timeDelta * currentQueue;
-                    
                 }
                 // New passengers have arrived, calculate their waiting time
                 else
