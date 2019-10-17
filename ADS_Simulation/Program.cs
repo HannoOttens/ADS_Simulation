@@ -12,8 +12,9 @@ namespace ADS_Simulation
         static readonly Stopwatch stopwatch = new Stopwatch();
 
         static string configPath = "../../../config.json";
-        static string inPath = "../../../in.csv";
-        static string outPath = "../../../out.csv";
+        static string inPath = "../../../Files/in.csv";
+        static string outPath = "../../../Files/out.csv";
+        static string artPath = "../../../Files/artificial-input-data-passengers-03.csv";
 
         static bool step = false;
         static bool gui = false;
@@ -26,7 +27,7 @@ namespace ADS_Simulation
             MarshallArgs(args);
 
             // Initialize config
-            Config.readConfig(configPath, inPath, outPath);
+            Config.readConfig(configPath, inPath, outPath, artPath, false);
 
             // Initialize simulation
             Simulation simulation = new Simulation();
@@ -38,15 +39,15 @@ namespace ADS_Simulation
                 // Addition between-step functionality
                 eventCount++;
 
-                // First cannot be None if there is a tram at the platform
-                Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
-                        || s.first == Platform.A && !s.IsFree(Platform.A)
-                        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
+                //// First cannot be None if there is a tram at the platform
+                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                //        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
+                //        || s.first == Platform.A && !s.IsFree(Platform.A)
+                //        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
-                //Only trams with upfollowing ids can be on endstation at same time
-                Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
+                ////Only trams with upfollowing ids can be on endstation at same time
+                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                //        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
 
                 if (step)
                     Console.ReadKey();
