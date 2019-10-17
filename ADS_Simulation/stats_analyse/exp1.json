@@ -1,5 +1,5 @@
-{
-  "runs": 5,
+﻿{
+  "runs": 100,
   "frequency": 16,
   "numberOfTrams": 12,
   "tramCapacity": 420,
@@ -8,7 +8,7 @@
   "startTime": 21600, // 6 AM
   "endTime": 77400, // 9 PM
   "oneWayTripTimeMinutes": 17,
-  "ucDualDriverSwitch": false,
+  "ucDualDriverSwitch": true,
   "turnAroundTime": 180,
   "turnAroundTimeDualDriver": 30,
   "sdDrivingTimes": 0.1,
@@ -17,7 +17,7 @@
   "maximumDelayBeforeDelayed": 60,
   "maximumWaitForExtraPassengers": 0,
   "outputFilePath": "../../../Output/",
-  "outputFileName": "run_a",
+  "outputFileName": "exp1",
   "transferTimes": [
     {
       "from": "P+R De Uithof",

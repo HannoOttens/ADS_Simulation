@@ -1,5 +1,5 @@
-{
-  "runs": 5,
+﻿{
+  "runs": 100,
   "frequency": 16,
   "numberOfTrams": 12,
   "tramCapacity": 420,
@@ -17,7 +17,7 @@
   "maximumDelayBeforeDelayed": 60,
   "maximumWaitForExtraPassengers": 0,
   "outputFilePath": "../../../Output/",
-  "outputFileName": "run_a",
+  "outputFileName": "base",
   "transferTimes": [
     {
       "from": "P+R De Uithof",
