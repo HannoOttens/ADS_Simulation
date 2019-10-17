@@ -47,7 +47,8 @@ namespace ADS_Simulation
         {
             var d = 12.5 + 0.22 * pIn + 0.13 * pOut;
             var g = Gamma.Sample(2, 2/d);
-            return (int)Math.Max(0.8 * d, g);
+            //return (int)Math.Max(0.8 * d, g);
+            return (int)d;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿{
   "frequency": 12,
-  "numberOfTrams": 9,
+  "numberOfTrams": 10,
   "tramCapacity": 420,
   "stationClearanceTime": 40,
   "switchClearanceTime": 60,

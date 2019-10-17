@@ -17,7 +17,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
 
-            System.Diagnostics.Debug.WriteLine($"ClearSwitchLane: {station.name}, {lane}");
+            System.Diagnostics.Debug.WriteLine($"ClearSwitchLane: {station.name}, {lane}, time: {state.time}");
 
             /* Kind of a critical point here:
              * - We have a possible departing tram
