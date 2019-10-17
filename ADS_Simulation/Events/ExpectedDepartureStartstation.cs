@@ -20,7 +20,7 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
-            System.Diagnostics.Debug.WriteLine($"ExpectedDepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, Timetable: {timeTableTime}");
+            System.Diagnostics.Debug.WriteLine($"ExpectedDepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, Timetable: {timeTableTime}, time: {state.time}");
 
             // Close doors if it is time to leave
             if (state.time >= timeTableTime)

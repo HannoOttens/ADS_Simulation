@@ -16,6 +16,8 @@ namespace ADS_Simulation.Events
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
+            System.Diagnostics.Debug.WriteLine($"ExpectedArrivalEndstation: tram {tram.id}, station: {station.name}, time: {state.time}");
+
             // Check if there is a free platform available and if switch lane is free
             Platform bestPlatform = station.BestFreePlatform();
             if(station.depotQueue.Count == 0 && bestPlatform != Platform.None)

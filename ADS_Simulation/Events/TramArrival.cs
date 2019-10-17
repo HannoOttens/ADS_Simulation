@@ -17,7 +17,7 @@ namespace ADS_Simulation.Events
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             var station = state.stations[stationIndex];
-            System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}");
+            System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}, time: {state.time}");
 
             // Board and unboard passengers
             (int pOut, int pIn) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex));
