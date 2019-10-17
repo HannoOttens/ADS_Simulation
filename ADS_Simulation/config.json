@@ -1,7 +1,7 @@
 ﻿{
-  "runs": 5,
-  "frequency": 16,
-  "numberOfTrams": 12,
+  "runs": 1,
+  "frequency": 12,
+  "numberOfTrams": 9,
   "tramCapacity": 420,
   "stationClearanceTime": 40,
   "switchClearanceTime": 60,
@@ -21,7 +21,8 @@
   "inFilePath": "../../../Files/in.csv",
   "outFilePath": "../../../Files/out.csv",
   "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
-  "useArtificialData": false,
+  "useArtificialData": true,
+  "simplifiedDrivingTimes": true,
   "transferTimes": [
     {
       "from": "P+R De Uithof",

@@ -140,6 +140,7 @@ namespace ADS_Simulation.Configuration
         public string outFilePath;
         public string artFilePath;
         public bool useArtificialData;
+        public bool simplifiedDrivingTimes;
 
         internal int GetIntervalSeconds()
         {
