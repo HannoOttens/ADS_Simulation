@@ -153,7 +153,8 @@ namespace ADS_Simulation.Configuration
         internal int RoundTripTime()
         {
             return 2 * turnAroundTime
-                + 2 * 60 * oneWayTripTimeMinutes;
+                + 2 * 60 * oneWayTripTimeMinutes
+                + 60;
         }
 
         internal int roundTripOffsetFor(string name)

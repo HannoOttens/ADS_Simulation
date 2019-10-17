@@ -39,14 +39,14 @@ namespace ADS_Simulation
                 eventCount++;
 
                 // First cannot be None if there is a tram at the platform
-                Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
-                        || s.first == Platform.A && !s.IsFree(Platform.A)
-                        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
+                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                //        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
+                //        || s.first == Platform.A && !s.IsFree(Platform.A)
+                //        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
-                //Only trams with upfollowing ids can be on endstation at same time
-                Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
+                ////Only trams with upfollowing ids can be on endstation at same time
+                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                //        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
 
                 if (step)
                     Console.ReadKey();
