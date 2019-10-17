@@ -14,7 +14,7 @@ namespace ADS_Simulation.Configuration
     {
         public static ConfigData c;
 
-        public static void readConfig(string pathToConfig, string inPath, string outPath)
+        public static void readConfig(string pathToConfig, string inPath, string outPath, string artPath, bool useArt)
         {
             string configStr = File.ReadAllText(pathToConfig);
             c = JsonConvert.DeserializeObject<ConfigData>(configStr);
@@ -37,34 +37,84 @@ namespace ADS_Simulation.Configuration
                 // Swap direction halfway
                 if (direction == 0 && i == c.transferTimes.Length / 2)
                 {
-                    direction = 1; i--;
+                    direction = 1;
+                    i--;
                 }
             }
 
             // Parse in the CSVs
             bool header = true;
-            using (var reader = new StreamReader(inPath))
-                while (!reader.EndOfStream)
-                {
-                    string[] data = reader.ReadLine().Split(',');
-                    if (header) { header = false; continue; } // Skip header
 
-                    var idx = (data[0], int.Parse(data[1]));
-                    var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].arrivalRate[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
-                }
-            header = true;
-            using (var reader = new StreamReader(outPath))
-                while (!reader.EndOfStream)
-                {
-                    string[] data = reader.ReadLine().Split(',');
-                    if (header) { header = false; continue; } // Skip header
+            if (useArt)
+            {
+                // Parse using artificial file
+                using (var reader = new StreamReader(artPath))
+                    while (!reader.EndOfStream)
+                    {
+                        string[] data = reader.ReadLine().Split(';');
+                        if (header)
+                        {
+                            header = false;
+                            continue;
+                        } // Skip header
 
-                    var idx = (data[0], int.Parse(data[1]));
-                    var idxT = int.Parse(data[2]) / 15;
-                    c.transferTimes[nameToIndex[idx]].averageExit[idxT] = double.Parse(data[3], CultureInfo.InvariantCulture);
-                    c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] = double.Parse(data[4], CultureInfo.InvariantCulture);
-                }
+                        (string, int) idx;
+                        if (data[0] == "P+R De Uithof")
+                            idx = ("P+R De Uithof", 0);
+                        else
+                            idx = (data[0], int.Parse(data[1]));
+                        var l = (int) (double.Parse(data[2], CultureInfo.InvariantCulture) * 4);
+                        var u = (int) (double.Parse(data[3], CultureInfo.InvariantCulture) * 4);
+                        var intervals = u - l;
+                        for (int i = l; i < u; i++)
+                        {
+                            var arr = c.transferTimes[nameToIndex[idx]].arrivalRate[i];
+                            var exx = c.transferTimes[nameToIndex[idx]].averageExit[i];
+                            arr = Math.Max(arr, double.Parse(data[4], CultureInfo.InvariantCulture) / intervals);
+                            exx = Math.Max(exx, double.Parse(data[5], CultureInfo.InvariantCulture) / intervals);
+                            c.transferTimes[nameToIndex[idx]].arrivalRate[i] = arr;
+                            c.transferTimes[nameToIndex[idx]].averageExit[i] = exx;
+                        }
+                    }
+            }
+            else
+            {
+                // Parse using in/out file
+                using (var reader = new StreamReader(inPath))
+                    while (!reader.EndOfStream)
+                    {
+                        string[] data = reader.ReadLine().Split(',');
+                        if (header)
+                        {
+                            header = false;
+                            continue;
+                        } // Skip header
+
+                        var idx = (data[0], int.Parse(data[1]));
+                        var idxT = int.Parse(data[2]) / 15;
+                        c.transferTimes[nameToIndex[idx]].arrivalRate[idxT] =
+                            double.Parse(data[3], CultureInfo.InvariantCulture);
+                    }
+
+                header = true;
+                using (var reader = new StreamReader(outPath))
+                    while (!reader.EndOfStream)
+                    {
+                        string[] data = reader.ReadLine().Split(',');
+                        if (header)
+                        {
+                            header = false;
+                            continue;
+                        } // Skip header
+
+                        var idx = (data[0], int.Parse(data[1]));
+                        var idxT = int.Parse(data[2]) / 15;
+                        c.transferTimes[nameToIndex[idx]].averageExit[idxT] =
+                            double.Parse(data[3], CultureInfo.InvariantCulture);
+                        c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] =
+                            double.Parse(data[4], CultureInfo.InvariantCulture);
+                    }
+            }
         }
     }
 
