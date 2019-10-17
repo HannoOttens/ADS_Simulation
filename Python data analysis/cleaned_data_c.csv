@@ -2057,7 +2057,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 1-9-2017,1264,Vaartsche Rijn,7,0,4,996
 1-9-2017,1264,Centraal Station,8,37,0,1002
 1-9-2017,1265,Centraal Station,0,0,0,967
-1-9-2017,1265,Vaarsche Rijn,1,0,0,974
+1-9-2017,1265,Vaartsche Rijn,1,0,0,974
 1-9-2017,1266,WKZ,0,0,4,988
 1-9-2017,1266,UMC,1,0,7,992
 1-9-2017,1266,Heidelberglaan,2,0,9,994
@@ -9642,7 +9642,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 6-9-2017,1250,Padualaan,3,0,0,959
 6-9-2017,1250,Kromme Rijn,4,0,0,961
 6-9-2017,1250,Galgenwaard,5,2,10,964
-6-9-2017,1250,Vaarsche Rijn,6,0,0,965
+6-9-2017,1250,Vaartsche Rijn,6,0,0,965
 6-9-2017,1250,Centraal Station,8,104,0,972
 6-9-2017,1251,Centraal Station,0,0,4,943
 6-9-2017,1251,Vaartsche Rijn,2,1,1,949
@@ -9699,7 +9699,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 6-9-2017,1257,WKZ,8,0,0,974
 6-9-2017,1258,WKZ,0,0,0,994
 6-9-2017,1259,Centraal Station,0,0,13,961
-6-9-2017,1259,Vaarsche Rijn,2,3,0,969
+6-9-2017,1259,Vaartsche Rijn,2,3,0,969
 6-9-2017,1259,Galgenwaard,3,3,0,971
 6-9-2017,1259,Kromme Rijn,4,0,0,974
 6-9-2017,1259,Padualaan,5,2,0,977
@@ -11805,7 +11805,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 7-9-2017,1186,Padualaan,3,0,37,819
 7-9-2017,1186,Kromme Rijn,4,0,0,820
 7-9-2017,1186,Galgenwaard,5,4,3,823
-7-9-2017,1186,Vaarsche Rijn,6,1,0,824
+7-9-2017,1186,Vaartsche Rijn,6,1,0,824
 7-9-2017,1187,Centraal Station,0,0,2,810
 7-9-2017,1187,Vaartsche Rijn,2,0,0,817
 7-9-2017,1187,Galgenwaard,3,0,0,819
@@ -15260,7 +15260,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 8-9-2017,1294,Vaartsche Rijn,7,1,0,1070
 8-9-2017,1294,Centraal Station,8,5,0,1074
 8-9-2017,1295,Centraal Station,0,0,1,1047
-8-9-2017,1295,Vaarsche Rijn,2,0,0,1051
+8-9-2017,1295,Vaartsche Rijn,2,0,0,1051
 8-9-2017,1295,Galgenwaard,3,0,0,1052
 8-9-2017,1295,Kromme Rijn,4,0,0,1053
 8-9-2017,1295,Padualaan,5,0,0,1055
@@ -15404,7 +15404,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 8-9-2017,1312,Vaartsche Rijn,7,0,2,1123
 8-9-2017,1312,Centraal Station,8,8,0,1127
 8-9-2017,1313,Centraal Station,0,0,23,1116
-8-9-2017,1313,Vaarsche Rijn,2,3,0,1124
+8-9-2017,1313,Vaartsche Rijn,2,3,0,1124
 8-9-2017,1313,Galgenwaard,3,7,1,1126
 8-9-2017,1313,Kromme Rijn,4,2,0,1128
 8-9-2017,1313,Padualaan,5,1,0,1130
@@ -20946,7 +20946,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1010,Vaartsche Rijn,7,0,2,432
 13-9-2017,1010,Centraal Station,8,10,0,437
 13-9-2017,1011,Centraal Station,0,0,0,406
-13-9-2017,1011,Vaarsche Rijn,2,0,0,411
+13-9-2017,1011,Vaartsche Rijn,2,0,0,411
 13-9-2017,1011,Galgenwaard,3,0,0,412
 13-9-2017,1011,Kromme Rijn,4,0,0,413
 13-9-2017,1011,Padualaan,5,0,0,415
@@ -22378,7 +22378,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1198,Padualaan,3,0,21,846
 13-9-2017,1198,Kromme Rijn,4,1,1,848
 13-9-2017,1198,Galgenwaard,5,4,12,849
-13-9-2017,1198,Vaarsche Rijn,6,2,19,849
+13-9-2017,1198,Vaartsche Rijn,6,2,19,849
 13-9-2017,1199,Centraal Station,0,0,40,875
 13-9-2017,1200,WKZ,0,0,0,844
 13-9-2017,1200,UMC,1,0,2,846
@@ -22413,7 +22413,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1206,Vaartsche Rijn,7,8,34,876
 13-9-2017,1206,Centraal Station,8,119,0,880
 13-9-2017,1207,Centraal Station,0,0,11,853
-13-9-2017,1207,Vaarsche Rijn,1,11,2,852
+13-9-2017,1207,Vaartsche Rijn,1,11,2,852
 13-9-2017,1207,Galgenwaard,3,0,0,856
 13-9-2017,1207,Kromme Rijn,4,0,0,858
 13-9-2017,1207,Padualaan,5,2,0,860
@@ -22426,9 +22426,9 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1208,Padualaan,3,0,78,871
 13-9-2017,1208,Kromme Rijn,4,0,0,873
 13-9-2017,1208,Galgenwaard,5,4,0,875
-13-9-2017,1208,Vaarsche Rijn,6,4,0,876
+13-9-2017,1208,Vaartsche Rijn,6,4,0,876
 13-9-2017,1209,Centraal Station,0,0,29,848
-13-9-2017,1209,Vaarsche Rijn,2,5,1,856
+13-9-2017,1209,Vaartsche Rijn,2,5,1,856
 13-9-2017,1209,Galgenwaard,3,1,1,859
 13-9-2017,1209,Kromme Rijn,4,1,0,861
 13-9-2017,1209,Padualaan,5,3,0,864
@@ -22473,7 +22473,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1214,Padualaan,3,0,13,881
 13-9-2017,1214,Kromme Rijn,4,2,0,883
 13-9-2017,1214,Galgenwaard,5,2,6,886
-13-9-2017,1214,Vaarsche Rijn,6,4,9,887
+13-9-2017,1214,Vaartsche Rijn,6,4,9,887
 13-9-2017,1216,WKZ,0,0,1,879
 13-9-2017,1216,UMC,1,0,2,881
 13-9-2017,1216,Heidelberglaan,2,0,27,882
@@ -23129,7 +23129,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 13-9-2017,1305,WKZ,8,0,0,1088
 13-9-2017,1306,WKZ,0,0,2,1084
 13-9-2017,1306,UMC,1,0,0,1082
-13-9-2017,1306,Vaarsche Rijn,7,0,0,1072
+13-9-2017,1306,Vaartsche Rijn,7,0,0,1072
 13-9-2017,1307,Centraal Station,0,0,39,1082
 13-9-2017,1307,Vaartsche Rijn,2,19,0,1090
 13-9-2017,1307,Galgenwaard,3,5,1,1091
@@ -23936,7 +23936,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 14-9-2017,1070,Galgenwaard,5,3,0,572
 14-9-2017,1070,Vaartsche Rijn,7,0,3,575
 14-9-2017,1070,Centraal Station,8,5,0,580
-14-9-2017,1071,Vaarsche Rijn,2,17,1,564
+14-9-2017,1071,Vaartsche Rijn,2,17,1,564
 14-9-2017,1071,Galgenwaard,3,36,2,566
 14-9-2017,1071,Kromme Rijn,4,5,0,568
 14-9-2017,1071,Padualaan,5,106,0,570
@@ -25410,7 +25410,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 14-9-2017,1256,UMC,1,1,0,970
 14-9-2017,1256,Heidelberglaan,2,0,37,972
 14-9-2017,1256,Padualaan,3,0,59,975
-14-9-2017,1256,Vaarsche Rijn,7,4,0,986
+14-9-2017,1256,Vaartsche Rijn,7,4,0,986
 14-9-2017,1256,Centraal Station,8,91,0,991
 14-9-2017,1257,Centraal Station,0,0,9,954
 14-9-2017,1257,Vaartsche Rijn,2,5,0,961
@@ -25557,7 +25557,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 14-9-2017,1276,UMC,1,0,0,1015
 14-9-2017,1276,Heidelberglaan,2,0,44,1016
 14-9-2017,1276,Padualaan,3,0,48,1019
-14-9-2017,1276,Vaarsche Rijn,7,1,0,1032
+14-9-2017,1276,Vaartsche Rijn,7,1,0,1032
 14-9-2017,1276,Centraal Station,8,92,0,1037
 14-9-2017,1277,Centraal Station,0,0,13,1000
 14-9-2017,1277,Vaartsche Rijn,2,1,2,1008
@@ -28961,7 +28961,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 18-9-2017,1056,Padualaan,3,0,1,541
 18-9-2017,1056,Kromme Rijn,4,0,0,542
 18-9-2017,1056,Galgenwaard,5,3,0,545
-18-9-2017,1056,Vaarsche Rijn,6,1,0,547
+18-9-2017,1056,Vaartsche Rijn,6,1,0,547
 18-9-2017,1056,Centraal Station,8,5,0,553
 18-9-2017,1057,Centraal Station,0,0,141,521
 18-9-2017,1057,Vaartsche Rijn,2,7,1,531
@@ -32835,7 +32835,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 19-9-2017,1212,Vaartsche Rijn,7,0,4,888
 19-9-2017,1212,Centraal Station,8,53,0,892
 19-9-2017,1213,Centraal Station,0,0,0,858
-19-9-2017,1213,Vaarsche Rijn,2,0,1,865
+19-9-2017,1213,Vaartsche Rijn,2,0,1,865
 19-9-2017,1213,Galgenwaard,3,0,0,866
 19-9-2017,1213,Kromme Rijn,4,0,0,868
 19-9-2017,1213,Padualaan,5,1,0,870
@@ -34930,7 +34930,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 20-9-2017,1140,Vaartsche Rijn,7,4,6,729
 20-9-2017,1140,Centraal Station,8,45,0,733
 20-9-2017,1141,Centraal Station,0,0,3,704
-20-9-2017,1141,Vaarsche Rijn,1,0,0,709
+20-9-2017,1141,Vaartsche Rijn,1,0,0,709
 20-9-2017,1141,Kromme Rijn,4,0,0,715
 20-9-2017,1141,Padualaan,5,1,0,717
 20-9-2017,1141,Heidelberglaan,6,1,0,719
@@ -36869,7 +36869,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 21-9-2017,1067,Heidelberglaan,6,39,0,562
 21-9-2017,1067,UMC,7,6,0,563
 21-9-2017,1067,WKZ,8,1,0,564
-21-9-2017,1068,Vaarsche Rijn,7,0,0,575
+21-9-2017,1068,Vaartsche Rijn,7,0,0,575
 21-9-2017,1068,Centraal Station,8,0,0,576
 21-9-2017,1070,WKZ,0,0,0,566
 21-9-2017,1070,UMC,1,0,0,568
@@ -40204,7 +40204,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 22-9-2017,1168,Padualaan,3,0,39,782
 22-9-2017,1168,Kromme Rijn,4,0,6,784
 22-9-2017,1168,Galgenwaard,5,1,0,786
-22-9-2017,1168,Vaarsche Rijn,6,2,1,787
+22-9-2017,1168,Vaartsche Rijn,6,2,1,787
 22-9-2017,1168,Centraal Station,8,53,0,794
 22-9-2017,1169,Centraal Station,0,0,119,764
 22-9-2017,1169,Vaartsche Rijn,2,9,7,772
@@ -42699,7 +42699,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 25-9-2017,1146,Vaartsche Rijn,7,2,0,741
 25-9-2017,1146,Centraal Station,8,36,0,744
 25-9-2017,1147,Centraal Station,0,0,40,716
-25-9-2017,1147,Vaarsche Rijn,2,5,0,722
+25-9-2017,1147,Vaartsche Rijn,2,5,0,722
 25-9-2017,1147,Galgenwaard,3,5,0,724
 25-9-2017,1147,Kromme Rijn,4,2,0,725
 25-9-2017,1147,Padualaan,5,14,0,728
@@ -43845,7 +43845,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 25-9-2017,1301,Vaartsche Rijn,2,15,4,1062
 25-9-2017,1301,Galgenwaard,3,3,1,1064
 25-9-2017,1303,Centraal Station,0,0,14,1062
-26-9-2017,1052,Vaarsche Rijn,7,1,2,538
+26-9-2017,1052,Vaartsche Rijn,7,1,2,538
 26-9-2017,1054,UMC,1,0,2,537
 26-9-2017,1054,Heidelberglaan,2,0,5,538
 26-9-2017,1054,Padualaan,3,0,0,540
@@ -46467,7 +46467,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 27-9-2017,1050,Padualaan,3,0,1,526
 27-9-2017,1050,Kromme Rijn,4,3,4,528
 27-9-2017,1050,Galgenwaard,5,2,1,530
-27-9-2017,1050,Vaarsche Rijn,7,0,1,534
+27-9-2017,1050,Vaartsche Rijn,7,0,1,534
 27-9-2017,1050,Centraal Station,8,15,0,539
 27-9-2017,1051,Centraal Station,0,0,144,505
 27-9-2017,1051,Vaartsche Rijn,2,3,1,513
@@ -46528,7 +46528,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 27-9-2017,1058,Vaartsche Rijn,7,1,0,547
 27-9-2017,1058,Centraal Station,8,2,0,552
 27-9-2017,1059,Centraal Station,0,0,306,526
-27-9-2017,1059,Vaarsche Rijn,2,20,10,533
+27-9-2017,1059,Vaartsche Rijn,2,20,10,533
 27-9-2017,1059,Galgenwaard,3,9,2,535
 27-9-2017,1059,Kromme Rijn,4,16,1,537
 27-9-2017,1059,Padualaan,5,141,0,541
@@ -46544,7 +46544,7 @@ datum,ritnummer,haltenaam,haltevolgorde,aantal uitstappers,aantal instappers,tim
 27-9-2017,1060,Vaartsche Rijn,7,1,8,551
 27-9-2017,1060,Centraal Station,8,14,0,555
 27-9-2017,1061,Centraal Station,0,0,59,528
-27-9-2017,1061,Vaarsche Rijn,2,14,0,534
+27-9-2017,1061,Vaartsche Rijn,2,14,0,534
 27-9-2017,1061,Galgenwaard,3,7,0,536
 27-9-2017,1061,Kromme Rijn,4,1,2,539
 27-9-2017,1061,Padualaan,5,22,0,542

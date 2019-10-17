@@ -13,6 +13,9 @@ namespace ADS_Simulation.NS_State
 
         public void FreeSwitch(SwitchLane lane)
         {
+            // No clear needed
+            if (lane == SwitchLane.None) return; 
+
             if (SwitchLaneFree(lane))
                 throw new Exception($"Tried to free {lane} but it was already free.");
 
@@ -71,7 +74,8 @@ namespace ADS_Simulation.NS_State
     {
         ArrivalLane = 0,
         DepartureLane = 1,
-        Cross = 2
+        Cross = 2,
+        None = 3
     }
 }
 

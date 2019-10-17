@@ -40,21 +40,30 @@ namespace ADS_Simulation.Events
                 Event e = new DepartureStartstation(departingTram, station, departingPlatform);
                 eventQueue.Enqueue(e, state.time);
             }
-            
-            // Check if we can enqueue an arrival as well
-            Platform arrivalPlatform =  station.BestFreePlatform();
-            if (arrivalPlatform != Platform.None 
-                && station.HasQueue() 
-                && (departingPlatform == Platform.None || departingPlatform == Platform.A))
-            {
-                // Get best available platform && queue
-                Tram arrivingTram = station.OccupyFromQueue(arrivalPlatform);
-                SwitchLane lane = Switch.ArrivalLaneFor(arrivalPlatform);
-                station._switch.UseSwitchLane(lane);
 
-                // Queue the arrival
-                Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform);
-                eventQueue.Enqueue(e, state.time);
+            // Get the best free platform
+            Platform arrivalPlatform = station.BestFreePlatform();
+            if (arrivalPlatform != Platform.None)
+            {
+                // Check if there are trams arriving from the depot, if so prefer those.
+                if (station.depotQueue.Count > 0)
+                {
+                    Tram arrivingTram = station.OccupyFromDepotQueue(arrivalPlatform);
+                    Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform, true);
+                    eventQueue.Enqueue(e, state.time);
+                }
+                // Check if we can enqueue an arrival as well
+                else if (station.HasQueue() && station._switch.SwitchLaneFree(Switch.ArrivalLaneFor(arrivalPlatform)))
+                {
+                    // Get best available platform && queue
+                    Tram arrivingTram = station.OccupyFromQueue(arrivalPlatform);
+                    SwitchLane lane = Switch.ArrivalLaneFor(arrivalPlatform);
+                    station._switch.UseSwitchLane(lane);
+
+                    // Queue the arrival
+                    Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform);
+                    eventQueue.Enqueue(e, state.time);
+                }
             }
         }
     }

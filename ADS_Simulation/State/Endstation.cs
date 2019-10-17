@@ -1,5 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ADS_Simulation.NS_State
@@ -20,9 +21,11 @@ namespace ADS_Simulation.NS_State
     class Endstation : Station
     {
         public readonly Switch _switch;
-        private readonly bool hasDepot;
-        private readonly TimeTable timeTable;
+        public readonly Queue<Tram> depotQueue;
         public Platform first;
+
+        private readonly TimeTable timeTable;
+        private readonly bool hasDepot;
 
         /// <summary>
         /// Tram at platform B
@@ -36,6 +39,7 @@ namespace ADS_Simulation.NS_State
             first = Platform.None;
             
             timeTable = new TimeTable(Config.c.startTime + Config.c.roundTripOffsetFor(name), Config.c.GetIntervalSeconds());
+            depotQueue = new Queue<Tram>();
         }
 
         public (Tram? departingTram, Platform platform) GetFirstDepartingTram()
@@ -186,6 +190,23 @@ namespace ADS_Simulation.NS_State
             Trace.Assert(IsFree(platform), $"Tried to occupy {platform} from queue, but platform was already taken.");
 
             Tram tram = incomingTrams.Dequeue();
+            if (platform == Platform.A)
+                occupant = tram;
+            else
+                occupant2 = tram;
+
+            // No tram yet, so first arrival
+            if (first == Platform.None)
+                first = platform;
+
+            return tram;
+        }
+
+        internal Tram OccupyFromDepotQueue(Platform platform)
+        {
+            Trace.Assert(IsFree(platform), $"Tried to occupy {platform} from queue, but platform was already taken.");
+
+            Tram tram = depotQueue.Dequeue();
             if (platform == Platform.A)
                 occupant = tram;
             else

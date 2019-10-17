@@ -10,21 +10,25 @@ namespace ADS_Simulation.Events
         readonly Tram tram;
         readonly Endstation station;
         readonly Platform platform;
+        readonly bool fromDepot;
 
-        public ArrivalEndstation(Tram tram, Endstation station, Platform platform)
+        public ArrivalEndstation(Tram tram, Endstation station, Platform platform, bool fromDepot = false)
         {
             this.tram = tram;
             this.station = station;
             this.platform = platform;
+            this.fromDepot = fromDepot;
         }
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
 
-            // Clear switch
-            SwitchLane lane = Switch.ArrivalLaneFor(platform);
-            System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}, time: {state.time}"); 
+            // Clear switch (no lane cleared if coming from depot)
+            SwitchLane lane = fromDepot ? SwitchLane.None : Switch.ArrivalLaneFor(platform);
             eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
+            
+            // Log
+            System.Diagnostics.Debug.WriteLine($"ArrivalEndstation: tram {tram.id}, station: {station.name}, {platform}, {lane}, time: {state.time}"); 
 
             // Check if tram can do another round trip if it is at endstation with depot
             if (!station.TramToDepot(state.time))
