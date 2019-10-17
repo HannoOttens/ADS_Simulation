@@ -93,23 +93,34 @@ namespace ADS_Simulation.Statistics
             return sum;
         }
 
-        public int[] AverageWaitingTime()
+        public int[] AverageWaitingTimePerStation()
         {
             return totalWaitingTime.Zip(totalPassengers).Select(tuple => tuple.Second == 0 ? 0 : tuple.First / tuple.Second).ToArray();
         } 
 
+        public int AverageWaitingTime()
+        {
+            return totalWaitingTime.Sum() / totalPassengers.Sum();
+        }
+
+        public float AverageLeftWaiting()
+        {
+            return (float)totalPassengersLeftWaiting.Sum() / totalPassengers.Sum() * 100;
+        }
+
         public override void Print(State state)
         {
-            Console.WriteLine("Average waiting time per station (station, average, max, most left waiting):");
-
             var average = AverageWaitingTime();
-            for (int i = 0; i < stationCount; i++)
-            {
-                Station station = state.stations[i];
-                Console.WriteLine($"{station.name} - {station.direction} - {average[i]} - {longestWaitTime[i]} - {mostPassengersLeftWaiting[i]}");
-            }
+            var maxWaitTime = longestWaitTime.Max();
+            var mostLeftWaiting = mostPassengersLeftWaiting.Max();
+            var averageLeftWaiting = AverageLeftWaiting();
 
+            Console.WriteLine($"Average waiting time: {average}");
+            Console.WriteLine($"Longest waiting time: {maxWaitTime}");
             Console.WriteLine($"Longest queue length: {longestQueue}");
+
+            Console.WriteLine($"Most passengers left waiting: {mostLeftWaiting}");
+            Console.WriteLine($"Percentage of passengers left waiting: {averageLeftWaiting}");
         }
     }
 }
