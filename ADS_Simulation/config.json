@@ -18,6 +18,10 @@
   "maximumWaitForExtraPassengers": 0,
   "outputFilePath": "../../../Output/",
   "outputFileName": "run_a",
+  "inFilePath": "../../../Files/in.csv",
+  "outFilePath": "../../../Files/out.csv",
+  "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
+  "useArtificialData": false,
   "transferTimes": [
     {
       "from": "P+R De Uithof",

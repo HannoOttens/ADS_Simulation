@@ -10,15 +10,6 @@ namespace ADS_Simulation
     static class Sampling
     {
         /// <summary>
-        /// The time it takes to clear a switch
-        /// </summary>
-        /// <returns></returns>
-        public static int switchClearanceTime()
-        {
-            return 60;
-        }
-
-        /// <summary>
         /// The estimated driving time between stations.
         /// This is a lognormal distribution with the natural logarithm of the average driving time as mu and 0.1 as sigma
         /// </summary>
@@ -54,15 +45,6 @@ namespace ADS_Simulation
             for (int i = 0; i < arrivals; i++)
                 times[i] = DiscreteUniform.Sample(0, 900);
             return times;
-        }
-
-        /// <summary>
-        /// The time a station needs to be clear for before the next tram can arrive
-        /// </summary>
-        /// <returns></returns>
-        public static int tramSafetyDistance()
-        {
-            return 40;
         }
 
         /// <summary>

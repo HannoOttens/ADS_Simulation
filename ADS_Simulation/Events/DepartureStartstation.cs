@@ -31,7 +31,7 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"DepartureStartstation: tram {tram.id}, station: {station.name}, {platform}, {lane}, time: {state.time}");
 
             // Clear the lane it's leaving over in 60s
-            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Sampling.switchClearanceTime());
+            eventQueue.Enqueue(new ClearSwitchLane(station, lane), state.time + Config.c.switchClearanceTime);
 
             // Queue next arrival
             int stationIndex = state.stations.IndexOf(station);
@@ -40,7 +40,7 @@ namespace ADS_Simulation.Events
             // Make sure trams do not take over eachother
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
             int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
-            eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), arrivalTime + Sampling.switchClearanceTime());
+            eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), arrivalTime + Config.c.switchClearanceTime);
         }
     }
 }

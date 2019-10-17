@@ -27,7 +27,7 @@ namespace ADS_Simulation.Events
             if (station.HasQueue())
             {
                 Tram newOccupant = station.OccupyFromQueue();
-                eventQueue.Enqueue(new TramArrival(newOccupant, stationIndex), state.time + Sampling.tramSafetyDistance());
+                eventQueue.Enqueue(new TramArrival(newOccupant, stationIndex), state.time + Config.c.stationClearanceTime);
             }
 
             // Schedule arrival at next station

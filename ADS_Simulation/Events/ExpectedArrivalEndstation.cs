@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.NS_State;
+﻿using ADS_Simulation.Configuration;
+using ADS_Simulation.NS_State;
 using Priority_Queue;
 
 namespace ADS_Simulation.Events
@@ -24,7 +25,7 @@ namespace ADS_Simulation.Events
             {
                 station.Occupy(tram, bestPlatform);
                 station._switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));
-                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Sampling.switchClearanceTime());
+                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Config.c.switchClearanceTime);
             }
             else
                 station.Enqueue(tram);

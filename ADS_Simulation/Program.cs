@@ -14,9 +14,6 @@ namespace ADS_Simulation
         static readonly Stopwatch stopwatch = new Stopwatch();
 
         static string configPath = "../../../config.json";
-        static string inPath = "../../../Files/in.csv";
-        static string outPath = "../../../Files/out.csv";
-        static string artPath = "../../../Files/artificial-input-data-passengers-03.csv";
 
         static bool step = false;
         static bool gui = false;
@@ -29,7 +26,7 @@ namespace ADS_Simulation
             MarshallArgs(args);
 
             // Initialize config
-            Config.readConfig(configPath, inPath, outPath, artPath, false);
+            Config.readConfig(configPath);
 
             // Bookkeep data
             var statisticalData = new Dictionary<(int, int), List<string>>();

@@ -1,3 +1,4 @@
+using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -50,7 +51,7 @@ namespace ADS_Simulation.Events
                 {
                     Tram arrivingTram = station.OccupyFromDepotQueue(arrivalPlatform);
                     Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform, true);
-                    eventQueue.Enqueue(e, state.time + Sampling.switchClearanceTime());
+                    eventQueue.Enqueue(e, state.time + Config.c.switchClearanceTime);
                 }
                 // Check if we can enqueue an arrival as well
                 else if (station.HasQueue() && station._switch.SwitchLaneFree(Switch.ArrivalLaneFor(arrivalPlatform)))
@@ -62,7 +63,7 @@ namespace ADS_Simulation.Events
 
                     // Queue the arrival
                     Event e = new ArrivalEndstation(arrivingTram, station, arrivalPlatform);
-                    eventQueue.Enqueue(e, state.time + Sampling.switchClearanceTime());
+                    eventQueue.Enqueue(e, state.time + Config.c.switchClearanceTime);
                 }
             }
         }
