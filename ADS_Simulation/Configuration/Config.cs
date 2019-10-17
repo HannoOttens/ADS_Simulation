@@ -73,7 +73,7 @@ namespace ADS_Simulation.Configuration
                 for (int j = 7 * 4; j < 9 * 4; j ++)
                     c.transferTimes[i].arrivalRate[j] = 1600 / 8;
                 for (int j = 9 * 4; j < 16 * 4; j ++)
-                    c.transferTimes[i].arrivalRate[j] = 5600 / 32;
+                    c.transferTimes[i].arrivalRate[j] = 5600 / 28;
                 for (int j = 16 * 4; j < 18 * 4; j ++)
                     c.transferTimes[i].arrivalRate[j] = 1600 / 8;
                 for (int j = 18 * 4; j < 21.5 * 4; j ++)
@@ -86,7 +86,7 @@ namespace ADS_Simulation.Configuration
                 for (int j = 7 * 4; j < 9 * 4; j ++)
                     c.transferTimes[i].averageExit[j] = 4000 / 8;
                 for (int j = 9 * 4; j < 16 * 4; j ++)
-                    c.transferTimes[i].averageExit[j] = 14000 / 32;
+                    c.transferTimes[i].averageExit[j] = 14000 / 28;
                 for (int j = 16 * 4; j < 18 * 4; j ++)
                     c.transferTimes[i].averageExit[j] = 4000 / 8;
                 for (int j = 18 * 4; j < 21.5 * 4; j ++)
@@ -99,7 +99,7 @@ namespace ADS_Simulation.Configuration
                 for (int j = 7 * 4; j < 9 * 4; j ++)
                     c.transferTimes[i].arrivalRate[j] = 4000 / 8;
                 for (int j = 9 * 4; j < 16 * 4; j ++)
-                    c.transferTimes[i].arrivalRate[j] = 14000 / 32;
+                    c.transferTimes[i].arrivalRate[j] = 14000 / 28;
                 for (int j = 16 * 4; j < 18 * 4; j ++)
                     c.transferTimes[i].arrivalRate[j] = 4000 / 8;
                 for (int j = 18 * 4; j < 21.5 * 4; j ++)
@@ -114,7 +114,7 @@ namespace ADS_Simulation.Configuration
                 for (int j = 7 * 4; j < 9 * 4; j ++)
                     c.transferTimes[i].averageExit[j] = 1600 / 8;
                 for (int j = 9 * 4; j < 16 * 4; j ++)
-                    c.transferTimes[i].averageExit[j] = 5600 / 32;
+                    c.transferTimes[i].averageExit[j] = 5600 / 28;
                 for (int j = 16 * 4; j < 18 * 4; j ++)
                     c.transferTimes[i].averageExit[j] = 1600 / 8;
                 for (int j = 18 * 4; j < 21.5 * 4; j ++)
