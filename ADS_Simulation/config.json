@@ -1,5 +1,5 @@
 ﻿{
-  "runs": 1,
+  "runs": 5,
   "frequency": 16,
   "numberOfTrams": 14,
   "tramCapacity": 420,
@@ -17,10 +17,10 @@
   "maximumDelayBeforeDelayed": 60,
   "maximumWaitForExtraPassengers": 0,
   "outputFilePath": "../../../Output/",
-  "outputFileName": "artificial_03",
+  "outputFileName": "artificial_05",
   "inFilePath": "../../../Files/in.csv",
   "outFilePath": "../../../Files/out.csv",
-  "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
+  "artFilePath": "../../../Files/artificial-input-data-passengers-05.csv",
   "useArtificialData": true,
   "simplifiedDrivingTimes": false,
   "transferTimes": [

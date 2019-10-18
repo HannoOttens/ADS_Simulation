@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+13121,39359,42279,42037,993,2228,3150,3150,269,72,420,42545,37058,36206,Padualaan,0,2115,27,692308
+13007,39385,41976,41897,1084,8938,3150,3150,265,64,420,42567,37082,36226,UMC,0,1882,27,272728
+13363,39456,42772,42245,999,8353,3150,3150,269,63,420,42176,30332,36246,Heidelberglaan,0,2875,33,846153
+13249,39173,42056,41797,1069,6727,3150,3150,268,67,420,42378,32568,36251,Galgenwaard,0,2512,30,76923
+13197,39401,42531,41907,1072,5493,3150,3150,267,68,420,42623,37062,36289,Vaartsche Rijn,0,2311,27,692308

@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+27594,52294,100034,37700,740,9437,3153,4849,3265,249,27,420,22238,45373,43485,Kromme Rijn,115,6293,38,38384
+27730,52474,100000,37191,745,6427,3157,3381,244,26,420,22432,45505,43476,Vaartsche Rijn,231,4834,33
+27653,52322,99990,37382,766,1241,3152,2727,3225,249,26,420,22207,45355,43449,Kromme Rijn,75,6778,36,363636
+27714,52507,99729,37438,757,0344,3158,4849,3430,244,31,420,22650,42851,43413,Kromme Rijn,280,4374,31,313131
+27796,52512,99492,37492,771,1354,3158,5757,3433,244,24,420,22094,45545,43477,Heidelberglaan,283,4325,36

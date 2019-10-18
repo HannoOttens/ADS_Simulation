@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+2899,8871,21108,4874,125,89667,3150,3150,298,65,420,68857,9691,5657,WKZ,0,1792,26,153847
+2899,8870,20962,4797,131,92273,3150,3150,294,62,420,69190,9737,5659,WKZ,0,1032,15,384615
+2902,8870,21454,4827,133,0094,3150,3150,298,66,420,69461,10034,5619,WKZ,0,1895,27,272728
+2872,8898,20913,4590,124,22888,3150,3150,293,68,420,68506,9688,5658,WKZ,0,827,15,625
+2872,8893,20864,4855,129,30453,3150,3150,296,68,420,69189,10375,5610,Vaartsche Rijn,0,1773,23,076923

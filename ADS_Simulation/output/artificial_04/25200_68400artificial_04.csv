@@ -1,0 +1,6 @@
+average_waiting_time;longest_waiting_time;longest_queue;most_left_waiting;percentage_left_waiting;average_rtt;max_rtt;avg_tram_load;lowest_tram_load;higest_tram_load;total_passengers;average_empty_time;longest_empty_time;longest_empty_time_station;total_delay_pr;total_delay_uc;punctuality
+13933;43071;96068;37700;672,5849;3150;3150;292;14;420;386382;36707;3928;Heidelberglaan;0;10872;24,804178
+13932;43070;95954;37191;694,4995;3150;3150;292;26;420;385822;36633;3829;Vaartsche Rijn;0;13010;24,21875
+13960;43070;96044;37382;685,3674;3150;3150;291;22;420;385842;37005;3954;Padualaan;0;10856;25,194805
+13851;43098;95732;37438;673,9342;3150;3150;290;25;420;384771;36648;3867;Kromme Rijn;0;9885;23,177084
+13883;43093;95553;37492;677,8691;3150;3150;291;24;420;384664;36758;3863;Kromme Rijn;0;10191;22,857143

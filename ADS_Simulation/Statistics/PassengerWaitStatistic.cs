@@ -12,11 +12,11 @@ namespace ADS_Simulation.Statistics
         int lastEventTime;
         int stationCount;
 
-        int[] totalWaitingTime;
+        long[] totalWaitingTime;
         int[] longestWaitTime;
         int[] previousQueueLength;
 
-        int[] totalPassengers;
+        long[] totalPassengers;
         int[] totalPassengersLeftWaiting;
         int[] mostPassengersLeftWaiting;
         int longestQueue;
@@ -26,10 +26,10 @@ namespace ADS_Simulation.Statistics
             this.stationCount = stationCount;
             this.lastEventTime = startTime;
 
-            totalWaitingTime = new int[stationCount];
+            totalWaitingTime = new long[stationCount];
             longestWaitTime = new int[stationCount];
             previousQueueLength = new int[stationCount];
-            totalPassengers = new int[stationCount];
+            totalPassengers = new long[stationCount];
 
             totalPassengersLeftWaiting = new int[stationCount];
             mostPassengersLeftWaiting = new int[stationCount];
@@ -59,7 +59,7 @@ namespace ADS_Simulation.Statistics
                 // New passengers have arrived, calculate their waiting time
                 else
                 {
-                    int waitingTime = WaitingTimeNewPassengers(station.waitingPassengers.TakeLast(queueDelta), state.time)
+                    long waitingTime = WaitingTimeNewPassengers(station.waitingPassengers.TakeLast(queueDelta), state.time)
                                     + timeDelta * (currentQueue - queueDelta);
                     Debug.Assert(waitingTime >= 0, "Negative waiting time");
                     totalWaitingTime[stationIdx] += waitingTime;  
@@ -85,22 +85,22 @@ namespace ADS_Simulation.Statistics
             lastEventTime = state.time;
         }
 
-        private int WaitingTimeNewPassengers(IEnumerable<int> newPassengers, int time)
+        private long WaitingTimeNewPassengers(IEnumerable<int> newPassengers, int time)
         {
-            int sum = 0;
+            long sum = 0;
             foreach (int arrival in newPassengers)
                 sum += time - arrival;
             return sum;
         }
 
-        public int[] AverageWaitingTimePerStation()
+        public long[] AverageWaitingTimePerStation()
         {
             return totalWaitingTime.Zip(totalPassengers).Select(tuple => tuple.Second == 0 ? 0 : tuple.First / tuple.Second).ToArray();
         } 
 
         public int AverageWaitingTime()
         {
-            return totalWaitingTime.Sum() / totalPassengers.Sum();
+            return (int)(totalWaitingTime.Sum() / totalPassengers.Sum());
         }
 
         public float AverageLeftWaiting()

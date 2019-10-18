@@ -1,0 +1,6 @@
+average_waiting_time;longest_waiting_time;longest_queue;most_left_waiting;percentage_left_waiting;average_rtt;max_rtt;avg_tram_load;lowest_tram_load;higest_tram_load;total_passengers;average_empty_time;longest_empty_time;longest_empty_time_station;total_delay_pr;total_delay_uc;punctuality
+8293;42959;42355;42331;1910,42;3150;3150;262;15;420;237737;36151;3905;Kromme Rijn;0;13662;30,12987
+8178;42985;41998;41911;1945,4113;3150;3150;261;16;420;236750;36503;3840;Kromme Rijn;0;13483;29,6875
+8376;43056;42787;42506;1861,2935;3150;3150;262;15;420;238094;36546;3803;UMC;0;12900;28,645834
+8323;42773;42242;41903;1879,104;3150;3150;263;13;420;237704;35995;3835;Padualaan;0;14232;30,208334
+8318;43001;42621;42473;1858,3534;3150;3150;261;15;420;237921;36301;3883;UMC;0;14229;27,864584

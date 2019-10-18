@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+1814,8759,9257,9113,372,40796,3150,3150,270,69,420,42451,9936,5656,Padualaan,0,2072,30,76923
+1770,8785,9095,8982,377,25858,3150,3150,268,54,420,42009,9599,5650,Heidelberglaan,0,2305,30,76923
+1819,8856,9546,9301,381,56952,3150,3150,268,65,420,42366,9957,5658,Padualaan,0,1527,21,538462
+1817,8573,9641,9090,405,3535,3150,3150,269,63,420,42687,10256,5667,Padualaan,0,2966,31,818182
+1791,8801,9383,9122,360,28516,3150,3150,267,62,420,42435,9984,5685,Padualaan,0,1786,21,875

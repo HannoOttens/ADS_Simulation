@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+11664,32305,88939,28972,823,03827,3150,3150,300,29,420,258358,29467,12807,Vaartsche Rijn,0,5385,23,444977
+11683,32332,89058,29142,821,08057,3150,3150,300,55,420,258252,28691,12825,Kromme Rijn,0,5105,22,966507
+11666,32371,88719,29244,829,1241,3150,3166,300,50,420,258647,28648,12804,Vaartsche Rijn,0,6739,26,442308
+11627,32295,88772,28651,808,7955,3150,3150,299,60,420,258792,27843,12915,WKZ,0,4793,21,428572
+11648,32305,88348,28978,828,37933,3150,3150,301,60,420,258376,29458,12835,Padualaan,0,5440,22,488039

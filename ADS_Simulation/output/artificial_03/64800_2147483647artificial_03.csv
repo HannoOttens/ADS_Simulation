@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+22700,52229,42355,42331,2425,0867,3150,3150,205,15,420,14958,45035,43417,Galgenwaard,0,5042,38,38384
+22600,52322,41998,41911,2416,4692,3150,3150,204,17,420,14878,42430,43566,Vaartsche Rijn,0,4855,35,353535
+23048,52468,42787,42506,2415,3606,3156,5757,3367,201,11,420,14937,45250,43485,Galgenwaard,217,4864,38,38384
+23163,52727,42242,41903,2355,4075,3164,2727,3621,201,16,420,14943,45611,43372,UMC,471,6643,43,434345
+22795,52204,42621,42473,2416,5876,3150,3150,206,14,420,14915,44972,43497,Kromme Rijn,0,5094,39
