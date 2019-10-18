@@ -52,6 +52,8 @@ Went through {eventCount} events.
 The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
 The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");
+
+                simulation.statisticsManager.printStatistics(simulation.state);
             }
 
             // Save result

@@ -65,7 +65,7 @@ namespace ADS_Simulation
                     if (Config.c.transferTimes[i].arrivalRate[j] == 0)
                         continue; // No arrival in this window
 
-                    var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j] * 2.65);
+                    var times = Sampling.arrivingPassengers(Config.c.transferTimes[i].arrivalRate[j]);
                     foreach (var time in times)
                         queue.Enqueue(new PassengerArrival(i), j * 900 + time);
                 }
@@ -95,18 +95,20 @@ namespace ADS_Simulation
 
             // Start in direction A
             var direction = Direction.A;
-            foreach (StationData stationData in Config.c.transferTimes)
+            for (int i = 0; i < Config.c.transferTimes.Length; i++)
             {
+                StationData stationData = Config.c.transferTimes[i];
+
                 bool isEndStation = stationData.from == Config.c.startStation
                     || stationData.from == Config.c.endStation;
 
                 if (isEndStation)
                 {
                     bool hasDepot = stationData.from == Config.c.startStation;
-                    stations.Add(new Endstation(stationData.from, hasDepot));
+                    stations.Add(new Endstation(i, stationData.from, hasDepot));
                 }
                 else
-                    stations.Add(new Station(stationData.from, direction));
+                    stations.Add(new Station(i, stationData.from, direction));
 
                 // Change direction at endstation
                 if (stationData.from == Config.c.endStation)

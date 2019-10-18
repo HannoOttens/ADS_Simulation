@@ -19,7 +19,7 @@ namespace ADS_Simulation.Statistics
         public override void measure(State state, Event currentEvent)
         {
             if(currentEvent is PassengerArrival pa)
-                totalPassengers[pa.stationIdx] += 1;
+                totalPassengers[pa.stationIndex] += 1;
         }
 
         public override void Print(State state)

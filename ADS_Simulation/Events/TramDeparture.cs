@@ -8,8 +8,8 @@ namespace ADS_Simulation.Events
 {
     class TramDeparture : Event
     {
-        private readonly Tram tram;
-        private readonly int stationIndex;
+        public readonly Tram tram;
+        public readonly int stationIndex;
 
         public TramDeparture(Tram tram, int stationIndex)
         {

@@ -22,6 +22,7 @@ namespace ADS_Simulation.NS_State
 
     public class Station
     {
+        public readonly int index;
         public readonly Queue<Tram> incomingTrams;
         public readonly string name;
         public readonly Direction direction;
@@ -36,8 +37,9 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         private int lastSignaledArrivalTime = 0;
 
-        public Station(string name, Direction direction)
+        public Station(int index, string name, Direction direction)
         {
+            this.index = index;
             this.name = name;
             this.direction = direction;
             waitingPassengers = new Queue<int>();

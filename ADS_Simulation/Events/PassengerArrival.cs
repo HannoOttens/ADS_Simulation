@@ -5,17 +5,17 @@ namespace ADS_Simulation.Events
 {
     class PassengerArrival : Event
     {
-        public readonly int stationIdx;
+        public readonly int stationIndex;
 
         public PassengerArrival(int stationIdx)
         {
-            this.stationIdx = stationIdx;
+            this.stationIndex = stationIdx;
         }
 
         public override void Execute(State state, FastPriorityQueue<Event> eventQueue)
         {
             // Add passenger to station
-            state.stations[stationIdx].waitingPassengers.Enqueue(state.time);
+            state.stations[stationIndex].waitingPassengers.Enqueue(state.time);
         }
     }
 }

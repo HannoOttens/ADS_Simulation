@@ -1,6 +1,2 @@
 average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
-118,455,143,0,0,2702.5999,2751,38,0,260,7858,37333,36311,Heidelberglaan,137,4044,47.692307
-115,396,151,0,0,2700.238,2731,39,0,229,7977,26026,36223,Vaartsche Rijn,0,61414,45.454544
-124,482,205,0,0,2706.1,2775,41,0,269,8096,35057,36285,Galgenwaard,507,4440,56.25
-130,448,211,0,0,2706.0476,2805,40,0,385,7901,32834,36274,WKZ,666,5189,60
-133,574,244,0,0,2697.762,2820,37,0,341,8011,35077,36293,Heidelberglaan,1042,6550,63.636364
+49952,57911,83,15,11.725738,3000,3000,15,0,118,3020,35350,36301,UMC,0,0,0

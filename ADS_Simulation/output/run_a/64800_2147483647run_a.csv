@@ -1,6 +1,2 @@
 average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
-184,2594,70,0,0,2700.0571,2862,10,0,96,3430,49107,43567,WKZ,402,3338,35.353535
-194,2673,58,0,0,2700.4287,2817,11,0,117,3569,49114,43518,WKZ,189,3270,32.32323
-193,2696,55,0,0,2693.2856,2763,10,0,169,3399,43690,43480,Padualaan,138,3666,36.363636
-195,2747,63,0,0,2699.3713,2736,11,0,137,3491,43706,43467,Galgenwaard,0,2839,29.292929
-188,2578,67,0,0,2697.8857,2882,11,0,95,3485,49129,43395,UMC,492,69162,39
+20772,65111,30,13,15.116279,3000,3000,4,0,43,1376,46715,43486,Kromme Rijn,0,0,0

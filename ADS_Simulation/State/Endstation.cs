@@ -32,7 +32,7 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         public Tram? occupant2;
 
-        public Endstation(string name, bool hasDepot) : base(name, Direction.END)
+        public Endstation(int index, string name, bool hasDepot) : base(index, name, Direction.END)
         {
             this.hasDepot = hasDepot;
             _switch = new Switch();
