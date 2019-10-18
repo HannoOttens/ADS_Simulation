@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+3973,14666,18153,17733,1356,404,3150,3150,200,0,420,67496,27631,12850,Heidelberglaan,0,7181,26,31579
+3800,14862,17388,16968,1292,1342,3150,3150,199,0,420,67499,29172,12930,Heidelberglaan,0,5853,24,285715
+3834,13887,17798,17378,1305,336,3150,3150,199,0,420,67655,27631,12793,Heidelberglaan,0,6707,25,358852
+3841,14614,17620,17200,1308,315,3150,3150,201,0,420,67823,26721,12936,Heidelberglaan,0,8560,30,76923
+3844,14813,17566,17146,1306,9406,3150,3150,200,0,420,67890,28318,12808,Kromme Rijn,0,7381,28,571428

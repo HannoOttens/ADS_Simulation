@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+1970,6363,8352,7932,821,9245,3150,3150,146,0,420,24073,10411,5627,WKZ,0,153,3,125
+2003,6249,8695,8275,834,3317,3150,3150,146,0,420,23691,10053,5661,Heidelberglaan,0,520,10,769231
+1950,6205,8187,7767,811,7801,3150,3150,146,0,420,23791,10063,5647,UMC,0,448,7,6923075
+1995,6025,8477,8057,829,5585,3150,3150,144,0,420,23788,10411,5619,UMC,0,599,12,307693
+1973,6497,8330,7910,819,3402,3150,3150,147,0,420,24003,10071,5645,Vaartsche Rijn,0,212,4,6153846

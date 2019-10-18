@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+5411,19969,10714,10681,1473,0747,3156,0303,3349,123,0,420,18113,45629,43537,Kromme Rijn,199,6111,41
+5339,20044,10556,10497,1406,3441,3156,4546,3363,122,0,420,18129,45554,43544,Galgenwaard,213,4707,38
+5345,19922,10548,10523,1426,6683,3152,879,3245,124,0,420,18008,48110,43473,Kromme Rijn,95,4169,31
+5375,19758,10648,10615,1455,411,3152,2727,3225,121,0,420,18084,40022,43447,Padualaan,75,3221,27,272728
+5364,20101,10581,10540,1473,8281,3156,9092,3378,122,0,420,17878,40325,43696,Vaartsche Rijn,228,4793,32

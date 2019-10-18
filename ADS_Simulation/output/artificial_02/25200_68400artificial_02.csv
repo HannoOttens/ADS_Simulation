@@ -1,0 +1,6 @@
+average_waiting_time;longest_waiting_time;longest_queue;most_left_waiting;percentage_left_waiting;average_rtt;max_rtt;avg_tram_load;lowest_tram_load;higest_tram_load;total_passengers;average_empty_time;longest_empty_time;longest_empty_time_station;total_delay_pr;total_delay_uc;punctuality
+3296;14666;19411;18991;1293,3243;3150;3150;186;0;420;161235;36287;3880;Padualaan;0;12082;24,21875
+3181;14862;18622;18202;1242,9016;3150;3242;187;0;420;160160;36294;3813;Vaartsche Rijn;92;14406;25,194805
+3216;13887;18971;18551;1262,3235;3150;3150;186;0;420;160650;36541;3812;Galgenwaard;0;12795;24,21875
+3211;14614;18774;18354;1259,9612;3150;3150;185;0;420;160787;36270;3817;Kromme Rijn;0;12088;24,155844
+3215;14813;18773;18353;1277,5085;3150;3150;186;0;420;160601;36467;3846;Vaartsche Rijn;0;12199;25,260416

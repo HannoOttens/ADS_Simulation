@@ -1,0 +1,6 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+975,7172,5585,5523,195,37497,3150,3150,152,0,420,27891,34915,36336,Padualaan,0,2136,28,125
+983,7085,5598,5419,223,51274,3150,3150,154,0,420,28078,32596,36284,Kromme Rijn,0,2820,35,384617
+1020,7160,5719,5306,173,6796,3150,3150,154,0,420,28211,37111,36334,Heidelberglaan,0,2295,26,5625
+964,6795,5420,4592,195,4482,3150,3150,152,0,420,27751,32613,36206,Galgenwaard,0,2214,29,23077
+1009,6886,5900,5445,208,77335,3150,3150,152,0,420,28307,34890,36212,Kromme Rijn,0,1915,26,5625

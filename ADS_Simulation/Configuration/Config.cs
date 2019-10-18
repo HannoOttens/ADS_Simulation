@@ -30,7 +30,6 @@ namespace ADS_Simulation.Configuration
             for (int i = 0; i < c.transferTimes.Length; i++)
             {
                 c.transferTimes[i].averageExit = new double[maxIndex];
-                c.transferTimes[i].standardDeviationExit = new double[maxIndex];
                 c.transferTimes[i].arrivalRate = new double[maxIndex];
                 nameToIndex.Add((c.transferTimes[i].from, direction), i);
 
@@ -107,8 +106,6 @@ namespace ADS_Simulation.Configuration
                         var idxT = int.Parse(data[2]) / 15;
                         c.transferTimes[nameToIndex[idx]].averageExit[idxT] =
                             double.Parse(data[3], CultureInfo.InvariantCulture);
-                        c.transferTimes[nameToIndex[idx]].standardDeviationExit[idxT] =
-                            double.Parse(data[4], CultureInfo.InvariantCulture);
                     }
             }
         }
