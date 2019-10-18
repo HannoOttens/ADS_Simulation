@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
 out_folder = dir_path.parent.joinpath("ADS_Simulation/output")
-exp = ["base", "exp1"]
+exp = ["base", "exp1", "exp2"]
 int_max_value = pow(2, 31) - 1
 alpha = 0.05
 headers_type = [("average_waiting_time", int),
@@ -56,9 +56,12 @@ def t_test(sample1, sample2, column_name):
         a_mean, b_mean, diff_mean = np.mean(a), np.mean(b), np.mean(diff)
         a_std, b_std, diff_std = np.std(a), np.std(b), np.std(diff)
         t_critical = st.t.ppf(1 - (alpha / 2), df)
-        stat = t_critical * (diff_std / np.sqrt(N))
-        interval = (diff_mean - stat, diff_mean + stat)
-        tests[k] = relation(interval)
+        stat = diff_std / np.sqrt(N)
+        value = t_critical * stat
+        interval = (diff_mean - value, diff_mean + value)
+        t_obs = diff_mean / stat
+        p_value = (1 - st.t.cdf(np.abs(t_obs), df=df)) * 2
+        tests[k] = (relation(interval), f"{p_value:.5f}")
     return tests
 
 def relation(interval):
@@ -85,7 +88,7 @@ def main():
     set_types()
     table = confidence_table("base", "exp1")
     fig = go.Figure(data=table)
-    fig.update_layout(width=2200, height=600)
+    fig.update_layout(width=2500, height=800)
     fig.show()
 
 
