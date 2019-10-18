@@ -1,0 +1,2 @@
+average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+3000,3000,297,68,420,42383,37400,36535,Padualaan,0,1000,18,367348

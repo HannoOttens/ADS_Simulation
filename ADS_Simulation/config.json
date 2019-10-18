@@ -1,7 +1,7 @@
 ﻿{
   "runs": 1,
   "frequency": 12,
-  "numberOfTrams": 9,
+  "numberOfTrams": 10,
   "tramCapacity": 420,
   "stationClearanceTime": 40,
   "switchClearanceTime": 60,
@@ -17,7 +17,7 @@
   "maximumDelayBeforeDelayed": 60,
   "maximumWaitForExtraPassengers": 0,
   "outputFilePath": "../../../Output/",
-  "outputFileName": "run_a",
+  "outputFileName": "validation",
   "inFilePath": "../../../Files/in.csv",
   "outFilePath": "../../../Files/out.csv",
   "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",

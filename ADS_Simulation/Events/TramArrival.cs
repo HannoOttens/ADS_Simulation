@@ -20,7 +20,7 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}, time: {state.time}");
 
             // Board and unboard passengers
-            (int pOut, int pIn) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex));
+            (int pOut, int pIn) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex, tram.passengerCount));
 
             // Queue the expected tram departure
             int scheduledDepartTime = state.time + Sampling.passengerExchangeTime(pOut, pIn);

@@ -25,7 +25,7 @@ namespace ADS_Simulation.Events
             {
                 station.Occupy(tram, bestPlatform);
                 station._switch.UseSwitchLane(Switch.ArrivalLaneFor(bestPlatform));
-                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time + Config.c.switchClearanceTime);
+                eventQueue.Enqueue(new ArrivalEndstation(tram, station, bestPlatform), state.time);
             }
             else
                 station.Enqueue(tram);

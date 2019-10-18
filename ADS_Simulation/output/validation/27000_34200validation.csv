@@ -1,0 +1,2 @@
+average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+3000,3000,297,61,420,42171,9954,5727,Kromme Rijn,0,1649,26,530613

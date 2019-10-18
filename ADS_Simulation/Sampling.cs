@@ -19,16 +19,16 @@ namespace ADS_Simulation
         {
             if (Config.c.simplifiedDrivingTimes)
             {
-                var x = ContinuousUniform.Sample(0, 1);
-                if (x >= 0.6)
-                    return (int)(0.8 * averageForPart);
-                if (x >= 0.3)
+                var x = DiscreteUniform.Sample(0, 100);
+                if (x <= 40)
+                    return (int) (0.8 * averageForPart);
+                if (x <= 70)
                     return averageForPart;
-                if (x >= 0.1)
-                    return (int)(1.2 * averageForPart);
-                return (int)(1.4 * averageForPart);
+                if (x <= 90)
+                    return (int) (1.2 * averageForPart);
+                return (int) (1.4 * averageForPart);
             }
-            return (int)LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
+            return (int) LogNormal.Sample(Math.Log(averageForPart), Config.c.sdDrivingTimes);
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace ADS_Simulation
         public static int passengerExchangeTime(int pOut, int pIn)
         {
             var d = 12.5 + 0.22 * pIn + 0.13 * pOut;
-            var g = Gamma.Sample(2, 2/d);
-            return (int)Math.Max(0.8 * d, g);
+            var g = Gamma.Sample(2, 2 / d);
+            return (int) Math.Max(0.8 * d, g);
         }
 
         /// <summary>
@@ -63,17 +63,30 @@ namespace ADS_Simulation
         /// </summary>
         /// <param name="time">Current time</param>
         /// <param name="stationIndex">Index of station where passengers unboard</param>
+        /// <param name="passengers">Current passengers in tram</param>
         /// <returns></returns>
-        internal static int unboardingPassengerCount(int time, int stationIndex)
+        internal static int unboardingPassengerCount(int time, int stationIndex, int passengers)
         {
+            if (passengers == 0)
+                return 0; // Nothing to unboard
+
             int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
-            double mean = Config.c.transferTimes[stationIndex].averageExit[idxT];
-            double sd = Config.c.transferTimes[stationIndex].standardDeviationExit[idxT];
+            var averageExit = Config.c.transferTimes[stationIndex].averageExit[idxT];
+            if (averageExit.Equals(0))
+                return 0;
 
-            double log_mean = Math.Max(0.000001, Math.Log(mean));
-            double log_sd = Math.Max(0.000001, Math.Log(sd));
+            // Calculate expected passengers based on data from previous stations on the route
+            double expectedPassengers = 0;
+            for (var i = stationIndex > 8 ? 8 : 0; i < stationIndex; i++)
+            {
+                expectedPassengers += Config.c.transferTimes[i].arrivalRate[idxT];
+                if(i != 8) // Passengers exiting on CS have left on the previous trip
+                    expectedPassengers -= Config.c.transferTimes[i].averageExit[idxT];
+            }
+            if (expectedPassengers <= 0)
+                return 0;
 
-            return (int)LogNormal.Sample(log_mean, log_sd);
+            return Math.Min(passengers, (int)LogNormal.Sample(Math.Log(passengers * (averageExit / expectedPassengers)), 0.1));
         }
     }
 }

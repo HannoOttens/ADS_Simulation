@@ -1,0 +1,2 @@
+average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+3001,071,3153,266,0,420,252032,46382,2164,WKZ,153,11690,24,444445
