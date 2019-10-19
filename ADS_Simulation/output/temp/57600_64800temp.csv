@@ -1,0 +1,2 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+2718,24691,14619,14619,233551,05801708723,3000,3000,305,60,420,42749,30609,36264,Kromme Rijn,0,2371,32,65306

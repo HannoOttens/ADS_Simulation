@@ -1,0 +1,2 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+543,4852,2868,2868,40046,2750646436,3000,3000,299,60,420,42311,10578,5683,Galgenwaard,0,1710,26,530613

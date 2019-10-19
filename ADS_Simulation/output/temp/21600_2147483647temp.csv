@@ -1,0 +1,2 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+5707,44844,58931,58931,538583,6225395759,3000,8994,3103,270,0,420,253288,45737,2201,WKZ,103,13890,27,374302

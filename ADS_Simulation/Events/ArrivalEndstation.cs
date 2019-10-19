@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
@@ -8,9 +9,10 @@ namespace ADS_Simulation.Events
     class ArrivalEndstation : Event
     {
         readonly Tram tram;
-        readonly Endstation station;
+        public Endstation station;
         readonly Platform platform;
         readonly bool fromDepot;
+        public List<int> entrances = new List<int>();
 
         public ArrivalEndstation(Tram tram, Endstation station, Platform platform, bool fromDepot = false)
         {
@@ -34,7 +36,8 @@ namespace ADS_Simulation.Events
             if (!station.TramToDepot(state.time))
             {
                 // Board and unboard
-                (int pOut, int pIn) = station.UnboardAndBoard(tram, tram.passengerCount);
+                (int pOut, int pIn, List<int> e) = station.UnboardAndBoard(tram, tram.passengerCount);
+                entrances = e;
 
                 // Calculate when to schedule departure
                 // If boarding/unboarding takes shorter than the turnaround, take the turnaround time
@@ -43,8 +46,7 @@ namespace ADS_Simulation.Events
                 int nextEventTime = Math.Max(passengerTransferTime, nextDepartureTime);
 
                 // Queue event
-                Event e = new ExpectedDepartureStartstation(tram, station, platform, nextDepartureTime);
-                eventQueue.Enqueue(e, nextEventTime);
+                eventQueue.Enqueue(new ExpectedDepartureStartstation(tram, station, platform, nextDepartureTime), nextEventTime);
             }
             // Transfer tram to depot
             else

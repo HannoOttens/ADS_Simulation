@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.NS_State;
+﻿using System.Collections.Generic;
+using ADS_Simulation.NS_State;
 using Priority_Queue;
 
 namespace ADS_Simulation.Events
@@ -6,7 +7,8 @@ namespace ADS_Simulation.Events
     class TramArrival : Event
     {
         private readonly Tram tram;
-        private readonly int stationIndex;
+        public int stationIndex;
+        public List<int> entrances = new List<int>();
 
         public TramArrival(Tram tram, int stationIndex)
         {
@@ -20,7 +22,8 @@ namespace ADS_Simulation.Events
             System.Diagnostics.Debug.WriteLine($"TramArrival: tram {tram.id}, station: {station.name}, dir: {station.direction}, time: {state.time}");
 
             // Board and unboard passengers
-            (int pOut, int pIn) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex, tram.passengerCount));
+            (int pOut, int pIn, List<int> ent) = station.UnboardAndBoard(tram, Sampling.unboardingPassengerCount(state.time, stationIndex, tram.passengerCount));
+            entrances = ent;
 
             // Queue the expected tram departure
             int scheduledDepartTime = state.time + Sampling.passengerExchangeTime(pOut, pIn);

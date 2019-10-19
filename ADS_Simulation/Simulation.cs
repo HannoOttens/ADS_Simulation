@@ -95,21 +95,22 @@ namespace ADS_Simulation
 
             // Start in direction A
             var direction = Direction.A;
-            foreach (StationData stationData in Config.c.transferTimes)
+            for (var i = 0; i < Config.c.transferTimes.Length; i++)
             {
-                bool isEndStation = stationData.from == Config.c.startStation
-                    || stationData.from == Config.c.endStation;
+                StationData stationData = Config.c.transferTimes[i];
+                bool isEndStation = stationData.@from == Config.c.startStation
+                                    || stationData.@from == Config.c.endStation;
 
                 if (isEndStation)
                 {
-                    bool hasDepot = stationData.from == Config.c.startStation;
-                    stations.Add(new Endstation(stationData.from, hasDepot));
+                    bool hasDepot = stationData.@from == Config.c.startStation;
+                    stations.Add(new Endstation(stationData.@from, hasDepot, i));
                 }
                 else
-                    stations.Add(new Station(stationData.from, direction));
+                    stations.Add(new Station(stationData.@from, direction));
 
                 // Change direction at endstation
-                if (stationData.from == Config.c.endStation)
+                if (stationData.@from == Config.c.endStation)
                     direction = Direction.B;
             }
 

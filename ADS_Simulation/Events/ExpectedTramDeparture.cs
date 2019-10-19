@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.Configuration;
+﻿using System.Collections.Generic;
+using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
 
@@ -7,8 +8,9 @@ namespace ADS_Simulation.Events
     class ExpectedTramDeparture : Event
     {
         private readonly Tram tram;
-        private readonly int stationIndex;
+        public readonly int stationIndex;
         private readonly int initialScheduledDeparture;
+        public List<int> entrances = new List<int>();
 
         public ExpectedTramDeparture(Tram tram, int stationIndex, int initialScheduledDeparture)
         {
@@ -25,7 +27,8 @@ namespace ADS_Simulation.Events
             bool forceDepart = state.time >= initialScheduledDeparture + Config.c.maximumWaitForExtraPassengers;
             if (!forceDepart && !tram.IsFull() && station.HasPassengers())
             {
-                int pIn = station.BoardPassengers(tram);
+                (int pIn, List<int> e) = station.BoardPassengers(tram);
+                entrances = e;
                 eventQueue.Enqueue(new ExpectedTramDeparture(tram, stationIndex, initialScheduledDeparture), 
                     state.time + Sampling.passengerExchangeTime(0, pIn));
             }

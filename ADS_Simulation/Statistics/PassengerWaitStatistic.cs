@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using ADS_Simulation.Events;
 using ADS_Simulation.NS_State;
@@ -9,80 +8,95 @@ namespace ADS_Simulation.Statistics
 {
     class PassengerWaitStatistic : Statistic
     {
-        int lastEventTime;
-        int stationCount;
-
         long[] totalWaitingTime;
-        int[] longestWaitTime;
-        int[] previousQueueLength;
+        long[] longestWaitTime;
 
         long[] totalPassengers;
-        int[] totalPassengersLeftWaiting;
-        int[] mostPassengersLeftWaiting;
-        int longestQueue;
+        long[] totalPassengersLeftWaiting;
+        long[] mostPassengersLeftWaiting;
+        long longestQueue;
 
         public PassengerWaitStatistic(int startTime, int endTime, int stationCount) : base(startTime, endTime)
         {
-            this.stationCount = stationCount;
-            this.lastEventTime = startTime;
-
             totalWaitingTime = new long[stationCount];
-            longestWaitTime = new int[stationCount];
-            previousQueueLength = new int[stationCount];
+            longestWaitTime = new long[stationCount];
             totalPassengers = new long[stationCount];
 
-            totalPassengersLeftWaiting = new int[stationCount];
-            mostPassengersLeftWaiting = new int[stationCount];
+            totalPassengersLeftWaiting = new long[stationCount];
+            mostPassengersLeftWaiting = new long[stationCount];
             longestQueue = 0;
         }
 
         public override void measure(State state, Event currentEvent)
         {
-            int timeDelta = state.time - lastEventTime;
+            if (currentEvent is TramArrival ta)
+                countPassengers(ta.entrances, ta.stationIndex);
+            if (currentEvent is ExpectedTramDeparture etd)
+                countPassengers(etd.entrances, etd.stationIndex);
+            if (currentEvent is ArrivalEndstation aes)
+                countPassengers(aes.entrances, aes.station.index);
+            if (currentEvent is ExpectedDepartureStartstation edss)
+                countPassengers(edss.entrances, edss.station.index);
 
-            for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
+            void countPassengers(List<int> entrances, int stationIndex)
             {
-                var station = state.stations[stationIdx];
-
-                int currentQueue = station.waitingPassengers.Count;
-                int queueDelta = currentQueue - previousQueueLength[stationIdx];
-                previousQueueLength[stationIdx] = currentQueue;
-
-                if (longestQueue < currentQueue)
-                    longestQueue = currentQueue;
-
-                // Passengers got in tram, calculate waiting time of remaining passengers
-                if(queueDelta <= 0)
+                foreach (int p in entrances)
                 {
-                    totalWaitingTime[stationIdx] += timeDelta * currentQueue;
-                }
-                // New passengers have arrived, calculate their waiting time
-                else
-                {
-                    long waitingTime = WaitingTimeNewPassengers(station.waitingPassengers.TakeLast(queueDelta), state.time)
-                                    + timeDelta * (currentQueue - queueDelta);
-                    Debug.Assert(waitingTime >= 0, "Negative waiting time");
-                    totalWaitingTime[stationIdx] += waitingTime;  
-                    totalPassengers[stationIdx] += queueDelta;
-                }
-
-                // Check if passengers are left waiting for the next tram
-                if (queueDelta < 0 && currentQueue != 0)
-                {
-                    totalPassengersLeftWaiting[stationIdx] += currentQueue;
-                    if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
-                        mostPassengersLeftWaiting[stationIdx] = currentQueue;
-                }
-
-                // Update longest waiting time, person first in queue has the longest waiting time
-                if (station.HasPassengers())
-                {
-                    int waitTime = state.time - station.waitingPassengers.Peek();
-                    if (waitTime > longestWaitTime[stationIdx])
-                        longestWaitTime[stationIdx] = waitTime;
+                    var waitingTime = state.time - p;
+                    totalWaitingTime[stationIndex] += waitingTime;
+                    longestWaitTime[stationIndex] = Math.Max(longestWaitTime[stationIndex], waitingTime);
+                    totalPassengers[stationIndex]++;
+                    var waitingPassengers = state.stations[stationIndex].waitingPassengers.Count;
+                    totalPassengersLeftWaiting[stationIndex] += waitingPassengers;
+                    mostPassengersLeftWaiting[stationIndex] = Math.Max(mostPassengersLeftWaiting[stationIndex], waitingPassengers);
+                    longestQueue = Math.Max(longestQueue, waitingPassengers);
                 }
             }
-            lastEventTime = state.time;
+            //int timeDelta = state.time - lastEventTime;
+
+            //for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
+            //{
+            //    var station = state.stations[stationIdx];
+
+            //    int currentQueue = station.waitingPassengers.Count;
+            //    int queueDelta = currentQueue - previousQueueLength[stationIdx];
+            //    previousQueueLength[stationIdx] = currentQueue;
+
+            //    if (longestQueue < currentQueue)
+            //        longestQueue = currentQueue;
+
+            //    // Passengers got in tram, calculate waiting time of remaining passengers
+            //    if(queueDelta <= 0)
+            //    {
+            //        totalWaitingTime[stationIdx] += timeDelta * currentQueue;
+            //    }
+            //    // New passengers have arrived, calculate their waiting time
+            //    else
+            //    {
+            //        long waitingTime = WaitingTimeNewPassengers(station.waitingPassengers.TakeLast(queueDelta), state.time)
+            //                        + timeDelta * (currentQueue - queueDelta);
+            //        Debug.Assert(waitingTime >= 0, "Negative waiting time");
+            //        totalWaitingTime[stationIdx] += waitingTime;  
+            //        totalPassengers[stationIdx] += queueDelta;
+            //    }
+
+            //    // Check if passengers are left waiting for the next tram
+            //    if (queueDelta < 0 && currentQueue != 0)
+            //    {
+            //        totalPassengersLeftWaiting[stationIdx] += currentQueue;
+            //        if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
+            //            mostPassengersLeftWaiting[stationIdx] = currentQueue;
+            //    }
+
+            //    // Update longest waiting time, person first in queue has the longest waiting time
+            //    if (station.HasPassengers())
+            //    {
+            //        int waitTime = state.time - station.waitingPassengers.Peek();
+            //        if (waitTime > longestWaitTime[stationIdx])
+            //            longestWaitTime[stationIdx] = waitTime;
+            //    }
+            //}
+            //lastEventTime = state.time;
         }
 
         private long WaitingTimeNewPassengers(IEnumerable<int> newPassengers, int time)
@@ -103,9 +117,9 @@ namespace ADS_Simulation.Statistics
             return (int)(totalWaitingTime.Sum() / totalPassengers.Sum());
         }
 
-        public float AverageLeftWaiting()
+        public double AverageLeftWaiting()
         {
-            return (float)totalPassengersLeftWaiting.Sum() / totalPassengers.Sum() * 100;
+            return (double)totalPassengersLeftWaiting.Sum() / totalPassengers.Sum() * 100;
         }
 
         public override void Print(State state)

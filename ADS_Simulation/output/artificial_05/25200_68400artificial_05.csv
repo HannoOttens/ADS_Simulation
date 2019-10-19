@@ -1,6 +1,6 @@
-average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
-15152,43105,110360,35326,1129,8573,3150,3150,296,15,420,443589,36905,3806,Padualaan,0,9294,22,077923
-15175,43132,110463,35258,1125,6664,3150,3150,297,27,420,443115,37127,3853,Heidelberglaan,0,12081,25
-15140,43171,110061,35463,1123,1321,3150,3166,297,21,420,443374,36852,3863,Padualaan,0,12245,25,714285
-15102,43095,110254,35431,1113,4785,3150,3150,296,23,420,444138,36858,3807,Kromme Rijn,0,9321,22,916666
-15133,43105,109564,35240,1133,1364,3150,3150,296,26,420,442935,36428,3861,Heidelberglaan,0,9365,21,875
+average_waiting_time;longest_waiting_time;longest_queue;most_left_waiting;percentage_left_waiting;average_rtt;max_rtt;avg_tram_load;lowest_tram_load;higest_tram_load;total_passengers;average_empty_time;longest_empty_time;longest_empty_time_station;total_delay_pr;total_delay_uc;punctuality
+15111;43086;109985;35611;1127,5715;3150;3181;297;31;420;443674;36816;3948;WKZ;0;11040;23,376623
+15111;43136;110214;34974;1109,7654;3150;3150;297;22;420;443776;36903;3842;Heidelberglaan;0;10427;22,77923
+15139;43094;110441;35562;1124,1603;3150;3150;295;25;420;443842;36665;3833;Galgenwaard;0;8698;21,354166
+15152;43154;110392;34890;1108,584;3150;3150;296;23;420;443831;36875;3949;WKZ;0;11014;24,611399
+15147;43134;110561;35703;1120,9623;3150;3150;297;20;420;443772;36898;3908;Kromme Rijn;0;9211;21,818182

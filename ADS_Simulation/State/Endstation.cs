@@ -23,6 +23,7 @@ namespace ADS_Simulation.NS_State
         public readonly Switch _switch;
         public readonly Queue<Tram> depotQueue;
         public Platform first;
+        public int index;
 
         private readonly TimeTable timeTable;
         private readonly bool hasDepot;
@@ -32,12 +33,13 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         public Tram? occupant2;
 
-        public Endstation(string name, bool hasDepot) : base(name, Direction.END)
+        public Endstation(string name, bool hasDepot, int index) : base(name, Direction.END)
         {
             this.hasDepot = hasDepot;
+            this.index = index;
             _switch = new Switch();
             first = Platform.None;
-            
+
             timeTable = new TimeTable(Config.c.startTime + Config.c.roundTripOffsetFor(name), Config.c.GetIntervalSeconds());
             depotQueue = new Queue<Tram>();
         }

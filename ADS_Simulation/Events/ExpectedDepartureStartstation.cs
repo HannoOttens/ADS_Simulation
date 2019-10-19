@@ -1,4 +1,5 @@
-﻿using ADS_Simulation.NS_State;
+﻿using System.Collections.Generic;
+using ADS_Simulation.NS_State;
 using Priority_Queue;
 
 namespace ADS_Simulation.Events
@@ -9,6 +10,7 @@ namespace ADS_Simulation.Events
         public readonly Endstation station;
         public readonly Platform platform;
         public readonly int timeTableTime;
+        public List<int> entrances = new List<int>();
 
         public ExpectedDepartureStartstation(Tram tram, Endstation station, Platform platform, int timeTableTime)
         {
@@ -40,7 +42,8 @@ namespace ADS_Simulation.Events
             // Otherwise let extra passengers enter
             else
             {
-                int pInExtra = station.BoardPassengers(tram);
+                (int pInExtra, List<int> e) = station.BoardPassengers(tram);
+                entrances = e;
                 int extraTime = Sampling.passengerExchangeTime(0, pInExtra);
                 eventQueue.Enqueue(new ExpectedDepartureStartstation(tram, station, platform, timeTableTime), state.time + extraTime);
             }

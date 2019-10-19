@@ -113,20 +113,21 @@ namespace ADS_Simulation.NS_State
         /// Remove passengers from station
         /// </summary>
         /// <param name="maxPassengers">Maximum amount that will still fit in the tram</param>
-        /// <returns>The amount of boarded passengers</returns>
-        public int BoardPassengers(Tram tram)
+        /// <returns>The amount of boarded passengers, and their arrival times</returns>
+        public (int, List<int>) BoardPassengers(Tram tram)
         {
+            List<int> entrances = new List<int>();
             int maxPassengers = tram.PassengerSpace();
             
             int count = 0;
             while (count < maxPassengers && waitingPassengers.Count > 0)
             {
-                waitingPassengers.Dequeue();
+                entrances.Add(waitingPassengers.Dequeue());
                 count++;
             }
 
             tram.AddPassengers(count);
-            return count;
+            return (count, entrances);
         }
 
         /// <summary>
@@ -143,15 +144,15 @@ namespace ADS_Simulation.NS_State
         /// </summary>
         /// <param name="tram"></param>
         /// <returns></returns>
-        public (int pOut, int pIn) UnboardAndBoard(Tram tram, int maxUnboard)
+        public (int pOut, int pIn, List<int> entrances) UnboardAndBoard(Tram tram, int maxUnboard)
         {
             // First empty the tram
             int pOut = tram.EmptyPassengers(maxUnboard); 
 
             // Then board the passengers
-            int pIn = BoardPassengers(tram);
+            var (pIn, entrances) = BoardPassengers(tram);
 
-            return (pOut, pIn);
+            return (pOut, pIn, entrances);
         }
 
         /// <summary>

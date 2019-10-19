@@ -1,0 +1,2 @@
+average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
+21666,44844,58931,58931,2112597,5173095944,3006,08,3103,233,10,420,14981,48233,43584,Vaartsche Rijn,103,4607,41,89189
