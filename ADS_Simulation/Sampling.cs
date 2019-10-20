@@ -11,7 +11,7 @@ namespace ADS_Simulation
     {
         /// <summary>
         /// The estimated driving time between stations.
-        /// This is a lognormal distribution with the natural logarithm of the average driving time as mu and 0.1 as sigma
+        /// This could either be a simplified version for validation, or a lognormal distribution.
         /// </summary>
         /// <param name="averageForPart">Average driving time for this section</param>
         /// <returns></returns>
