@@ -61,7 +61,7 @@ def t_test(sample1, sample2, column_name):
         interval = (diff_mean - value, diff_mean + value)
         t_obs = diff_mean / stat
         p_value = (1 - st.t.cdf(np.abs(t_obs), df=df)) * 2
-        tests[k] = (relation(interval), f"{p_value:.5f}")
+        tests[k] = (f"{interval[0]:.2f};{interval[1]:.2f};{p_value:.5f}")
     return tests
 
 def relation(interval):
@@ -82,14 +82,33 @@ def confidence_table(sample1, sample2):
     return go.Table(header=dict(values=headers), cells=dict(values=data))
 
 
+def confidence_table_csv(sample1, sample2, filepath):
+    headers = list(map(lambda t: t[0], headers_type))
+    data = [list(map(interval_to_string, intervals))]
+    for header in headers:
+        test = t_test(sample1, sample2, header)
+        data.append(list(map(lambda t: test[t], intervals)))
+    headers.insert(0, "interval")
+    rows = [headers]
+    for i in range(0, len(data[0])):
+        rows.append(list(map(lambda x: x[i], data)))
+    table = readin.Table(rows)
+    table.save_as_csv(filepath)
+
+def interval_to_string(interval):
+    begin = f"{interval[0]/3600}"
+    end = "End" if interval[1] == int_max_value else f"{interval[1]/3600}"
+    return begin + "-" + end
 
 def main():
+    pair = ("base", "exp1")
     read_tables(exp)
     set_types()
-    table = confidence_table("base", "exp1")
-    fig = go.Figure(data=table)
-    fig.update_layout(width=2500, height=800)
-    fig.show()
+    # table = confidence_table("base", "exp1")
+    # fig = go.Figure(data=table)
+    # fig.update_layout(width=2500, height=800)
+    # fig.show()
+    confidence_table_csv(pair[0], pair[1], f"{pair}.csv")
 
 
 if __name__ == "__main__":
