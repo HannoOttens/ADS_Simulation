@@ -26,9 +26,9 @@ namespace ADS_Simulation
             // Initialize config
             Config.readConfig(configPath);
 
-            int[] tramFrequencies = new int[] { 14, 16, 18, 20, 22 };
+            int[] tramFrequencies = new int[] { 14, 15, 16, 17, 18, 19, 20, 21, 22 };
             bool[] ucDriverSwitch = new bool[] { true, false };
-            int[] turnAroundTimes = new int[] { 60, 120, 150, 180, 210, 240, 300 };
+            int[] turnAroundTimes = new int[] { 60, 90, 120, 150, 180, 210, 240, 270, 300 };
             foreach (int frequency in tramFrequencies)
                 foreach (bool ucSwitch in ucDriverSwitch)
                     foreach (int turnAroundTime in turnAroundTimes)
@@ -54,7 +54,6 @@ namespace ADS_Simulation
 
         private static void Run()
         {
-            int eventCount = 0;
 
             // Bookkeep data
             var statisticalData = new Dictionary<(int, int), List<string>>();
@@ -78,7 +77,7 @@ namespace ADS_Simulation
 
                 // Print run result
                 Console.WriteLine(@$"Run: {runNo}
-Went through {eventCount} events.
+Went through {events} events.
 The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
 The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");

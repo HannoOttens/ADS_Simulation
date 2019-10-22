@@ -21,7 +21,7 @@
   "inFilePath": "../../../Files/in.csv",
   "outFilePath": "../../../Files/out.csv",
   "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
-  "useArtificialData": true,
+  "useArtificialData": false,
   "simplifiedDrivingTimes": false,
   "passengerMultiplier": 2.65,
   "transferTimes": [
