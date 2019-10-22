@@ -66,7 +66,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
                     Directory.CreateDirectory(path);
                 
                 string timerangename = timeRange.ToString().Replace("(", "").Replace(")", "").Replace(", ", "_");
-                string filepath = Path.Combine(path, timerangename + Config.c.outputFileName + ".csv");
+                string filepath = Path.Combine(path, $"{timerangename}_{Config.c.outputFileName}.csv");
                 
                 File.WriteAllText(filepath, output);
             }
@@ -343,7 +343,7 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
                     {
                         case "-c":
                         case "-config":
-                            configPath = args[i++];
+                            configPath = args[++i];
                             break;
                         case "-s":
                         case "-step":
@@ -351,6 +351,12 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
                             break;
                         case "-gui":
                             gui = true;
+                            break;
+                        case "-in":
+                            inPath = args[++i];
+                            break;
+                        case "-out":
+                            inPath = args[++i];
                             break;
                         case "-h":
                         case "-help":

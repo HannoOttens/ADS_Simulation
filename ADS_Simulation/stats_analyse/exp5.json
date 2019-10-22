@@ -1,29 +1,23 @@
-{
-  "runs": 5,
+﻿{
+  "runs": 100,
   "frequency": 16,
-  "numberOfTrams": 14,
+  "numberOfTrams": 12,
   "tramCapacity": 420,
   "stationClearanceTime": 40,
   "switchClearanceTime": 60,
   "startTime": 21600, // 6 AM
   "endTime": 77400, // 9 PM
   "oneWayTripTimeMinutes": 17,
-  "ucDualDriverSwitch": false,
-  "turnAroundTime": 240,
+  "ucDualDriverSwitch": true,
+  "turnAroundTime": 180,
   "turnAroundTimeDualDriver": 30,
   "sdDrivingTimes": 0.1,
   "startStation": "P+R De Uithof",
   "endStation": "Centraal Station",
   "maximumDelayBeforeDelayed": 60,
-  "maximumWaitForExtraPassengers": 0,
+  "maximumWaitForExtraPassengers": 45,
   "outputFilePath": "../../../Output/",
-  "outputFileName": "temp",
-  "inFilePath": "../../../Files/in.csv",
-  "outFilePath": "../../../Files/out.csv",
-  "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
-  "useArtificialData": true,
-  "simplifiedDrivingTimes": false,
-  "passengerMultiplier": 1,
+  "outputFileName": "exp5",
   "transferTimes": [
     {
       "from": "P+R De Uithof",

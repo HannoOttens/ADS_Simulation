@@ -1,6 +1,0 @@
-average_waiting_time,longest_waiting_time,longest_queue,most_left_waiting,percentage_left_waiting,average_rtt,max_rtt,avg_tram_load,lowest_tram_load,higest_tram_load,total_passengers,average_empty_time,longest_empty_time,longest_empty_time_station,total_delay_pr,total_delay_uc,punctuality
-121,455,470,50,0.24526405,2700.4622,2783,62,0,420,42760,38050,3797,Vaartsche Rijn,364,15708,35.15625
-118,403,458,38,0.22451104,2700.497,2775,63,0,420,43149,37714,3858,Vaartsche Rijn,75,15770,35.584415
-122,482,504,84,0.34658042,2700.9177,2775,64,0,420,43268,38003,3858,Kromme Rijn,795,16039,36.979168
-122,448,439,19,0.07848206,2700.1055,2841,65,0,420,43278,38072,3864,Kromme Rijn,1042,16896,36.623375
-124,574,423,3,0.006970422,2701.558,2820,63,0,420,43000,38040,3841,Heidelberglaan,1675,19637,40.104168
