@@ -352,12 +352,12 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
                         case "-gui":
                             gui = true;
                             break;
-                        case "-in":
-                            inPath = args[++i];
-                            break;
-                        case "-out":
-                            inPath = args[++i];
-                            break;
+                        //case "-in":
+                        //    inPath = args[++i];
+                        //    break;
+                        //case "-out":
+                        //    inPath = args[++i];
+                        //    break;
                         case "-h":
                         case "-help":
                             PrintHelp();

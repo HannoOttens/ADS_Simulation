@@ -54,7 +54,7 @@ namespace ADS_Simulation
             var arrivals = Poisson.Sample(mean);
             var times = new int[arrivals];
             for (int i = 0; i < arrivals; i++)
-                times[i] = DiscreteUniform.Sample(0, 900);
+                times[i] = DiscreteUniform.Sample(0, 899);
             return times;
         }
 
