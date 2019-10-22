@@ -1,5 +1,5 @@
 {
-  "runs": 5,
+  "runs": 50,
   "frequency": 16,
   "numberOfTrams": 14,
   "tramCapacity": 420,
@@ -23,7 +23,7 @@
   "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
   "useArtificialData": true,
   "simplifiedDrivingTimes": false,
-  "passengerMultiplier": 1,
+  "passengerMultiplier": 2.65,
   "transferTimes": [
     {
       "from": "P+R De Uithof",
