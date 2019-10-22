@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
 out_folder = dir_path.parent.joinpath("ADS_Simulation/output")
-exp = ["base", "exp1", "exp2"]
+exp = ["base", "exp1", "exp2","exp3", "exp4", "exp5"]
 int_max_value = pow(2, 31) - 1
 alpha = 0.05
 headers_type = [("average_waiting_time", int),
