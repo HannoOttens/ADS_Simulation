@@ -27,7 +27,6 @@ namespace ADS_Simulation
             Config.readConfig(configPath);
 
             int[] tramFrequencies = new int[] { 14, 16, 18, 20, 22 };
-            int[] tramNumbers = new int[] { 12, 14, 16, 18, 20 };
             bool[] ucDriverSwitch = new bool[] { true, false };
             int[] turnAroundTimes = new int[] { 60, 120, 150, 180, 210, 240, 300 };
             foreach (int frequency in tramFrequencies)
