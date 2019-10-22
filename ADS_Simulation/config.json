@@ -23,6 +23,7 @@
   "artFilePath": "../../../Files/artificial-input-data-passengers-03.csv",
   "useArtificialData": true,
   "simplifiedDrivingTimes": false,
+  "passengerMultiplier": 1,
   "transferTimes": [
     {
       "from": "P+R De Uithof",
