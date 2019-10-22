@@ -20,13 +20,40 @@ namespace ADS_Simulation
 
         static void Main(string[] args)
         {
-            int eventCount = 0;
-            stopwatch.Start();
 
             MarshallArgs(args);
 
             // Initialize config
             Config.readConfig(configPath);
+
+            int[] tramFrequencies = new int[] { 14, 15, 16, 17, 18, 19, 20, 21, 22 };
+            bool[] ucDriverSwitch = new bool[] { true, false };
+            int[] turnAroundTimes = new int[] { 60, 90, 120, 150, 180, 210, 240, 270, 300 };
+            foreach (int frequency in tramFrequencies)
+                foreach (bool ucSwitch in ucDriverSwitch)
+                    foreach (int turnAroundTime in turnAroundTimes)
+                    {
+                        Config.c.ucDualDriverSwitch = ucSwitch;
+                        Config.c.frequency = frequency;
+                        Config.c.turnAroundTime = turnAroundTime;
+
+                        // Caclulate number of trams programiicly
+                        Config.c.numberOfTrams = (int)Math.Ceiling((decimal)Config.c.RoundTripTime() / Config.c.GetIntervalSeconds());
+
+                        Config.c.outputFileName = $"f={frequency}-n={Config.c.numberOfTrams}-uc={ucSwitch}-q={turnAroundTime}";
+
+                        Console.WriteLine("====================================================");
+                        Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        Console.WriteLine($"Run: {Config.c.outputFileName}");
+                        Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        Console.WriteLine("====================================================");
+
+                        Run();
+                    }
+        }
+
+        private static void Run()
+        {
 
             // Bookkeep data
             var statisticalData = new Dictionary<(int, int), List<string>>();
@@ -34,6 +61,8 @@ namespace ADS_Simulation
             // Run the number of simulations
             for (int runNo = 0; runNo < Config.c.runs; runNo++)
             {
+                stopwatch.Restart();
+
                 // Initialize simulation
                 (int events, Simulation simulation) = Simulate();
 
@@ -48,7 +77,7 @@ namespace ADS_Simulation
 
                 // Print run result
                 Console.WriteLine(@$"Run: {runNo}
-Went through {eventCount} events.
+Went through {events} events.
 The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
 The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
 ================================");
@@ -59,15 +88,15 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
             {
                 List<string> results = statisticalData[timeRange];
                 string output = String.Join('\n', results);
-                
+
                 string path = Path.Combine(Config.c.outputFilePath, Config.c.outputFileName);
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
-                
+
                 string timerangename = timeRange.ToString().Replace("(", "").Replace(")", "").Replace(", ", "_");
                 string filepath = Path.Combine(path, $"{timerangename}_{Config.c.outputFileName}.csv");
-                
+
                 File.WriteAllText(filepath, output);
             }
         }
@@ -352,12 +381,6 @@ The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
                         case "-gui":
                             gui = true;
                             break;
-                        //case "-in":
-                        //    inPath = args[++i];
-                        //    break;
-                        //case "-out":
-                        //    inPath = args[++i];
-                        //    break;
                         case "-h":
                         case "-help":
                             PrintHelp();
