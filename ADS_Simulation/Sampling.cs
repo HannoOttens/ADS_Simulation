@@ -73,7 +73,7 @@ namespace ADS_Simulation
             int idxT = Math.Min(time / 900, Config.c.transferTimes[stationIndex].arrivalRate.Length - 1);
             var averageExit = Config.c.transferTimes[stationIndex].averageExit[idxT];
             if (averageExit.Equals(0))
-                return 0;
+                return 0; //No passengers expecting to leave
 
             // Calculate expected passengers based on data from previous stations on the route
             double expectedPassengers = 0;
@@ -84,9 +84,13 @@ namespace ADS_Simulation
                     expectedPassengers -= Config.c.transferTimes[i].averageExit[idxT];
             }
             if (expectedPassengers <= 0)
-                return 0;
+                return 0; // No passengers expected in tram
 
-            return Math.Min(passengers, (int)LogNormal.Sample(Math.Log(passengers * (averageExit / expectedPassengers)), 0.1));
+            var mean = passengers * (averageExit / expectedPassengers);
+            var sd = Config.c.transferTimes[stationIndex].standardDeviationExit[idxT];
+            if (sd.Equals(0))
+                return (int)mean; //Avoid division by zero 
+            return (int) Gamma.Sample((mean * mean) / (sd * sd), mean / (sd * sd));
         }
     }
 }
