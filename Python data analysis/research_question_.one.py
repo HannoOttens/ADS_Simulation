@@ -7,7 +7,8 @@ from plotly.subplots import make_subplots
 import scipy.stats as st
 import stats_analyse
 
-stat_diff = False
+stat_diff = True
+interval_idx = 2
 
 def table_array_for(name_x, name_y):
     table = []
@@ -29,9 +30,10 @@ def make_table(param_x, param_y, data, colors=None):
                     fill_color=colors))
 
 
-target_folder = 'Multi state data/more_trams/'
+target_folder = 'Multi state data/batch_60/'
 param = {
-    'f': [21, 22, 23, 24, 25,26, 27, 28, 29, 30, 40],
+    'f': [14, 15, 16, 17, 18, 19, 20, 21, 22],
+    # 'f': [21, 22, 23, 24, 25,26, 27, 28, 29, 30, 40],
     'uc': [True, False], 
     'q': [60, 90, 120, 150, 180, 210, 240, 270, 300]
 }
@@ -69,6 +71,8 @@ for subdir, dirs, files in os.walk(target_folder):
             means.append((c,table.average(c)))
 
         results[idx][(f,uc,q)] = means
+
+        # Read in interesting columns in full
         results_c0[idx][(f,uc,q)] = table.columns[columns[0][0]]
         results_c1[idx][(f,uc,q)] = table.columns[columns[1][0]]
 
@@ -99,8 +103,8 @@ if stat_diff:
 
     for idx_f, f in enumerate(param['f']):
         for idx_q, q in enumerate(param['q']):
-            table_c0[idx_f][idx_q] = stats_analyse.relation(t_test(results_c0[0][(f,True,q)],results_c0[0][(f,False,q)],0.05)[0])
-            table_c1[idx_f][idx_q] = stats_analyse.relation(t_test(results_c1[0][(f,True,q)],results_c1[0][(f,False,q)],0.05)[0])
+            table_c0[idx_f][idx_q] = stats_analyse.relation(t_test(results_c0[interval_idx][(f,True,q)],results_c0[0][(f,False,q)],0.05)[0])
+            table_c1[idx_f][idx_q] = stats_analyse.relation(t_test(results_c1[interval_idx][(f,True,q)],results_c1[0][(f,False,q)],0.05)[0])
             colors_c0[idx_f][idx_q] = col_dict[table_c0[idx_f][idx_q]]
             colors_c1[idx_f][idx_q] = col_dict[table_c1[idx_f][idx_q]]
 
@@ -121,7 +125,7 @@ if stat_diff:
 else:
     def build_table(uc_switch, val_idx):
         table = table_array_for('f','q')
-        for k,v in results[0].items():
+        for k,v in results[interval_idx].items():
             (f,uc,q) = k
             if (uc_switch and uc) or (not uc_switch and not uc) :
                 table[param['f'].index(f)][param['q'].index(q)] = round(v[val_idx][1],2)

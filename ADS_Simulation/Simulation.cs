@@ -29,16 +29,10 @@ namespace ADS_Simulation
             state.time = (int)eventQueue.First.Priority;
 
             statisticsManager = new StatisticsManager(state, new (int, int)[] { 
-                // Whole simulation
-                (Config.c.startTime,  int.MaxValue),
                 // 7:30 - 9:30
                 (75*6*60,  95*6*60),
-                // 9:30 - 16:00
-                (95*6*60,  16*60*60),
                 // 16:00 - 18:00
                 (16*60*60,  18*60*60),
-                // 18:00 - End
-                (18*60*60,  int.MaxValue),
                 // 07:00 - 19:00
                 (07*60*60,  19*60*60)
             });

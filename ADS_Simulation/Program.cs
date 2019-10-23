@@ -26,7 +26,7 @@ namespace ADS_Simulation
             // Initialize config
             Config.readConfig(configPath);
 
-            int[] tramFrequencies = new int[] { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40 };
+            int[] tramFrequencies = new int[] { 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
             bool[] ucDriverSwitch = new bool[] { true, false };
             int[] turnAroundTimes = new int[] { 60, 90, 120, 150, 180, 210, 240, 270, 300 };
             foreach (int frequency in tramFrequencies)
@@ -42,11 +42,11 @@ namespace ADS_Simulation
 
                         Config.c.outputFileName = $"f={frequency}-n={Config.c.numberOfTrams}-uc={ucSwitch}-q={turnAroundTime}";
 
-                        Console.WriteLine("====================================================");
-                        Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        //Console.WriteLine("====================================================");
+                        //Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine($"Run: {Config.c.outputFileName}");
-                        Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        Console.WriteLine("====================================================");
+                        //Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                        //Console.WriteLine("====================================================");
 
                         Run();
                     }
@@ -76,11 +76,11 @@ namespace ADS_Simulation
                     statisticalData[timeRange].Add(simulation.statisticsManager.GetSimulationResultForRange(simulation.state, timeRange));
 
                 // Print run result
-                Console.WriteLine(@$"Run: {runNo}
-Went through {events} events.
-The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
-The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
-================================");
+//                Console.WriteLine(@$"Run: {runNo}
+//Went through {events} events.
+//The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
+//The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
+//================================");
             }
 
             // Save result
