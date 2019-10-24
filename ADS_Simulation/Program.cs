@@ -26,9 +26,11 @@ namespace ADS_Simulation
             // Initialize config
             Config.readConfig(configPath);
 
-            int[] tramFrequencies = new int[] { 5,6,7,8,9,10,11,12,13 };
+            int[] tramFrequencies = new int[] { 16 };
             bool[] ucDriverSwitch = new bool[] { true, false };
-            int[] turnAroundTimes = new int[] { 60, 90, 120, 150, 180, 210, 240, 270, 300 };
+            int[] turnAroundTimes = new int[13];
+            for(int i = 0; i < 13; i++)
+                turnAroundTimes[i] = 370 + i * 10;
             foreach (int frequency in tramFrequencies)
                 foreach (bool ucSwitch in ucDriverSwitch)
                     foreach (int turnAroundTime in turnAroundTimes)
