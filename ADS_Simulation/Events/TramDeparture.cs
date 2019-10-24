@@ -1,7 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
-using System;
 using System.Diagnostics;
 
 namespace ADS_Simulation.Events
@@ -23,7 +22,7 @@ namespace ADS_Simulation.Events
             var station = state.stations[stationIndex];
             station.Free();
 
-            // Enqueue current train
+            // Enqueue current tram
             if (station.HasQueue())
             {
                 Tram newOccupant = station.OccupyFromQueue();
@@ -35,7 +34,7 @@ namespace ADS_Simulation.Events
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
             Debug.WriteLine($"TramDeparture: tram {tram.id}: {station.name}, dir: {station.direction}, time: {state.time}");
 
-            // Make sure trams do not take over eachother
+            // Make sure trams do not take over each other
             int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
             if (state.stations[newStationIndex] is Endstation endstation)
                 eventQueue.Enqueue(new ExpectedArrivalEndstation(tram, endstation), arrivalTime);
