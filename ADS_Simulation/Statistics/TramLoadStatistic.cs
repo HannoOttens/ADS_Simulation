@@ -62,7 +62,7 @@ namespace ADS_Simulation.Statistics
             return lowestPassengerCount.Min();
         }
 
-        public int HigestTramLoad()
+        public int HighestTramLoad()
         {
             return highestPassengerCount.Max();
         }
@@ -71,7 +71,7 @@ namespace ADS_Simulation.Statistics
         {
             Console.WriteLine($"Average tram load: {TotalAverageTramLoad(state.time, state.trams.Count)}");
             Console.WriteLine($"Lowest tram load: {LowestTramLoad()}");
-            Console.WriteLine($"Highest tram load: {HigestTramLoad()}");
+            Console.WriteLine($"Highest tram load: {HighestTramLoad()}");
         }
 
         public override string[] GetHeaders()
@@ -80,7 +80,7 @@ namespace ADS_Simulation.Statistics
             {
                 "avg_tram_load",
                 "lowest_tram_load",
-                "higest_tram_load",
+                "highest_tram_load",
             };
         }
 
@@ -90,7 +90,7 @@ namespace ADS_Simulation.Statistics
             {
                 TotalAverageTramLoad(state.time, state.trams.Count).ToString(),
                 LowestTramLoad().ToString(),
-                HigestTramLoad().ToString()
+                HighestTramLoad().ToString()
             };
         }
     }

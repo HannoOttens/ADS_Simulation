@@ -45,7 +45,7 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
-        /// Let train enter from queue
+        /// Let tram enter from queue
         /// </summary>
         /// <returns>The new occupant</returns>
         public Tram OccupyFromQueue()
@@ -103,7 +103,7 @@ namespace ADS_Simulation.NS_State
         /// <summary>
         /// Free the station
         /// </summary>
-        /// <returns>True when station has no more trains in queue</returns>
+        /// <returns>True when station has no more trams in queue</returns>
         public void Free()
         {
             occupant = null;
@@ -156,9 +156,9 @@ namespace ADS_Simulation.NS_State
         }
 
         /// <summary>
-        /// Make sure trams do not take over eachother.
+        /// Make sure trams do not take over each other.
         /// </summary>
-        /// <param name="stochasticArrivalTime">The stocasticly calculated arrival time</param>
+        /// <param name="stochasticArrivalTime">The arrival time from the distribution</param>
         /// <returns>Actual arrival time</returns>
         public int SignalNextArrival(int stochasticArrivalTime)
         {

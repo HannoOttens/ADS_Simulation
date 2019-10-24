@@ -1,5 +1,4 @@
-﻿using ADS_Simulation.Configuration;
-using ADS_Simulation.NS_State;
+﻿using ADS_Simulation.NS_State;
 using Priority_Queue;
 
 namespace ADS_Simulation.Events

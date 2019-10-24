@@ -52,51 +52,6 @@ namespace ADS_Simulation.Statistics
                     longestQueue = Math.Max(longestQueue, waitingPassengers);
                 }
             }
-            //int timeDelta = state.time - lastEventTime;
-
-            //for (int stationIdx = 0; stationIdx < stationCount; stationIdx++)
-            //{
-            //    var station = state.stations[stationIdx];
-
-            //    int currentQueue = station.waitingPassengers.Count;
-            //    int queueDelta = currentQueue - previousQueueLength[stationIdx];
-            //    previousQueueLength[stationIdx] = currentQueue;
-
-            //    if (longestQueue < currentQueue)
-            //        longestQueue = currentQueue;
-
-            //    // Passengers got in tram, calculate waiting time of remaining passengers
-            //    if(queueDelta <= 0)
-            //    {
-            //        totalWaitingTime[stationIdx] += timeDelta * currentQueue;
-            //    }
-            //    // New passengers have arrived, calculate their waiting time
-            //    else
-            //    {
-            //        long waitingTime = WaitingTimeNewPassengers(station.waitingPassengers.TakeLast(queueDelta), state.time)
-            //                        + timeDelta * (currentQueue - queueDelta);
-            //        Debug.Assert(waitingTime >= 0, "Negative waiting time");
-            //        totalWaitingTime[stationIdx] += waitingTime;  
-            //        totalPassengers[stationIdx] += queueDelta;
-            //    }
-
-            //    // Check if passengers are left waiting for the next tram
-            //    if (queueDelta < 0 && currentQueue != 0)
-            //    {
-            //        totalPassengersLeftWaiting[stationIdx] += currentQueue;
-            //        if (mostPassengersLeftWaiting[stationIdx] < currentQueue)
-            //            mostPassengersLeftWaiting[stationIdx] = currentQueue;
-            //    }
-
-            //    // Update longest waiting time, person first in queue has the longest waiting time
-            //    if (station.HasPassengers())
-            //    {
-            //        int waitTime = state.time - station.waitingPassengers.Peek();
-            //        if (waitTime > longestWaitTime[stationIdx])
-            //            longestWaitTime[stationIdx] = waitTime;
-            //    }
-            //}
-            //lastEventTime = state.time;
         }
 
         private long WaitingTimeNewPassengers(IEnumerable<int> newPassengers, int time)

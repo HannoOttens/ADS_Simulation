@@ -39,7 +39,7 @@ namespace ADS_Simulation
                         Config.c.frequency = frequency;
                         Config.c.turnAroundTime = turnAroundTime;
 
-                        // Caclulate number of trams programiicly
+                        // Calculate number of trams
                         Config.c.numberOfTrams = (int)Math.Ceiling((decimal)Config.c.RoundTripTime() / Config.c.GetIntervalSeconds());
 
                         Config.c.outputFileName = $"f={frequency}-n={Config.c.numberOfTrams}-uc={ucSwitch}-q={turnAroundTime}";
@@ -57,7 +57,7 @@ namespace ADS_Simulation
         private static void Run()
         {
 
-            // Bookkeep data
+            // Book-keep data
             var statisticalData = new Dictionary<(int, int), List<string>>();
 
             // Run the number of simulations
@@ -115,15 +115,15 @@ namespace ADS_Simulation
                 // Addition between-step functionality
                 eventCount++;
 
-                //// First cannot be None if there is a tram at the platform
-                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                //        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
-                //        || s.first == Platform.A && !s.IsFree(Platform.A)
-                //        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
+                // First cannot be None if there is a tram at the platform
+                Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                        .All((s) => s.first == Platform.None && s.IsFree(Platform.A) && s.IsFree(Platform.B)
+                        || s.first == Platform.A && !s.IsFree(Platform.A)
+                        || s.first == Platform.B && !s.IsFree(Platform.B)), "Tram cannot depart");
 
-                ////Only trams with upfollowing ids can be on endstation at same time
-                //Debug.Assert(simulation.state.stations.OfType<Endstation>()
-                //        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
+                //Only trams with consecutive ids can be on endstation at same time
+                Debug.Assert(simulation.state.stations.OfType<Endstation>()
+                        .All((s) => Abs(s.occupant?.id - s.occupant2?.id) ?? true), "Trams cannot overtake each other");
 
                 if (step)
                     Console.ReadKey();
@@ -245,11 +245,11 @@ namespace ADS_Simulation
                         occupant = endstation.occupant2;
 
                 if (occupant != null)
-                    return DrawTrainId(occupant.id);
+                    return DrawTramId(occupant.id);
                 else return new string(' ', dotDist);
             }
 
-            string DrawTrainId(int id)
+            string DrawTramId(int id)
             {
                 string occupantName = id.ToString();
                 string emptySpace = new string(' ', (dotDist - occupantName.Length) / 2);
@@ -270,7 +270,7 @@ namespace ADS_Simulation
                     {
                         for (int i = 0; i < state.stations.Count / 2; i++)
                             if (q < state.stations[i].incomingTrams.Count)
-                                toOut += DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                                toOut += DrawTramId(state.stations[i].incomingTrams.ToList()[q].id);
                             else
                                 toOut += new string(' ', dotDist);
                         toOut += "\n";
@@ -282,7 +282,7 @@ namespace ADS_Simulation
                         toOut += new string(' ', dotDist);
                         for (int i = state.stations.Count - 1; i >= state.stations.Count / 2; i--)
                             if (q < state.stations[i].incomingTrams.Count)
-                                toOut += DrawTrainId(state.stations[i].incomingTrams.ToList()[q].id);
+                                toOut += DrawTramId(state.stations[i].incomingTrams.ToList()[q].id);
                             else
                                 toOut += new string(' ', dotDist);
                         toOut += "\n";
@@ -316,7 +316,7 @@ namespace ADS_Simulation
                         {
                             var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
-                                toOut += DrawTrainId(ts.ToList()[q].tram.id);
+                                toOut += DrawTramId(ts.ToList()[q].tram.id);
                             else
                                 toOut += new string(' ', dotDist);
                         }
@@ -324,7 +324,7 @@ namespace ADS_Simulation
                         // Utrecht Centraal
                         var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.endStation);
                         if (q < tes?.Count())
-                            toOut += DrawTrainId(tes.ToList()[q].tram.id);
+                            toOut += DrawTramId(tes.ToList()[q].tram.id);
                         else
                             toOut += new string(' ', dotDist);
 
@@ -338,7 +338,7 @@ namespace ADS_Simulation
                         // P+R
                         var tes = endTransits.SingleOrDefault(k => k.Key == Config.c.startStation);
                         if (q < tes?.Count())
-                            toOut += DrawTrainId(tes.ToList()[q].tram.id);
+                            toOut += DrawTramId(tes.ToList()[q].tram.id);
                         else
                             toOut += new string(' ', dotDist);
 
@@ -347,7 +347,7 @@ namespace ADS_Simulation
                         {
                             var ts = groupedTransits.SingleOrDefault(k => k.Key == i);
                             if (q < ts?.Count())
-                                toOut += DrawTrainId(ts.ToList()[q].tram.id);
+                                toOut += DrawTramId(ts.ToList()[q].tram.id);
                             else
                                 toOut += new string(' ', dotDist);
                         }

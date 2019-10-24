@@ -1,7 +1,6 @@
 ﻿using ADS_Simulation.Configuration;
 using ADS_Simulation.NS_State;
 using Priority_Queue;
-using System;
 
 namespace ADS_Simulation.Events
 {
@@ -37,7 +36,7 @@ namespace ADS_Simulation.Events
             int stationIndex = state.stations.IndexOf(station);
             int newStationIndex = stationIndex + 1;
 
-            // Make sure trams do not take over eachother
+            // Make sure trams do not take over each other
             int drivingTime = Sampling.drivingTime(Config.c.transferTimes[stationIndex].averageTime);
             int arrivalTime = station.SignalNextArrival(state.time + drivingTime);
             eventQueue.Enqueue(new ExpectedTramArrival(tram, newStationIndex), arrivalTime);
