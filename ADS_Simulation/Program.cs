@@ -21,10 +21,14 @@ namespace ADS_Simulation
         static void Main(string[] args)
         {
 
-            MarshallArgs(args);
+            if (!MarshallArgs(args))
+                return;
 
             // Initialize config
             Config.readConfig(configPath);
+
+            // Run single simulation example (uncomment):
+            // Simulate();
 
             int[] tramFrequencies = new int[] { 16 };
             bool[] ucDriverSwitch = new bool[] { true, false };
@@ -41,15 +45,9 @@ namespace ADS_Simulation
 
                         // Calculate number of trams
                         Config.c.numberOfTrams = (int)Math.Ceiling((decimal)Config.c.RoundTripTime() / Config.c.GetIntervalSeconds());
-
                         Config.c.outputFileName = $"f={frequency}-n={Config.c.numberOfTrams}-uc={ucSwitch}-q={turnAroundTime}";
 
-                        //Console.WriteLine("====================================================");
-                        //Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
                         Console.WriteLine($"Run: {Config.c.outputFileName}");
-                        //Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                        //Console.WriteLine("====================================================");
-
                         Run();
                     }
         }
@@ -76,13 +74,6 @@ namespace ADS_Simulation
                 // Add data
                 foreach (var timeRange in simulation.statisticsManager.timeRanges)
                     statisticalData[timeRange].Add(simulation.statisticsManager.GetSimulationResultForRange(simulation.state, timeRange));
-
-                // Print run result
-//                Console.WriteLine(@$"Run: {runNo}
-//Went through {events} events.
-//The situation ended at {simulation.state.time} and should end at {Config.c.endTime}.
-//The simulation took {(stopwatch.ElapsedMilliseconds / 1000f).ToString("n2")}s
-//================================");
             }
 
             // Save result
